@@ -2,6 +2,7 @@
 namespace controller;
 
 require_once("src/view/LoginView.php");
+require_once("src/model/loginModel.php");
 
 class LoginController {
 
@@ -10,6 +11,7 @@ class LoginController {
 
 	public function __construct(){
 		$this->loginView = new \view\LoginView();
+		$this->loginModel = new \model\loginModel();
 	}
 
 	public function doControll(){
@@ -28,12 +30,11 @@ class LoginController {
 			//scenario - användaren är inte inloggad
 			else {
 				$body = $this->loginView->doLoginPage();
+				$body .= $this->loginView->getDateAndTime();
 
 				//scenario - användaren har tryck på "Logga in"
 				if ($this->loginView->triedToLogin() === TRUE) {
 					//kontroll av inloggningsuppgifter
-					/////
-					/////
 					/////
 					$body = $this->loginView->loggedInPage();
 				} else {

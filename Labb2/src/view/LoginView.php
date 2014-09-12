@@ -27,7 +27,8 @@ class LoginView{
 	public function triedToLogin(){
 		if (isset($_GET[$this->getKey_loginButton]) === TRUE) {
 			return TRUE;
-		} else {
+		} 
+		else {
 			return FALSE;
 		}
 	}
@@ -46,6 +47,22 @@ class LoginView{
 
 	//Funktion som kollar om användaren tryckt på Logga ut-knappen
 	public function triedToLogout(){
-
+		if (isset($_GET[$this->$getKey_logoutButton]) === TRUE) {
+			return TRUE;
+		} 
+		else {
+			return FALSE;
+		}	
 	}
+
+	//Funktion som returnerar aktuellt datum och tid
+	public function getDateAndTime(){
+		$object = new DateTime('2014-09-12');
+		$date = $object->format('d F Y');
+		$day = $object->format('l');
+		$time = $object->format('H: i : s');
+
+		return $day . ', ' . $date . '. Klockan är ' . $time;
+	}
+
 }
