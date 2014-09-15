@@ -59,7 +59,7 @@ class LoginController {
 			}
 			//scenario - användaren är nu inloggad
 			if ($this->loginModel->isLoggedIn() == TRUE) {
-				$body = $loginView->loggedInPage();
+				$body = $this->loginView->loggedInPage();
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
 					$this->loginModel->doLogout();
@@ -67,6 +67,6 @@ class LoginController {
 					$body = $this->loginView->doLoginPage();
 				}
 			}
-			return  $status . $body . $datetime;
+			return  $status . $messages . $body . $datetime;
 	}
 }

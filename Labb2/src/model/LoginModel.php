@@ -23,7 +23,7 @@ class LoginModel{
 			case 'Admin':
 				//kontroll lösenord
 				if ($password == 'Password') {
-					$_SESSION['LoggedIn'] = yes;
+					$_SESSION['LoggedIn'] = "yes";
 					return TRUE;
 				}
 			break;
@@ -31,7 +31,7 @@ class LoginModel{
 			case 'Marike':
 				//kontroll lösenord
 				if ($password == 'Grinde') {
-					$_SESSION['LoggedIn'] = yes;
+					$_SESSION['LoggedIn'] = "yes";
 					return TRUE;
 				}
 				break;
@@ -42,5 +42,8 @@ class LoginModel{
 	return FALSE;	
 	}
 
-	//Funktion för att hantera utloggning
+	//Funktion för utloggning
+	public function doLogout(){
+		$_SESSION['LoggedIn'] = "no";
+	}
 }

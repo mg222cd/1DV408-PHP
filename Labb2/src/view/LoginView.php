@@ -26,7 +26,7 @@ class LoginView{
 
 	//Funktion som kollar om användaren tryckt på Logga in-knappen
 	public function triedToLogin(){
-		if (isset($_GET[$this->getKey_loginButton]) === TRUE) {
+		if (isset($_GET[$this->getKey_loginButton]) == TRUE) {
 			return TRUE;
 		} 
 		else {
@@ -48,7 +48,7 @@ class LoginView{
 
 	//Funktion som kollar om användaren tryckt på Logga ut-knappen
 	public function triedToLogout(){
-		if (isset($_GET[$this->$getKey_logoutButton]) === TRUE) {
+		if (isset($_GET[$this->getKey_logoutButton]) == TRUE) {
 			return TRUE;
 		} 
 		else {
