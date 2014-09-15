@@ -34,6 +34,7 @@ class LoginController {
 			} 
 			//scenario - användaren är inte inloggad
 			else {
+				$status = "Ej inloggad";
 				$body = $this->loginView->doLoginPage();
 				$datetime = $this->loginView->getDateAndTime();
 
@@ -41,7 +42,12 @@ class LoginController {
 				if ($this->loginView->triedToLogin() === TRUE) {
 					//kontroll av inloggningsuppgifter
 					if ($this->loginModel->doLogin($this->loginView->getName(), $this->loginView->getPassword())) {
-						# code...
+						//sätt eventuella kakor
+						if ($this->loginView->checkBox() == TRUE) {
+							$this->loginView->createCookie($this->loginView->getName(), $this->loginView->getPassword());
+						}
+						$this->loginModel->isLoggedIn();
+						$status = "Ej inloggad";
 					}
 					else{
 
@@ -53,6 +59,6 @@ class LoginController {
 				
 			}
 			
-			return $body . $datetime;
+			return  $status . $body . $datetime;
 	}
 }
