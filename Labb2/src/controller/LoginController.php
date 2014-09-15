@@ -45,20 +45,28 @@ class LoginController {
 						//sätt eventuella kakor
 						if ($this->loginView->checkBox() == TRUE) {
 							$this->loginView->createCookie($this->loginView->getName(), $this->loginView->getPassword());
+							$status = "Inloggad";
+							$messages = "Du är inloggad och vi kommer ihåg dig nästa gång";
 						}
 						$this->loginModel->isLoggedIn();
-						$status = "Ej inloggad";
-					}
-					else{
+						$status = "Inloggad";
 
 					}
-					$body = $this->loginView->loggedInPage();
-				} else {
-					# code...
-				}
-				
+					else{
+						$status = "Fel användarnamn eller lösenord, försök igen";
+					}
+				} 
 			}
-			
+			//scenario - användaren är nu inloggad
+			if ($this->loginModel->isLoggedIn() == TRUE) {
+				$body = $loginView->loggedInPage();
+				//kontroll om användaren tryckt på logout
+				if ($this->loginView->triedToLogout() == TRUE) {
+					$this->loginModel->doLogout();
+					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
+					$body = $this->loginView->doLoginPage();
+				}
+			}
 			return  $status . $body . $datetime;
 	}
 }
