@@ -1,8 +1,12 @@
 <?php
 namespace view;
 
+require_once("LoginCookieView.php");
+
 use DateTime;
 class LoginView{
+
+
 	//variabler för informationslagring
 	private $getKey_name = "name";
 	private $getKey_password = "password";
@@ -26,7 +30,7 @@ class LoginView{
 
 	//Funktion som kollar om användaren tryckt på Logga in-knappen
 	public function triedToLogin(){
-		if (isset($_GET[$this->getKey_loginButton]) == TRUE) {
+		if (isset($_POST['loginButton']) == TRUE) {
 			return TRUE;
 		} 
 		else {
@@ -48,7 +52,7 @@ class LoginView{
 
 	//Funktion som kollar om användaren tryckt på Logga ut-knappen
 	public function triedToLogout(){
-		if (isset($_GET[$this->getKey_logoutButton]) == TRUE) {
+		if (isset($_POST['ogoutButton']) == TRUE) {
 			return TRUE;
 		} 
 		else {
@@ -71,8 +75,8 @@ class LoginView{
 		if (isset($_COOKIE['name'])) {
 			return $_COOKIE['name'];
 		}
-		elseif (isset($_GET[$this->getKey_name]) != NULL) {
-			return $_GET[$this->getKey_name];
+		elseif (isset($_POST["name"]) != NULL) {
+			return $_POST["name"];
 		}
 		return NULL;
 	}
@@ -82,15 +86,15 @@ class LoginView{
 		if (isset($_COOKIE['password'])) {
 			return $_COOKIE['password'];
 		}
-		elseif (isset($_GET[$this->getKey_password]) != NULL) {
-			return $_GET[$this->getKey_password];
+		elseif (isset($_POST["password"]) != NULL) {
+			return $_POST["password"];
 		}
 		return NULL;
 	}
 
 	//Funktion för att kontrollera "Håll mig inloggad"-checkboxen
 	public function checkBox(){
-		if (isset($_GET[$this->getKey_rememberMeBox]) != NULL) {
+		if (isset($_POST[$this->getKey_rememberMeBox]) != NULL) {
 			return TRUE;
 		} 
 		else {
@@ -111,13 +115,13 @@ class LoginView{
 
 	//Funktion för att sätta Cookies
 	public function createCookie($name, $password){
-		return setcookie("name", $_GET[$this->getKey_name], time()+3600);
-		return setcookie("password", $_GET[$this->getKey_password], time()+3600);
+		return setcookie("name", $_POST["name"], time()+3600);
+		return setcookie("password", $_POST["password"], time()+3600);
 	}
 
 	//Funktion för att ta bort Cookies
 	public function removeCookie($name, $password){
-		return setcookie("name", $_GET[$this->getKey_name], time()-3600);
-		return setcookie("password", $_GET[$this->getKey_password], time()-3600);
+		return setcookie("name", $_POST["name"], time()-3600);
+		return setcookie("password", $_POST["password"], time()-3600);
 	}
 }
