@@ -23,21 +23,15 @@ class LoginController {
 
 			//hantering loginscenarion
 			//scenario - användaren är redan inloggad
-			if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
-				/*$this->loginModel->doLogin($this->loginView->getName(), $this->loginView->getPassword());
-				if ($this->loginModel->isLoggedIn == TRUE) {
-					$body = $this->loginView->loggedInPage();
-				}
-				else{
-					$status = "Inloggningen misslyckades! Fel användarnamn eller lösenord, försök igen.";
-				}*/
+			if ($this->loginView->isThereCookies() == TRUE) {
+				$this->loginModel->doLogin($this->loginView->getName(), $this->loginView->getPassword());
+				$status = "Kommer in i loopen med cookies!";
 			} 
 			//scenario - användaren är inte inloggad
 			else {
 				$status = "Ej inloggad";
 				$body = $this->loginView->doLoginPage();
 				$datetime = $this->loginView->getDateAndTime();
-
 				//scenario - användaren har tryck på "Logga in"
 				if ($this->loginView->triedToLogin() === TRUE) {
 					//kontroll av inloggningsuppgifter

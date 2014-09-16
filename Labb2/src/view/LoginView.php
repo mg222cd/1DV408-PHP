@@ -13,7 +13,7 @@ class LoginView{
 	//Funktion som visar inloggningsruta
 	public function doLoginPage(){
 		return 
-		"<form action='' method='get'>
+		"<form action='' method='post'>
 		<fieldset>
 		<legend>Login - skriv in användarnamn och lösenord</legend>
 		Namn:<input type='text' name='name' />
@@ -37,7 +37,7 @@ class LoginView{
 	//Funktion som visar sida när man är inloggad.
 	public function loggedInPage(){
 		return
-		"<form>
+		"<form action='' method='post'>
 		<fieldset>
 		<legend><h2>Du är inloggad</h2></legend>
 		<input type='submit' name='logoutButton' value='Logga ut' />	
@@ -96,6 +96,17 @@ class LoginView{
 		else {
 			return FALSE;
 		}
+	}
+
+	//Funktion för att kolla om Cookies är satt
+	public function isThereCookies(){
+		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
+			return TRUE;
+		} 
+		else {
+			return FALSE;
+		}
+		
 	}
 
 	//Funktion för att sätta Cookies
