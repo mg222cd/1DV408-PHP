@@ -19,13 +19,20 @@ class LoginController {
 			$status = "";
 			$body;
 			$messages = "";
-			$datetime;
+			$datetime = $this->loginView->getDateAndTime();
 
 			//hantering loginscenarion
 			//scenario - användaren är redan inloggad
-			if ($this->loginView->isThereCookies() == TRUE) {
-				$this->loginModel->doLogin($this->loginView->getName(), $this->loginView->getPassword());
-				$status = "Kommer in i loopen med cookies!";
+			if ($this->loginView->getCookieName() != NULL && $this->loginView->getCoookiePassword() != NULL) {
+				$body = $this->loginView->loggedInPage();
+				$status = "välkommen tillbaka!";
+				//kontroll om användaren tryck på logout
+				if ($this->loginView->triedToLogout() == TRUE) {
+					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
+					$this->loginModel->doLogout();
+					$status = "";
+					$body = $this->loginView->doLoginPage();
+				}
 			} 
 			//scenario - användaren är inte inloggad
 			else {
@@ -44,7 +51,6 @@ class LoginController {
 						}
 						$this->loginModel->isLoggedIn();
 						$status = "Inloggad";
-
 					}
 					else{
 						$status = "Fel användarnamn eller lösenord, försök igen";

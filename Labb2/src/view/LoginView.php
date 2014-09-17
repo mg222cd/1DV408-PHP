@@ -52,7 +52,7 @@ class LoginView{
 
 	//Funktion som kollar om användaren tryckt på Logga ut-knappen
 	public function triedToLogout(){
-		if (isset($_POST['ogoutButton']) == TRUE) {
+		if (isset($_POST['logoutButton']) == TRUE) {
 			return TRUE;
 		} 
 		else {
@@ -75,8 +75,8 @@ class LoginView{
 		if (isset($_COOKIE['name'])) {
 			return $_COOKIE['name'];
 		}
-		elseif (isset($_POST["name"]) != NULL) {
-			return $_POST["name"];
+		elseif (isset($_POST['name']) != NULL) {
+			return $_POST['name'];
 		}
 		return NULL;
 	}
@@ -86,8 +86,8 @@ class LoginView{
 		if (isset($_COOKIE['password'])) {
 			return $_COOKIE['password'];
 		}
-		elseif (isset($_POST["password"]) != NULL) {
-			return $_POST["password"];
+		elseif (isset($_POST['password']) != NULL) {
+			return $_POST['password'];
 		}
 		return NULL;
 	}
@@ -102,26 +102,41 @@ class LoginView{
 		}
 	}
 
-	//Funktion för att kolla om Cookies är satt
-	public function isThereCookies(){
-		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
-			return TRUE;
-		} 
-		else {
-			return FALSE;
-		}
-		
-	}
-
 	//Funktion för att sätta Cookies
 	public function createCookie($name, $password){
-		return setcookie("name", $_POST["name"], time()+3600);
-		return setcookie("password", $_POST["password"], time()+3600);
+		setcookie("name", $name, time()+3600);
+		setcookie("password", $password, time()+3600);
 	}
 
 	//Funktion för att ta bort Cookies
 	public function removeCookie($name, $password){
-		return setcookie("name", $_POST["name"], time()-3600);
-		return setcookie("password", $_POST["password"], time()-3600);
+		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
+			setcookie("name", "", time()-3600);
+			setcookie("password", "", time()-3600);
+		} 
+		else {
+			return NULL;
+		}
 	}
+
+	//Funktion för att hämta name i Cookie
+	public function getCookieName(){
+		if (isset($_COOKIE['name'])) {
+			return $_COOKIE['name'];
+		} 
+		else {
+			return NULL;
+		}
+	}
+
+	//Funktion för att hämta password i Cookie
+	public function getCoookiePassword(){
+		if (isset($_COOKIE['password'])) {
+			return $_COOKIE['password'];
+		} 
+		else {
+			return NULL;
+		}
+	}
+
 }
