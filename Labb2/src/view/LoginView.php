@@ -104,7 +104,9 @@ class LoginView{
 
 	//Funktion för att sätta Cookies
 	public function createCookie($name, $password){
-		setcookie("name", $name, time()+3600);
+		$_COOKIE['name'] = $name;
+		setcookie('name', $name, time()+3600);
+		$_COOKIE['password'] = $password;
 		setcookie("password", $password, time()+3600);
 	}
 
