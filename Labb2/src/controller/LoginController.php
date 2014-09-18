@@ -28,15 +28,15 @@ class LoginController {
 			//scenario - användaren är redan inloggad
 			if ($this->loginCookieView->getCookieName() != NULL && $this->loginCookieView->getCoookiePassword() != NULL) {
 				//säkerhetskontroll 
-				//skapa unik krypterad sträng ur kakan
-				//$cookieUnique = $this->loginCookieView->pickupCookieInformation($encryptedPassword);
 				$stringToVerify = $this->loginCookieView->pickupCookieInformation($this->loginCookieView->getCoookiePassword());
 				//jämför strängen mot dem i filen
-				//Om allt är OK 
+				if ($this->loginModel->cookieSecurityCheck($stringToVerify) == TRUE) {
 					//logga in, skapa vyer, meddelanden osv
-					//Kontrollera om användaren tyckt på logga ut
-				//Annars - felmeddelande
-
+						//Kontrollera om användaren tyckt på logga ut
+				} else {
+					//Felmeddelande
+					//Ev visa startsidan
+				}
 				/*
 				$body = $this->loginView->loggedInPage();
 				$status = "välkommen tillbaka!";

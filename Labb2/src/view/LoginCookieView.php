@@ -31,18 +31,6 @@ class LoginCookieView{
 		return $_COOKIE['name'] . "," . md5($uniqueString);
 	}
 
-	//Funktion för att ta bort Cookies
-	public function removeCookie($name, $password){
-		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
-			setcookie("name", "", time()-3600);
-			setcookie("password", "", time()-3600);
-			setcookie("timeStamp", "", time()-3600);
-		} 
-		else {
-			return NULL;
-		}
-	}
-
 	//Funktion för att hämta name i Cookie
 	public function getCookieName(){
 		if (isset($_COOKIE['name'])) {
@@ -57,6 +45,18 @@ class LoginCookieView{
 	public function getCoookiePassword(){
 		if (isset($_COOKIE['password'])) {
 			return $_COOKIE['password'];
+		} 
+		else {
+			return NULL;
+		}
+	}
+
+	//Funktion för att ta bort Cookies
+	public function removeCookie($name, $password){
+		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
+			setcookie("name", "", time()-3600);
+			setcookie("password", "", time()-3600);
+			setcookie("timeStamp", "", time()-3600);
 		} 
 		else {
 			return NULL;
