@@ -102,12 +102,20 @@ class LoginView{
 		}
 	}
 
-	//Funktion för att sätta Cookies
+	//Funktion för att sätta Cookies och returnera unik identifieringssträng
 	public function createCookie($name, $password){
 		$_COOKIE['name'] = $name;
 		setcookie('name', $name, time()+3600);
 		$_COOKIE['password'] = $password;
 		setcookie("password", $password, time()+3600);
+		$timeStamp = time()+3600;
+		$_COOKIE['timeStamp'] = $timeStamp;
+		setcookie("timeStamp", $timeStamp, time()+3600);
+		//sätter ihop och krypterar unik sträng av kakan
+		$uniqueString = array();
+		$uniqueString = $_COOKIE['name'] .  $_COOKIE['password']  .  $_COOKIE['timeStamp'];
+		$encryptedString = md5($uniqueString);
+		return $encryptedString;
 	}
 
 	//Funktion för att ta bort Cookies

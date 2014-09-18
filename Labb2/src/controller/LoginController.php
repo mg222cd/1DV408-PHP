@@ -2,7 +2,7 @@
 namespace controller;
 
 require_once("src/view/LoginView.php");
-require_once("src/model/loginModel.php");
+require_once("src/model/LoginModel.php");
 
 class LoginController {
 
@@ -45,7 +45,7 @@ class LoginController {
 					if ($this->loginModel->doLogin($this->loginView->getName(), $this->loginView->getPassword())) {
 						//sätt eventuella kakor
 						if ($this->loginView->checkBox() == TRUE) {
-							$this->loginView->createCookie($this->loginView->getName(), $this->loginView->getPassword());
+							$encryptedString = $this->loginView->createCookie($this->loginView->getName(), $this->loginView->getPassword());
 							$status = "Inloggad";
 							$messages = "Du är inloggad och vi kommer ihåg dig nästa gång";
 						}
