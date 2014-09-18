@@ -27,6 +27,16 @@ class LoginController {
 			//hantering loginscenarion
 			//scenario - användaren är redan inloggad
 			if ($this->loginCookieView->getCookieName() != NULL && $this->loginCookieView->getCoookiePassword() != NULL) {
+				//säkerhetskontroll 
+				//skapa unik krypterad sträng ur kakan
+				//$cookieUnique = $this->loginCookieView->pickupCookieInformation($encryptedPassword);
+				$stringToVerify = $this->loginCookieView->pickupCookieInformation($this->loginCookieView->getCoookiePassword());
+				//jämför strängen mot dem i filen
+				//Om allt är OK 
+					//logga in, skapa vyer, meddelanden osv
+					//Kontrollera om användaren tyckt på logga ut
+				//Annars - felmeddelande
+
 				/*
 				$body = $this->loginView->loggedInPage();
 				$status = "välkommen tillbaka!";
@@ -50,13 +60,9 @@ class LoginController {
 					if ($this->loginModel->doLogin($this->loginView->getName(), $this->loginView->getPassword())) {
 						//om användaren kryssat i "håll mig inloggad"
 						if ($this->loginView->checkBox() == TRUE) {
-							//kryptera lösenord
 							$encryptedPassword = $this->loginCookieView->encryptPassword($this->loginView->getPassword());
-							//sätt Cookies
 							$this->loginCookieView->createCookie($this->loginView->getName(), $encryptedPassword);
-							//skapa unik sträng med namn, lösen, ip, tidsstämpel
 							$cookieUnique = $this->loginCookieView->pickupCookieInformation($encryptedPassword);
-							//skicka strängen till modellen och lägg i fil	
 							$this->loginModel->saveToFile($cookieUnique);
 							$status = "Inloggad";
 							$messages = "Du är inloggad och vi kommer ihåg dig nästa gång";
