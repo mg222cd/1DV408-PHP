@@ -1,11 +1,8 @@
 <?php
 namespace view;
 
-require_once("LoginCookieView.php");
-
 use DateTime;
 class LoginView{
-
 
 	//variabler för informationslagring
 	private $getKey_name = "name";
@@ -21,7 +18,7 @@ class LoginView{
 		<fieldset>
 		<legend>Login - skriv in användarnamn och lösenord</legend>
 		Namn:<input type='text' name='name' />
-		Lösenord:<input type='text' name='password' />
+		Lösenord:<input type='password' name='password' />
 		Håll mig inloggad<input type='checkbox' name='rememberMeBox' />
 		<input type='submit' name='loginButton' value='Logga in' />
 		</fieldset>
@@ -72,10 +69,7 @@ class LoginView{
 
 	//Funktion för att hämta angivet användarnamn
 	public function getName(){
-		if (isset($_COOKIE['name'])) {
-			return $_COOKIE['name'];
-		}
-		elseif (isset($_POST['name']) != NULL) {
+		if (isset($_POST['name']) != NULL) {
 			return $_POST['name'];
 		}
 		return NULL;
@@ -83,10 +77,7 @@ class LoginView{
 
 	//Funkrion för att hämta angivet lösenord
 	public function getPassword(){
-		if (isset($_COOKIE['password'])) {
-			return $_COOKIE['password'];
-		}
-		elseif (isset($_POST['password']) != NULL) {
+		if (isset($_POST['password']) != NULL) {
 			return $_POST['password'];
 		}
 		return NULL;
@@ -102,51 +93,6 @@ class LoginView{
 		}
 	}
 
-	//Funktion för att sätta Cookies och returnera unik identifieringssträng
-	public function createCookie($name, $password){
-		$_COOKIE['name'] = $name;
-		setcookie('name', $name, time()+3600);
-		$_COOKIE['password'] = $password;
-		setcookie("password", $password, time()+3600);
-		$timeStamp = time()+3600;
-		$_COOKIE['timeStamp'] = $timeStamp;
-		setcookie("timeStamp", $timeStamp, time()+3600);
-		//sätter ihop och krypterar unik sträng av kakan
-		$uniqueString = array();
-		$uniqueString = $_COOKIE['name'] .  $_COOKIE['password']  .  $_COOKIE['timeStamp'];
-		$encryptedString = md5($uniqueString);
-		return $encryptedString;
-	}
 
-	//Funktion för att ta bort Cookies
-	public function removeCookie($name, $password){
-		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
-			setcookie("name", "", time()-3600);
-			setcookie("password", "", time()-3600);
-		} 
-		else {
-			return NULL;
-		}
-	}
-
-	//Funktion för att hämta name i Cookie
-	public function getCookieName(){
-		if (isset($_COOKIE['name'])) {
-			return $_COOKIE['name'];
-		} 
-		else {
-			return NULL;
-		}
-	}
-
-	//Funktion för att hämta password i Cookie
-	public function getCoookiePassword(){
-		if (isset($_COOKIE['password'])) {
-			return $_COOKIE['password'];
-		} 
-		else {
-			return NULL;
-		}
-	}
 
 }

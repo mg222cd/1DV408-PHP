@@ -3,14 +3,17 @@ namespace controller;
 
 require_once("src/view/LoginView.php");
 require_once("src/model/LoginModel.php");
+require_once("src/view/LoginCookieView.php");
 
 class LoginController {
 
 	private $loginView;
+	private $loginCookieView;
 	private $loginModel;
 
 	public function __construct(){
 		$this->loginView = new \view\LoginView();
+		$this->loginCookieView = new \view\LoginCookieView();
 		$this->loginModel = new \model\loginModel();
 	}
 
@@ -23,7 +26,8 @@ class LoginController {
 
 			//hantering loginscenarion
 			//scenario - användaren är redan inloggad
-			if ($this->loginView->getCookieName() != NULL && $this->loginView->getCoookiePassword() != NULL) {
+			if ($this->loginCookieView->getCookieName() != NULL && $this->loginCookieView->getCoookiePassword() != NULL) {
+				/*
 				$body = $this->loginView->loggedInPage();
 				$status = "välkommen tillbaka!";
 				//kontroll om användaren tryck på logout
@@ -33,7 +37,8 @@ class LoginController {
 					$status = "";
 					$body = $this->loginView->doLoginPage();
 				}
-			} 
+				*/ 
+			}
 			//scenario - användaren är inte inloggad
 			else {
 				$status = "Ej inloggad";
@@ -45,7 +50,9 @@ class LoginController {
 					if ($this->loginModel->doLogin($this->loginView->getName(), $this->loginView->getPassword())) {
 						//sätt eventuella kakor
 						if ($this->loginView->checkBox() == TRUE) {
-							$encryptedString = $this->loginView->createCookie($this->loginView->getName(), $this->loginView->getPassword());
+							$this->loginView->createCookie($this->loginView->getName(), $this->loginView->getPassword());
+							$encryptedUser = $this->loginView->encryptCookie();
+							$this->loginModel->saveToFile($encryptedUser);
 							$status = "Inloggad";
 							$messages = "Du är inloggad och vi kommer ihåg dig nästa gång";
 						}

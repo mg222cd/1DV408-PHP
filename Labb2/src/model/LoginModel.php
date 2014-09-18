@@ -42,6 +42,13 @@ class LoginModel{
 	return FALSE;	
 	}
 
+	//Funktion för att spara användarinfo 
+	public function saveToFile($encryptedUser){
+		$file = fopen('logins.txt', 'a');
+		fwrite($file, $encryptedUser . "\n");
+		echo $file;
+	}
+
 	//Funktion för utloggning
 	public function doLogout(){
 		$_SESSION['LoggedIn'] = "no";
