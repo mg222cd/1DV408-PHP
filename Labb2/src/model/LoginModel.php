@@ -49,6 +49,10 @@ class LoginModel{
 		echo $file;
 	}
 
+	//$hash = password_hash('superLosenOrd', PASSWORD_DEFAULT);        
+	//Kolla om det stämmer såhär:           
+	//if (password_verify($password, $hash)) { //Correct password!}  else { //invalid password}
+
 	//Funktion för utloggning
 	public function doLogout(){
 		$_SESSION['LoggedIn'] = "no";

@@ -2,6 +2,12 @@
 namespace view;
 
 class LoginCookieView{
+
+	//Funktion för att kryptera password
+	public function encryptPassword($password){
+		$encryptedPassword = password_hash($password, PASSWORD_DEFAULT);
+		return $encryptedPassword;
+	}
 	
 	//Funktion för att sätta Cookies
 	public function createCookie($name, $password){
@@ -14,11 +20,15 @@ class LoginCookieView{
 		setcookie("timeStamp", $timeStamp, time()+3600);
 	}
 
-	//Funktion som krypterar Cookiens lösenord och tidsstämpel
-	public function encryptCookie(){
-		$uniqueString = $_COOKIE['password']  .  $_COOKIE['timeStamp'];
-		$encryptedString = $_COOKIE['name'] . md5($uniqueString);
-		return $encryptedString;
+	//funktion för att hämta IP-adressen från vilken klienten ser på sidan
+	public function getClientIdentifier(){
+		return $_SERVER["REMOTE_ADDR"];
+	}
+
+	//Funktion för att göra unik sträng av Cookie-informationen
+	public function pickupCookieInformation($encryptedPassword){
+		$uniqueString = $encryptedPassword . $_COOKIE['timeStamp'] . $this->getClientIdentifier();
+		return $_COOKIE['name'] . "," . md5($uniqueString);
 	}
 
 	//Funktion för att ta bort Cookies
@@ -26,6 +36,7 @@ class LoginCookieView{
 		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
 			setcookie("name", "", time()-3600);
 			setcookie("password", "", time()-3600);
+			setcookie("timeStamp", "", time()-3600);
 		} 
 		else {
 			return NULL;
