@@ -13,11 +13,12 @@ class LoginView{
 	
 	//Funktion som visar inloggningsruta
 	public function doLoginPage(){
+		$name = isset($_POST['name']) ? $_POST['name'] : '';
 		return 
 		"<form action='' method='post'>
 		<fieldset>
 		<legend>Login - skriv in användarnamn och lösenord</legend>
-		Namn:<input type='text' name='name' />
+		Namn:<input type='text' name='name' value='$name' />
 		Lösenord:<input type='password' name='password' />
 		Håll mig inloggad<input type='checkbox' name='rememberMeBox' />
 		<input type='submit' name='loginButton' value='Logga in' />

@@ -19,6 +19,7 @@ class LoginController {
 
 	public function doControll(){
 			//varaibler för loginscenarion
+			$registerLink = "<a href='#''>Registrera ny användare</a> <br />";
 			$status = "";
 			$body;
 			$messages = "";
@@ -48,7 +49,7 @@ class LoginController {
 			}
 			//scenario - användaren är inte inloggad
 			else {
-				$status = "Ej inloggad";
+				$status = "<h2>Ej inloggad</h2>";
 				$body = $this->loginView->doLoginPage();
 				$datetime = $this->loginView->getDateAndTime();
 				//scenario - användaren har tryck på "Logga in"
@@ -69,7 +70,16 @@ class LoginController {
 						$status = "Inloggad";
 					}
 					else{
-						$status = "Fel användarnamn eller lösenord, försök igen";
+						if ($this->loginView->getName() == NULL) {
+							$messages = "Användarnamn saknas";
+						} 
+						else if ($this->loginView->getPassword() == NULL) {
+							$messages = "Lösenord saknas";
+						}
+						else {
+							$messages = "Fel vid inloggning";
+						}
+						
 					}
 				} 
 			}
@@ -78,12 +88,12 @@ class LoginController {
 				$body = $this->loginView->loggedInPage();
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
-					$this->loginModel->doLogout();
 					$this->loginModel->removeClientIdentifier($this->loginCookieView->getCookieName());
+					$this->loginModel->doLogout();
 					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
 					$body = $this->loginView->doLoginPage();
 				}
 			}
-			return  $status . $messages . $body . $datetime;
+			return $registerLink . $status . $messages . $body . $datetime;
 	}
 }
