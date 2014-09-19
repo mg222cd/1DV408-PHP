@@ -66,6 +66,11 @@ class LoginModel{
 		}	
 	}
 
+	//Funktion för att radera rad i fil vid Logout
+	public function removeClientIdentifier($name){
+
+	}
+
 	//Funktion för utloggning
 	public function doLogout(){
 		$_SESSION['LoggedIn'] = "no";

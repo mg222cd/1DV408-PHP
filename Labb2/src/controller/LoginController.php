@@ -34,6 +34,7 @@ class LoginController {
 					$body = $this->loginView->loggedInPage();
 					$status = "välkommen tillbaka!";
 						if ($this->loginView->triedToLogout() == TRUE) {
+							$this->loginModel->removeClientIdentifier($this->loginView->getName());
 							$this->loginCookieView->removeCookie();
 							$this->loginModel->doLogout();
 							$status = "";
@@ -78,6 +79,7 @@ class LoginController {
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
 					$this->loginModel->doLogout();
+					$this->loginModel->removeClientIdentifier($getName);
 					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
 					$body = $this->loginView->doLoginPage();
 				}
