@@ -31,23 +31,19 @@ class LoginController {
 				$stringToVerify = $this->loginCookieView->pickupCookieInformation($this->loginCookieView->getCoookiePassword());
 				//jämför strängen mot dem i filen
 				if ($this->loginModel->cookieSecurityCheck($stringToVerify) == TRUE) {
-					//logga in, skapa vyer, meddelanden osv
-						//Kontrollera om användaren tyckt på logga ut
+					$body = $this->loginView->loggedInPage();
+					$status = "välkommen tillbaka!";
+						if ($this->loginView->triedToLogout() == TRUE) {
+							$this->loginCookieView->removeCookie();
+							$this->loginModel->doLogout();
+							$status = "";
+							$messages = "";
+							$body = $this->loginView->doLoginPage();
+						}
 				} else {
-					//Felmeddelande
-					//Ev visa startsidan
-				}
-				/*
-				$body = $this->loginView->loggedInPage();
-				$status = "välkommen tillbaka!";
-				//kontroll om användaren tryck på logout
-				if ($this->loginView->triedToLogout() == TRUE) {
-					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
-					$this->loginModel->doLogout();
-					$status = "";
 					$body = $this->loginView->doLoginPage();
+					$messages = "Fel uppstod i samband med inloggning via kaka. Vänligen logga in på nytt.";
 				}
-				*/ 
 			}
 			//scenario - användaren är inte inloggad
 			else {

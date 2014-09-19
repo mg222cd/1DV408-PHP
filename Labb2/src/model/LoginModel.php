@@ -46,7 +46,6 @@ class LoginModel{
 	public function saveToFile($encryptedUser){
 		$file = fopen('logins.txt', 'a');
 		fwrite($file, $encryptedUser . "\n");
-		echo $file;
 	}
 
 	//Funktion för att kontrollera Cookien vid automatisk inloggning

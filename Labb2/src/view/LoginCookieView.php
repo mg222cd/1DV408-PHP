@@ -52,8 +52,8 @@ class LoginCookieView{
 	}
 
 	//Funktion för att ta bort Cookies
-	public function removeCookie($name, $password){
-		if (isset($_COOKIE['name']) && isset($_COOKIE['password'])) {
+	public function removeCookie(){
+		if (isset($_COOKIE['name']) && isset($_COOKIE['password']) && isset($_COOKIE['timeStamp'])) {
 			setcookie("name", "", time()-3600);
 			setcookie("password", "", time()-3600);
 			setcookie("timeStamp", "", time()-3600);
