@@ -8,7 +8,7 @@ class LoginModel{
 
 	//Funktion för att kolla om användaren är inloggad
 	public function isLoggedIn(){
-		if ($_SESSION['LoggedIn'] == "yes") {
+		if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == "yes") {
 			return TRUE;
 		} 
 		else {
@@ -24,6 +24,7 @@ class LoginModel{
 				//kontroll lösenord
 				if ($password == 'Password') {
 					$_SESSION['LoggedIn'] = "yes";
+					$_SESSION['name'] = $name;
 					return TRUE;
 				}
 			break;
@@ -32,6 +33,7 @@ class LoginModel{
 				//kontroll lösenord
 				if ($password == 'Grinde') {
 					$_SESSION['LoggedIn'] = "yes";
+					$_SESSION['name'] = $name;
 					return TRUE;
 				}
 				break;
@@ -40,6 +42,15 @@ class LoginModel{
 			break;
 		}
 	return FALSE;	
+	}
+
+	public function getSessionName(){
+		if (isset($_SESSION['name'])) {
+			return $_SESSION['name'];
+		} else {
+			return "";
+		}
+		
 	}
 
 	//Funktion för att spara användarinfo 
@@ -68,23 +79,32 @@ class LoginModel{
 
 	//Funktion för att radera rader i filen tillhörande utloggad användare
 	public function removeClientIdentifier($name){
-		rename("logins.txt", "logins_temp.txt");
-		$rows = @file("logins_temp.txt");
-		if ($rows === FALSE) {
+		//rename("logins.txt", "logins_temp.txt");
+		$rows = @file("logins.txt");
+		if ($rows == FALSE) {
 			return null;
 		} 
 		else {
+			$content = "";
 			foreach ($rows as $row) {
 				$row = trim($row);
+				//$checkRow = explode(",", $row);
+				//$checkRow = $checkRow[0];
 				if (!strpos($row, $name) == 0) {
-					$this->saveToFile($row);
+					$content .= $row . "\n";
 				}
 			}
+			$file = fopen('logins.txt', 'w+');
+			fwrite($file, $content);
 		}
 	}
 
 	//Funktion för utloggning
 	public function doLogout(){
-		$_SESSION['LoggedIn'] = "no";
+		unset($_SESSION['LoggedIn']);
+		unset($_SESSION['name']);
+		if (session_status () != PHP_SESSION_NONE) {
+			session_destroy();
+		}
 	}
 }

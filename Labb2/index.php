@@ -5,7 +5,6 @@ require_once("src/view/LoginView.php");
 require_once("src/controller/LoginController.php");
 
 session_start();
-$_SESSION['LoggedIn'] = null;
 
 $title = "Laborationskod mg222cd";
 $body = "<h1>Laborationskod mg222cd</h1>";

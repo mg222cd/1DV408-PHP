@@ -21,12 +21,16 @@ class LoginController {
 			//varaibler för loginscenarion
 			$registerLink = "<div><a href='#''>Registrera ny användare</a></div>";
 			$status = "";
-			$body;
+			$body = "";
 			$messages = "";
 			$datetime = $this->loginView->getDateAndTime();
 
 			//hantering loginscenarion
+			if ($this->loginView->triedToLogout()) {
+					$this->loginModel->doLogout();
+			}
 			//scenario - användaren är redan inloggad
+			//...via cookies
 			if ($this->loginCookieView->getCookieName() != NULL && $this->loginCookieView->getCoookiePassword() != NULL) {
 				//säkerhetskontroll 
 				$stringToVerify = $this->loginCookieView->pickupCookieInformation($this->loginCookieView->getCoookiePassword());
@@ -45,6 +49,16 @@ class LoginController {
 				} else {
 					$body = $this->loginView->doLoginPage();
 					$messages = "Fel uppstod i samband med inloggning via kaka. Vänligen logga in på nytt.";
+				}
+			}
+			//...via sessionen
+			else if ($this->loginModel->isLoggedIn() == TRUE) {
+				$registerLink = "";
+				$name = $_SESSION['name'];
+				$status = "<h2>" . $name . " är inloggad</h2>";
+				$body = $this->loginView->loggedInPage();
+				if ($this->loginView->triedToLogout()) {
+					$this->loginModel->doLogout();
 				}
 			}
 			//scenario - användaren är inte inloggad
@@ -66,11 +80,12 @@ class LoginController {
 							$messages = "Du är inloggad och vi kommer ihåg dig nästa gång";
 							$body = $this->loginView->loggedInPage();
 						}
-						$this->loginModel->isLoggedIn();
+						//inloggning utan ikryssad ruta
 						$registerLink = "";
-						$name = $this->loginView->getName();
+						$name = $this->loginModel->getSessionName();
 						$status = "<h2>" . $name . " är inloggad</h2>";
-						$messages = "<p>Inloggningen lyckades</p>";
+						$messages = "Inloggningen lyckades";
+						$body = $this->loginView->loggedInPage();
 					}
 					else{
 						if ($this->loginView->getName() == NULL) {
@@ -88,11 +103,12 @@ class LoginController {
 			}
 			//scenario - användaren är nu inloggad
 			if ($this->loginModel->isLoggedIn() == TRUE) {
+				$this->loginModel->isLoggedIn();
 				$body = $this->loginView->loggedInPage();
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
-					$this->loginModel->removeClientIdentifier($this->loginCookieView->getCookieName());
 					$this->loginModel->doLogout();
+					$this->loginModel->removeClientIdentifier($this->loginCookieView->getCookieName());
 					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
 					$body = $this->loginView->doLoginPage();
 				}

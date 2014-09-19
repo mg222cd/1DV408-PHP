@@ -40,10 +40,8 @@ class LoginView{
 	public function loggedInPage(){
 		return
 		"<form action='' method='post'>
-		<fieldset>
-		<legend><h2>Du är inloggad</h2></legend>
+		<legend></legend>
 		<input type='submit' name='logoutButton' value='Logga ut' />	
-		</fieldset>
 		</form>
 		";
 	}
