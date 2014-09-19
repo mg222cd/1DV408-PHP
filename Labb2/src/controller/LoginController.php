@@ -19,7 +19,7 @@ class LoginController {
 
 	public function doControll(){
 			//varaibler för loginscenarion
-			$registerLink = "<a href='#''>Registrera ny användare</a> <br />";
+			$registerLink = "<div><a href='#''>Registrera ny användare</a></div>";
 			$status = "";
 			$body;
 			$messages = "";
@@ -67,7 +67,10 @@ class LoginController {
 							$body = $this->loginView->loggedInPage();
 						}
 						$this->loginModel->isLoggedIn();
-						$status = "Inloggad";
+						$registerLink = "";
+						$name = $this->loginView->getName();
+						$status = "<h2>" . $name . " är inloggad</h2>";
+						$messages = "<p>Inloggningen lyckades</p>";
 					}
 					else{
 						if ($this->loginView->getName() == NULL) {
