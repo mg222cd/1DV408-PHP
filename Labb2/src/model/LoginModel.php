@@ -49,9 +49,23 @@ class LoginModel{
 		echo $file;
 	}
 
-	//$hash = password_hash('superLosenOrd', PASSWORD_DEFAULT);        
-	//Kolla om det stämmer såhär:           
-	//if (password_verify($password, $hash)) { //Correct password!}  else { //invalid password}
+	//Funktion för att kontrollera Cookien vid automatisk inloggning
+	public function cookieSecurityCheck($stringToVerify){
+		$lines = @file("logins.txt");
+		//om filen inte finns
+		if ($lines === FALSE) {
+			return FALSE;
+		}
+		else{
+			foreach ($lines as $line) {
+				$line = trim($line);
+				if ($line === $stringToVerify) {
+					return TRUE;
+				}
+			}
+			return FALSE;
+		}	
+	}
 
 	//Funktion för utloggning
 	public function doLogout(){
