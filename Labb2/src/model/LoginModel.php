@@ -66,9 +66,21 @@ class LoginModel{
 		}	
 	}
 
-	//Funktion för att radera rad i fil vid Logout
+	//Funktion för att radera rader i filen tillhörande utloggad användare
 	public function removeClientIdentifier($name){
-
+		rename("logins.txt", "logins_temp.txt");
+		$rows = @file("logins_temp.txt");
+		if ($rows === FALSE) {
+			return null;
+		} 
+		else {
+			foreach ($rows as $row) {
+				$row = trim($row);
+				if (!strpos($row, $name) == 0) {
+					$this->saveToFile($row);
+				}
+			}
+		}
 	}
 
 	//Funktion för utloggning
