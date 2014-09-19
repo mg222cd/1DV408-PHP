@@ -77,7 +77,7 @@ class LoginController {
 							$messages = "Lösenord saknas";
 						}
 						else {
-							$messages = "Fel vid inloggning";
+							$messages = "Felaktigt användarnamn och/eller lösenord";
 						}
 						
 					}
