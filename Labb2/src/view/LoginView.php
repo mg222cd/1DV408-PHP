@@ -59,12 +59,13 @@ class LoginView{
 
 	//Funktion som returnerar aktuellt datum och tid
 	public function getDateAndTime(){
-		setlocale(LC_ALL, 'sv_SE');
+		setlocale( 'sv_SE.UTF-8', 'Swedish');
 		$date = date('d F');
 		$year = date('Y');
 		$day = ucfirst(strftime("%A"));
+		$day = utf8_encode($day);
 		$time = date('H:i:s');
-		return utf8_encode($day) . ', den ' . $date . ' år ' . $year . '. Klockan är [' . $time . ']';
+		return $day . ', den ' . $date . ' år ' . $year . '. Klockan är [' . $time . ']';
 	}
 
 	//Funktion för att hämta angivet användarnamn
