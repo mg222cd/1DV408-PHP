@@ -19,7 +19,6 @@ class LoginController {
 
 	public function doControll(){
 			//varaibler för loginscenarion
-			$registerLink = "<div><a href='#''>Registrera ny användare</a></div>";
 			$status = "";
 			$body = "";
 			$messages = "";
@@ -27,7 +26,7 @@ class LoginController {
 
 			//hantering loginscenarion
 			if ($this->loginView->triedToLogout()) {
-					$this->loginModel->doLogout();
+					$messages = $this->loginModel->doLogout();
 			}
 			//scenario - användaren är redan inloggad
 			//...via cookies
@@ -37,28 +36,31 @@ class LoginController {
 				//jämför strängen mot dem i filen
 				if ($this->loginModel->cookieSecurityCheck($stringToVerify) == TRUE) {
 					$body = $this->loginView->loggedInPage();
-					$status = "välkommen tillbaka!";
+					$name = $this->loginCookieView->getCookieName();
+					$status = "<h2>" . $name . " är inloggad</h2>";
+					$messages = "Inloggning lyckades via cookies";
 						if ($this->loginView->triedToLogout() == TRUE) {
 							$this->loginModel->removeClientIdentifier($this->loginCookieView->getCookieName());
 							$this->loginCookieView->removeCookie();
-							$this->loginModel->doLogout();
-							$status = "";
-							$messages = "";
+							$messages = $this->loginModel->doLogout();
 							$body = $this->loginView->doLoginPage();
 						}
 				} else {
 					$body = $this->loginView->doLoginPage();
-					$messages = "Fel uppstod i samband med inloggning via kaka. Vänligen logga in på nytt.";
+					$messages = "Felaktig information i cookie";
+					$status = "<h2>Ej inloggad</h2>";
+					$this->loginCookieView->removeCookie();
+					$this->loginModel->doLogout();
 				}
 			}
 			//...via sessionen
 			else if ($this->loginModel->isLoggedIn() == TRUE) {
-				$registerLink = "";
 				$name = $_SESSION['name'];
 				$status = "<h2>" . $name . " är inloggad</h2>";
 				$body = $this->loginView->loggedInPage();
 				if ($this->loginView->triedToLogout()) {
-					$this->loginModel->doLogout();
+					$messages = $this->loginModel->doLogout();
+					var_dump($_SESSION);
 				}
 			}
 			//scenario - användaren är inte inloggad
@@ -76,16 +78,18 @@ class LoginController {
 							$this->loginCookieView->createCookie($this->loginView->getName(), $encryptedPassword);
 							$cookieUnique = $this->loginCookieView->pickupCookieInformation($encryptedPassword);
 							$this->loginModel->saveToFile($cookieUnique);
-							$status = "Inloggad";
-							$messages = "Du är inloggad och vi kommer ihåg dig nästa gång";
+							$name = $this->loginCookieView->getCookieName();
+							$status = "<h2>" . $name . " är inloggad</h2>";
+							$messages = "<p>Inloggning lyckades och vi kommer ihåg dig nästa gång</p>";
 							$body = $this->loginView->loggedInPage();
 						}
 						//inloggning utan ikryssad ruta
-						$registerLink = "";
+						else{
 						$name = $this->loginModel->getSessionName();
 						$status = "<h2>" . $name . " är inloggad</h2>";
-						$messages = "Inloggningen lyckades";
+						$messages = "<p>Inloggningen lyckades</p>";
 						$body = $this->loginView->loggedInPage();
+						}
 					}
 					else{
 						if ($this->loginView->getName() == NULL) {
@@ -107,12 +111,12 @@ class LoginController {
 				$body = $this->loginView->loggedInPage();
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
-					$this->loginModel->doLogout();
+					$messages = $this->loginModel->doLogout();
 					$this->loginModel->removeClientIdentifier($this->loginCookieView->getCookieName());
 					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
 					$body = $this->loginView->doLoginPage();
 				}
 			}
-			return $registerLink . $status . $messages . $body . $datetime;
+			return $status . $messages . $body . $datetime;
 	}
 }

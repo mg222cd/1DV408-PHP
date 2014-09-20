@@ -15,7 +15,8 @@ class LoginView{
 	public function doLoginPage(){
 		$name = isset($_POST['name']) ? $_POST['name'] : '';
 		return 
-		"<form action='' method='post'>
+		"<div id='link'><a href='#'>Registrera ny användare</a></div>
+		<form action='' method='post'>
 		<fieldset>
 		<legend>Login - skriv in användarnamn och lösenord</legend>
 		Namn:<input type='text' name='name' value='$name' />

@@ -106,5 +106,6 @@ class LoginModel{
 		if (session_status () != PHP_SESSION_NONE) {
 			session_destroy();
 		}
+		return "Du har nu loggat ut";
 	}
 }
