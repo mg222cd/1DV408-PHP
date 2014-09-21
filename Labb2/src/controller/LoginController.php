@@ -62,7 +62,11 @@ class LoginController {
 					$body = $this->loginView->loggedInPage();
 					if ($this->loginView->triedToLogout()) {
 					$messages = $this->loginModel->doLogout($this->loginView->getClientIdentifier());
-				}	
+				}
+				else{
+					$status = "<h2>Ej inloggad</h2>";
+					$body = $this->loginView->doLoginPage();
+					$datetime = $this->loginView->getDateAndTime();	
 				}
 			}
 			//scenario - användaren är inte inloggad
@@ -115,7 +119,9 @@ class LoginController {
 					$body = $this->loginView->loggedInPage();
 				}
 				else{
-					return NULL;
+					$status = "<h2>Ej inloggad</h2>";
+					$body = $this->loginView->doLoginPage();
+					$datetime = $this->loginView->getDateAndTime();
 				}
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
