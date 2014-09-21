@@ -55,11 +55,14 @@ class LoginController {
 			}
 			//...via sessionen
 			else if ($this->loginModel->isLoggedIn() == TRUE) {
-				$name = $_SESSION['name'];
-				$status = "<h2>" . $name . " är inloggad</h2>";
-				$body = $this->loginView->loggedInPage();
-				if ($this->loginView->triedToLogout()) {
+				//säkerhetskontroll
+				if ($this->loginModel->cookieSecurityCheck($this->loginView->getClientIdentifier()) == TRUE) {
+					$name = $_SESSION['name'];
+					$status = "<h2>" . $name . " är inloggad</h2>";
+					$body = $this->loginView->loggedInPage();
+					if ($this->loginView->triedToLogout()) {
 					$messages = $this->loginModel->doLogout($this->loginView->getClientIdentifier());
+				}	
 				}
 			}
 			//scenario - användaren är inte inloggad
