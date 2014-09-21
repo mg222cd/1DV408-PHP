@@ -94,6 +94,11 @@ class LoginView{
 		}
 	}
 
+	//Funktion för att klientens IP
+	public function getClientIdentifier(){
+		return $_SERVER['REMOTE_ADDR'];
+	}
+
 
 
 }

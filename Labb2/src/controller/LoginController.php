@@ -107,8 +107,14 @@ class LoginController {
 			}
 			//scenario - användaren är nu inloggad
 			if ($this->loginModel->isLoggedIn() == TRUE) {
-				$this->loginModel->isLoggedIn();
-				$body = $this->loginView->loggedInPage();
+				//Säkerhetskontroll för att undvika sessionsstöld
+				if ($this->loginModel->cookieSecurityCheck($this->loginView->getClientIdentifier()) == TRUE ) {
+					$this->loginModel->isLoggedIn();
+					$body = $this->loginView->loggedInPage();
+				}
+				else{
+					return NULL;
+				}
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
 					$messages = $this->loginModel->doLogout();

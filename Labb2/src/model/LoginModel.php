@@ -25,9 +25,13 @@ class LoginModel{
 				if ($password == 'Password') {
 					$_SESSION['LoggedIn'] = "yes";
 					$_SESSION['name'] = $name;
+					//spara undan IP
+					$sessionIdentifier = $_SERVER['REMOTE_ADDR'];
+					$this->saveToFile($sessionIdentifier);
 					return TRUE;
 				}
 			break;
+			/*
 			//kontroll användarnamn
 			case 'Marike':
 				//kontroll lösenord
@@ -40,6 +44,7 @@ class LoginModel{
 			default:
 			return FALSE;
 			break;
+			*/
 		}
 	return FALSE;	
 	}
