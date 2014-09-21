@@ -26,7 +26,7 @@ class LoginModel{
 					$_SESSION['LoggedIn'] = "yes";
 					$_SESSION['name'] = $name;
 					//spara undan IP
-					$sessionIdentifier = $_SERVER['REMOTE_ADDR'];
+					$sessionIdentifier = $_SERVER['HTTP_USER_AGENT'];
 					$this->saveToFile($sessionIdentifier);
 					return TRUE;
 				}
