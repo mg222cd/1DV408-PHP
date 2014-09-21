@@ -45,7 +45,8 @@ class LoginController {
 							$messages = $this->loginModel->doLogout();
 							$body = $this->loginView->doLoginPage();
 						}
-				} else {
+				} 
+				else {
 					$body = $this->loginView->doLoginPage();
 					$messages = "Felaktig information i cookie";
 					$status = "<h2>Ej inloggad</h2>";
@@ -62,6 +63,7 @@ class LoginController {
 					$body = $this->loginView->loggedInPage();
 					if ($this->loginView->triedToLogout()) {
 					$messages = $this->loginModel->doLogout($this->loginView->getClientIdentifier());
+					}
 				}
 				else{
 					$status = "<h2>Ej inloggad</h2>";
