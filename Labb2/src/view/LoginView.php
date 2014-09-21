@@ -63,9 +63,8 @@ class LoginView{
 		$date = date('d F');
 		$year = date('Y');
 		$day = ucfirst(strftime("%A"));
-		//$day = str_replace('Ã¶', 'ö', $day);
 		$time = date('H:i:s');
-		return $day . ', den ' . $date . ' år ' . $year . '. Klockan är [' . $time . ']';
+		return utf8_encode($day) . ', den ' . $date . ' år ' . $year . '. Klockan är [' . $time . ']';
 	}
 
 	//Funktion för att hämta angivet användarnamn
