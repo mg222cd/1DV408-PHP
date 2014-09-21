@@ -19,10 +19,10 @@ class LoginView{
 		<form action='' method='post'>
 		<fieldset>
 		<legend>Login - skriv in användarnamn och lösenord</legend>
-		Namn:<input type='text' name='name' value='$name' />
-		Lösenord:<input type='password' name='password' />
-		Håll mig inloggad<input type='checkbox' name='rememberMeBox' />
-		<input type='submit' name='loginButton' value='Logga in' />
+		Namn:<input type='text' name='name' value='$name'>
+		Lösenord:<input type='password' name='password'>
+		Håll mig inloggad<input type='checkbox' name='rememberMeBox'>
+		<input type='submit' name='loginButton' value='Logga in'>
 		</fieldset>
 		</form>";
 	}
@@ -42,7 +42,7 @@ class LoginView{
 		return
 		"<form action='' method='post'>
 		<legend></legend>
-		<input type='submit' name='logoutButton' value='Logga ut' />	
+		<input type='submit' name='logoutButton' value='Logga ut'>	
 		</form>
 		";
 	}
@@ -59,11 +59,11 @@ class LoginView{
 
 	//Funktion som returnerar aktuellt datum och tid
 	public function getDateAndTime(){
-		setlocale( 'sv_SE.UTF-8', 'Swedish');
+		setlocale (LC_ALL, "sv_SE");
 		$date = date('d F');
 		$year = date('Y');
 		$day = ucfirst(strftime("%A"));
-		$day = utf8_encode($day);
+		//$day = str_replace('Ã¶', 'ö', $day);
 		$time = date('H:i:s');
 		return $day . ', den ' . $date . ' år ' . $year . '. Klockan är [' . $time . ']';
 	}

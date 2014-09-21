@@ -10,11 +10,11 @@ class HTMLPage {
 			throw new \Exception("HTMLView::echoHTML does not allow body to be NULL");
 		}
 		return
-			"<DOCTYPE html>
+			"<!DOCTYPE html>
 			<html>
 				<head>
 					<title> " . $title . " </title>
-					<meta http-equiv='content-type' content='text/html'; charset='utf8'>
+					<meta http-equiv='content-type' content='text/html' charset=utf-8>
 				</head>
 				<body>
 					" . $body . "
