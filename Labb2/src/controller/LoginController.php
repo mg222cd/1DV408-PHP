@@ -26,7 +26,7 @@ class LoginController {
 
 			//hantering loginscenarion
 			if ($this->loginView->triedToLogout()) {
-					$messages = $this->loginModel->doLogout();
+					$messages = $this->loginModel->doLogout($this->loginView->getClientIdentifier());
 			}
 			//scenario - användaren är redan inloggad
 			//...via cookies
@@ -50,7 +50,7 @@ class LoginController {
 					$messages = "Felaktig information i cookie";
 					$status = "<h2>Ej inloggad</h2>";
 					$this->loginCookieView->removeCookie();
-					$this->loginModel->doLogout();
+					$this->loginModel->doLogout($this->loginView->getClientIdentifier());
 				}
 			}
 			//...via sessionen
@@ -59,8 +59,7 @@ class LoginController {
 				$status = "<h2>" . $name . " är inloggad</h2>";
 				$body = $this->loginView->loggedInPage();
 				if ($this->loginView->triedToLogout()) {
-					$messages = $this->loginModel->doLogout();
-					var_dump($_SESSION);
+					$messages = $this->loginModel->doLogout($this->loginView->getClientIdentifier());
 				}
 			}
 			//scenario - användaren är inte inloggad
@@ -117,7 +116,7 @@ class LoginController {
 				}
 				//kontroll om användaren tryckt på logout
 				if ($this->loginView->triedToLogout() == TRUE) {
-					$messages = $this->loginModel->doLogout();
+					$messages = $this->loginModel->doLogout($this->loginView->getClientIdentifier());
 					$this->loginModel->removeClientIdentifier($this->loginCookieView->getCookieName());
 					$this->loginView->removeCookie($this->loginView->getName(), $this->loginView->getPassword());
 					$body = $this->loginView->doLoginPage();

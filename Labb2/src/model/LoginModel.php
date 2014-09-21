@@ -105,7 +105,8 @@ class LoginModel{
 	}
 
 	//Funktion för utloggning
-	public function doLogout(){
+	public function doLogout($sessionIdentifier){
+		$this->removeClientIdentifier($sessionIdentifier);
 		unset($_SESSION['LoggedIn']);
 		unset($_SESSION['name']);
 		if (session_status () != PHP_SESSION_NONE) {
