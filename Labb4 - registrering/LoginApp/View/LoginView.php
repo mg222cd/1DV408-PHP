@@ -4,11 +4,13 @@ class LoginView{
     private $username;
     private $password;
     private $message;
+    private $register;
 
     public function ViewLogin(){
         $ret = "<h2>Laborationskod för mg22cd</h2>
         <h3>Ej inloggad</h3>
         <p>$this->message</p>
+        <div id='link'><a href='#'>Registrera ny användare</a></div>
         <form method='post' action='?LoggedIn'>
             Användarnamn: <input type='text' name='username' value='$this->username'>
             Lösenord: <input type='password' name='password'>
