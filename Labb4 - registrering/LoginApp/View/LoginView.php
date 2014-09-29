@@ -10,7 +10,7 @@ class LoginView{
         $ret = "<h2>Laborationskod för mg222cd</h2>
         <h3>Ej inloggad</h3>
         <p>$this->message</p>
-        <div id='link'><a href='?register'>Registrera ny användare</a></div>
+        <div id='link'><a href='?Register'>Registrera ny användare</a></div>
         <form method='post' action='?LoggedIn'>
             Användarnamn: <input type='text' name='username' value='$this->username'>
             Lösenord: <input type='password' name='password'>
@@ -40,7 +40,7 @@ class LoginView{
     }
     
     public function clickedRegister(){
-        if (isset($_GET['register'])) {
+        if (isset($_GET['Register'])) {
             return TRUE;
         } else {
             return FALSE;

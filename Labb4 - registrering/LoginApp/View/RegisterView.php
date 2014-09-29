@@ -12,7 +12,7 @@ class registerView{
 		<div id='link'><a href='./'>Tillbaka</a></div>
         <h3>Ej inloggad, Registrerar användare</h3>
         <p>$this->message</p>
-        <form method='post' action='?RegisterForm'>
+        <form method='post' action='?Register'>
             <p>Namn: <input type='text' name='username' value='$this->username'></p>
             <p>Lösenord: <input type='password' name='password'></p>
             <p>Repetera Lösenord: <input type='password' name='passwordRepeat'></p>
