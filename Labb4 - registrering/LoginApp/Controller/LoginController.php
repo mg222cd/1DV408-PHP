@@ -4,6 +4,7 @@ require_once('./View/LoginView.php');
 require_once('./Model/UserModel.php');
 require_once('./View/LoggedinView.php');
 require_once('./View/CookieView.php');
+require_once('./View/RegisterView.php');
 require_once('./Helpers/ServiceHelper.php');
 
 class LoginController{
@@ -12,6 +13,7 @@ class LoginController{
     private $loggedInView;
     private $cookieView;
     private $serviceHelper;
+    private $registerView;
 
     public function __construct(){
         $this->loginView = new LoginView();
@@ -19,15 +21,11 @@ class LoginController{
         $this->loggedInView = new LoggedInView();
         $this->cookieView = new CookieStorage();
         $this->serviceHelper = new ServiceHelper();
+        $this->registerView = new RegisterView();
     }
 
     public function doControl(){
         $userAgent = $this->serviceHelper->getUserAgent();
-
-        /*Kontrollera om användaren tryckt på Registrera*/
-        if ($this->loginView->getAction()) {
-            echo "rätt i controllern";
-        }
 
         /*När användaren trycker på logga in knappen så hämtas information ut om vad användaren skrev in för lösenord och
         användarnamn och skickar den vidare för att kontrollera om dem är korrekta och i sådana fall loggas man in annars
@@ -101,6 +99,24 @@ class LoginController{
         }
         else{
             //Returnerar den icke inloggade vyn.
+
+            //Kontrollera om användaren tryckt på Registrera, såfall visas formulär för detta
+            if ($this->loginView->getAction()) {
+                return $this->registerView->registerForm();
+                //kontrollera giltig längd på användarnamn och lösenord.
+                if ($this->loginModel->validateUsername($this->registerView->getUsername()) == TRUE 
+                    && $this->loginModel->validatePassword($this->registerView->getPassword()) == TRUE) {
+                    echo "Allt är rätt ifyllt, gå vidare och visa rätt vyer";
+                }
+                else{
+                    if ($this->loginModel->validateUsername == FALSE) {
+                        echo "fel på användarnmanet";
+                    }
+                    if ($this->loginModel->validatePassword == FALSE) {
+                        echo "fel på användarnmanet";
+                    }
+                }
+            }
             return $loginView;
         }
     }

@@ -7,6 +7,10 @@ class UserModel{
     //Eftersom det bara finns 1 användare så har jag en sträng som jag placerar i kakan som jag jämför med men
     //den ändras inte utan den har ett satt värde.
     private $randomString = "dsdididjsadladacm";
+    //konstanter som håller reda på min.längd för username och password
+    const $minLengthUsername = 3;
+    const $minLengthPassword = 6;
+
 
     /**
      * @param $username
@@ -70,4 +74,6 @@ class UserModel{
     public function saveCookieTime($time){
         file_put_contents("exist.txt", $time);
     }
+
+
 }

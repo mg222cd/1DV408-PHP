@@ -7,7 +7,7 @@ class LoginView{
     private $register;
 
     public function ViewLogin(){
-        $ret = "<h2>Laborationskod för mg22cd</h2>
+        $ret = "<h2>Laborationskod för mg222cd</h2>
         <h3>Ej inloggad</h3>
         <p>$this->message</p>
         <div id='link'><a href='?register'>Registrera ny användare</a></div>
@@ -32,18 +32,18 @@ class LoginView{
 
     public function getSubmit(){
         if(isset($_POST['submit'])){
-            return true;
+            return TRUE;
         }
         else{
-            return false;
+            return FALSE;
         }
     }
     
     public function getAction(){
         if (isset($_GET['register'])) {
-            echo "funkar";
+            return TRUE;
         } else {
-            echo "inte tryckt på knappen";
+            return FALSE;
         }
     }
 
