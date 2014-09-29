@@ -21,6 +21,20 @@ class registerView{
         return $ret;
 	}
 
+	public function confirmedRegister(){
+		echo "inne i funktionen!";
+		/*
+		if (isset($_POST['sendButton'])) {
+			echo "tryckt på knappen!";
+			return TRUE;
+		} 
+		else {
+			echo "kommer in i fel loop :(";
+			return FALSE;
+		}*/
+		
+	}
+
 	public function getUsername(){
 		if (isset($_POST['username'])) {
 			$this->username = $_POST['username'];
@@ -41,6 +55,6 @@ class registerView{
 		}
 	}
 
-	
+
 
 }

@@ -98,23 +98,32 @@ class LoginController{
             return $loggedInView;
         }
         else{
-            //Returnerar den icke inloggade vyn.
-
-            //Kontrollera om användaren tryckt på Registrera, såfall visas formulär för detta
-            if ($this->loginView->getAction()) {
+            /*Returnerar den icke inloggade vyn.
+            kontrollerar även om användaren tryckt på Registrera, såfall visas formulär för detta*/
+            if ($this->loginView->clickedRegister()) {
                 return $this->registerView->registerForm();
-                //kontrollera giltig längd på användarnamn och lösenord.
-                if ($this->loginModel->validateUsername($this->registerView->getUsername()) == TRUE 
-                    && $this->loginModel->validatePassword($this->registerView->getPassword()) == TRUE) {
-                    echo "Allt är rätt ifyllt, gå vidare och visa rätt vyer";
+                //Om anv tryck på Skicka - kontrollera giltig längd på användarnamn och lösenord.
+                $this->registerView->confirmedRegister();
+                
+                if ($this->registerView->confirmedRegister()) {
+                    echo "tryckt på knappen!";
+                    /*
+                    if ($this->loginModel->validateUsername($this->registerView->getUsername()) == TRUE 
+                        && $this->loginModel->validatePassword($this->registerView->getPassword()) == TRUE) {
+                        echo "Allt är rätt ifyllt, gå vidare och visa rätt vyer";
+                    }
+                    else{
+                        if ($this->loginModel->validateUsername == FALSE) {
+                            echo "fel på användarnmanet";
+                        }
+                        if ($this->loginModel->validatePassword == FALSE) {
+                            echo "fel på användarnmanet";
+                        }
+                    }
+                    */
                 }
                 else{
-                    if ($this->loginModel->validateUsername == FALSE) {
-                        echo "fel på användarnmanet";
-                    }
-                    if ($this->loginModel->validatePassword == FALSE) {
-                        echo "fel på användarnmanet";
-                    }
+                    echo "inte tryckt på knappen";
                 }
             }
             return $loginView;

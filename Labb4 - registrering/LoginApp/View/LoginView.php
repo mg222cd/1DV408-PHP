@@ -39,7 +39,7 @@ class LoginView{
         }
     }
     
-    public function getAction(){
+    public function clickedRegister(){
         if (isset($_GET['register'])) {
             return TRUE;
         } else {

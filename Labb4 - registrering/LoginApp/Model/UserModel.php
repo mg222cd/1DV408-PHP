@@ -8,8 +8,29 @@ class UserModel{
     //den ändras inte utan den har ett satt värde.
     private $randomString = "dsdididjsadladacm";
     //konstanter som håller reda på min.längd för username och password
-    const $minLengthUsername = 3;
-    const $minLengthPassword = 6;
+    const MIN_VALUE_USERNAME = 3;
+    const MIN_VALUE_PASSWORD = 6;
+
+    //Kontrollerar längden på Username
+    public function validateUsername($username){
+        if (strlen($username) >= self::MIN_VALUE_USERNAME) {
+            return TRUE;
+        } 
+        else {
+            return FALSE;
+        }   
+    }
+
+    //Kontrollerar längden på Password
+    public function validatePassword($password){
+        if (strlen($password) >= self::MIN_VALUE_PASSWORD) {
+            return TRUE;
+        } 
+        else {
+            return FALSE;
+        }
+        
+    }
 
 
     /**
