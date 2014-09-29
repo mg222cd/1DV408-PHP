@@ -98,34 +98,26 @@ class LoginController{
             return $loggedInView;
         }
         else{
-            /*Returnerar den icke inloggade vyn.
-            kontrollerar även om användaren tryckt på Registrera, såfall visas formulär för detta*/
+            //Om användaren tryckt på Registrera
             if ($this->loginView->clickedRegister()) {
                 return $this->registerView->registerForm();
-                //Om anv tryck på Skicka - kontrollera giltig längd på användarnamn och lösenord.
-                $this->registerView->confirmedRegister();
-                
-                if ($this->registerView->confirmedRegister()) {
-                    echo "tryckt på knappen!";
-                    /*
-                    if ($this->loginModel->validateUsername($this->registerView->getUsername()) == TRUE 
-                        && $this->loginModel->validatePassword($this->registerView->getPassword()) == TRUE) {
+            }
+            //Om användaren försökt skicka registreringsuppgifter
+            if ($this->registerView->confirmedRegister() == TRUE) {
+                    echo "tryckt på knappen";
+                    if ($this->userModel->validateUsername($this->registerView->getUsername()) == TRUE 
+                        && $this->userModel->validatePassword($this->registerView->getPassword()) == TRUE) {
                         echo "Allt är rätt ifyllt, gå vidare och visa rätt vyer";
                     }
                     else{
-                        if ($this->loginModel->validateUsername == FALSE) {
+                        if ($this->userModel->validateUsername() == FALSE) {
                             echo "fel på användarnmanet";
                         }
-                        if ($this->loginModel->validatePassword == FALSE) {
+                        if ($this->userModel->validatePassword() == FALSE) {
                             echo "fel på användarnmanet";
                         }
                     }
-                    */
                 }
-                else{
-                    echo "inte tryckt på knappen";
-                }
-            }
             return $loginView;
         }
     }

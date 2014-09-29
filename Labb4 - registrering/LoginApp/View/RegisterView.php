@@ -22,16 +22,12 @@ class registerView{
 	}
 
 	public function confirmedRegister(){
-		echo "inne i funktionen!";
-		/*
 		if (isset($_POST['sendButton'])) {
-			echo "tryckt på knappen!";
 			return TRUE;
 		} 
 		else {
-			echo "kommer in i fel loop :(";
 			return FALSE;
-		}*/
+		}
 		
 	}
 
