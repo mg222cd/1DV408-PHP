@@ -10,7 +10,7 @@ class LoginView{
         $ret = "<h2>Laborationskod för mg22cd</h2>
         <h3>Ej inloggad</h3>
         <p>$this->message</p>
-        <div id='link'><a href='#'>Registrera ny användare</a></div>
+        <div id='link'><a href='?register'>Registrera ny användare</a></div>
         <form method='post' action='?LoggedIn'>
             Användarnamn: <input type='text' name='username' value='$this->username'>
             Lösenord: <input type='password' name='password'>
@@ -36,6 +36,14 @@ class LoginView{
         }
         else{
             return false;
+        }
+    }
+    
+    public function getAction(){
+        if (isset($_GET['register'])) {
+            echo "funkar";
+        } else {
+            echo "inte tryckt på knappen";
         }
     }
 

@@ -24,6 +24,11 @@ class LoginController{
     public function doControl(){
         $userAgent = $this->serviceHelper->getUserAgent();
 
+        /*Kontrollera om användaren tryckt på Registrera*/
+        if ($this->loginView->getAction()) {
+            echo "rätt i controllern";
+        }
+
         /*När användaren trycker på logga in knappen så hämtas information ut om vad användaren skrev in för lösenord och
         användarnamn och skickar den vidare för att kontrollera om dem är korrekta och i sådana fall loggas man in annars
         visas ett felmeddelande.
