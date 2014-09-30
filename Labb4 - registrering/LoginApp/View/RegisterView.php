@@ -30,14 +30,17 @@ class registerView{
 		$this->message .= "<p>Lösenordet har för få tecken. Minst 6 tecken.</p>";
 	}
 
+	public function setPasswordMismatch(){
+		$this->message = "<p>Lösenorden matchar inte.</p>";
+	}
+
 	public function confirmedRegister(){
 		if (isset($_POST['sendButton'])) {
 			return TRUE;
 		} 
 		else {
 			return FALSE;
-		}
-		
+		}	
 	}
 
 	public function getUsername(){
@@ -61,9 +64,9 @@ class registerView{
 	}
 
 	public function getPasswordRepeat(){
-		if (isset($_POST['password'])) {
+		if (isset($_POST['passwordRepeat'])) {
 			$this->username = $_POST['passwordRepeat'];
-			return $this->password;
+			return $this->passwordRepeat;
 		} 
 		else {
 			return "";

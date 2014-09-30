@@ -106,11 +106,12 @@ class LoginController{
                         //kontrollera att lösenordsfälten matchar
                         $password = $this->registerView->getPassword();
                         $passwordRepeat = $this->registerView->getPasswordRepeat();
-                        if (condition) {
-                            # code...
+                        if ($password != $passwordRepeat) {
+                            $this->registerView->setPasswordMismatch();
                         } 
                         else {
-                            # code...
+                            //Kontrollera så att användarnamnet är ledigt
+                            
                         }
                         
                     }
