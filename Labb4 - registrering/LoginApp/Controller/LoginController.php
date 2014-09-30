@@ -98,26 +98,35 @@ class LoginController{
             return $loggedInView;
         }
         else{
+            //Om användaren försökt skicka registreringsuppgifter
+            if ($this->registerView->confirmedRegister() == TRUE) {
+                    $checkUsername = $this->userModel->validateUsername($this->registerView->getUsername());
+                    $checkPassword = $this->userModel->validatePassword($this->registerView->getPassword());
+                    if ($checkUsername && $checkPassword == TRUE) {
+                        //kontrollera att lösenordsfälten matchar
+                        $password = $this->registerView->getPassword();
+                        $passwordRepeat = $this->registerView->getPasswordRepeat();
+                        if (condition) {
+                            # code...
+                        } 
+                        else {
+                            # code...
+                        }
+                        
+                    }
+                    else{
+                        if (!$checkUsername) {
+                            $this->registerView->setWrongUsername();
+                        }
+                        if (!$checkPassword) {
+                            $this->registerView->setWrongPassword();
+                        }
+                    }
+            }
             //Om användaren tryckt på Registrera
             if ($this->loginView->clickedRegister()) {
                 return $this->registerView->registerForm();
             }
-            //Om användaren försökt skicka registreringsuppgifter
-            if ($this->registerView->confirmedRegister() == TRUE) {
-                    echo "tryckt på knappen";
-                    if ($this->userModel->validateUsername($this->registerView->getUsername()) == TRUE 
-                        && $this->userModel->validatePassword($this->registerView->getPassword()) == TRUE) {
-                        echo "Allt är rätt ifyllt, gå vidare och visa rätt vyer";
-                    }
-                    else{
-                        if ($this->userModel->validateUsername() == FALSE) {
-                            echo "fel på användarnmanet";
-                        }
-                        if ($this->userModel->validatePassword() == FALSE) {
-                            echo "fel på användarnmanet";
-                        }
-                    }
-                }
             return $loginView;
         }
     }
