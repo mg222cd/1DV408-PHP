@@ -11,6 +11,15 @@ class UserModel{
     const MIN_VALUE_USERNAME = 3;
     const MIN_VALUE_PASSWORD = 6;
 
+    //Funktioner för att hämta konstanter
+    public function getMinLengthUsername(){
+        return self::MIN_VALUE_USERNAME;
+    }
+
+    public function getMinLengthPassword(){
+        return self::MIN_VALUE_PASSWORD;
+    }
+
     //Kontrollerar längden på Username
     public function validateUsername($username){
         if (strlen($username) >= self::MIN_VALUE_USERNAME) {

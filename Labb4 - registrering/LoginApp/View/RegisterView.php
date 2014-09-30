@@ -22,12 +22,12 @@ class registerView{
         return $ret;
 	}
 
-	public function setWrongUsername(){
-		$this->message = "<p>Användarnmanet har för få tecken. Minst 3 tecken.</p>";
+	public function setWrongUsername($number){
+		$this->message = "<p>Användarnmanet har för få tecken. Minst " . $number . " tecken.</p>";
 	}
 
-	public function setWrongPassword(){
-		$this->message .= "<p>Lösenordet har för få tecken. Minst 6 tecken.</p>";
+	public function setWrongPassword($number){
+		$this->message .= "<p>Lösenordet har för få tecken. Minst " . $number . " tecken.</p>";
 	}
 
 	public function setPasswordMismatch(){

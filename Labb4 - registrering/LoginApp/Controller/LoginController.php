@@ -111,16 +111,16 @@ class LoginController{
                         } 
                         else {
                             //Kontrollera så att användarnamnet är ledigt
-                            
+
                         }
                         
                     }
                     else{
                         if (!$checkUsername) {
-                            $this->registerView->setWrongUsername();
+                            $this->registerView->setWrongUsername($this->userModel->getMinLengthUsername());
                         }
                         if (!$checkPassword) {
-                            $this->registerView->setWrongPassword();
+                            $this->registerView->setWrongPassword($this->userModel->getMinLengthPassword());
                         }
                     }
             }
