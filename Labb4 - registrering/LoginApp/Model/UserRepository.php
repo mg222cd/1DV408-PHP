@@ -3,6 +3,7 @@ require_once ('./model/DatabaseConnection.php');
 require_once('./model/User.php');
 
 class UserRepository extends DatabaseConnection{
+	private $userList = array();
 	private static $userId = 'userId';
 	private static $username = 'username';
 	private static $password = 'password';
@@ -50,10 +51,9 @@ class UserRepository extends DatabaseConnection{
 				$username = $user['username'];
 				$password = $user['password'];
 
-				$users[] = new User($userId, $username, $password);
-				var_dump($users);
+				$this->userList[] = new User($userId, $username, $password);
 			}
-			$userList = array();
+			var_dump($this->userList);
 			
 		}
 		catch(\PDOException $e){
