@@ -1,7 +1,6 @@
 <?php
-require_once('./Model/UserList.php');
 
-class User{
+class UserNew{
 	private $userId;
 	private $username;
 	private $password;

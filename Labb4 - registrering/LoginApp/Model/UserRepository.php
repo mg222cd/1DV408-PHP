@@ -1,6 +1,5 @@
 <?php
-
-require_once ('./model/User.php');
+require_once('./model/User.php');
 require_once ('./model/UserList.php');
 require_once ('./model/DatabaseConnection.php');
 
@@ -11,7 +10,7 @@ class UserRepository extends DatabaseConnection{
 	private static $password = 'password';
 
 	public function __construct(){
-		$this->dbTable = 'login';
+		$this->dbTable = 'member';
 		$this->users = new UserList();
 	}
 
@@ -47,6 +46,7 @@ class UserRepository extends DatabaseConnection{
 		try{
 			$db = $this->connection();
 			$sql = "SELECT * FROM $this->dbTable";
+			$query = $db->prepare($sql);
 			$query->execute();
 
 			foreach ($query->fetchAll() as $user) {

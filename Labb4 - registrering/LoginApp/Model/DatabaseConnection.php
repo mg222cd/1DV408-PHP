@@ -3,7 +3,7 @@
 abstract class DatabaseConnection{
 	protected $dbUsername = 'root';
 	protected $dbPassword = 'root';
-	protected $dbConnstring = 'mysql:host=127.0.0.1;dbname=login;charset=utf8';
+	protected $dbConnstring = 'mysql:host=localhost;dbname=login;charset=utf8';
 	protected $dbConnection;
 	protected $dbTable;
 
