@@ -7,8 +7,6 @@ require_once('./View/CookieView.php');
 require_once('./View/RegisterView.php');
 require_once('./Helpers/ServiceHelper.php');
 require_once('./Model/UserRepository.php');
-require_once('./Model/UserList.php');
-require_once('./Model/User.php');
 
 class LoginController{
     private $loginView;
@@ -18,8 +16,6 @@ class LoginController{
     private $serviceHelper;
     private $registerView;
     private $userRepository;
-    private $userList;
-    private $user;
 
     public function __construct(){
         $this->loginView = new LoginView();
@@ -28,9 +24,7 @@ class LoginController{
         $this->cookieView = new CookieStorage();
         $this->serviceHelper = new ServiceHelper();
         $this->registerView = new RegisterView();
-        $this->userList = new UserList();
-        $this->user = new User();
-        $this->userRepository = new UserRepository($this->userList, $this->user);
+        $this->userRepository = new UserRepository();
     }
 
     public function doControl(){
