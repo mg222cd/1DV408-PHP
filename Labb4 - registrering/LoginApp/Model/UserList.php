@@ -1,4 +1,5 @@
 <?php
+require_once('./Model/User.php');
 
 class UserList{
 	private $userList;
