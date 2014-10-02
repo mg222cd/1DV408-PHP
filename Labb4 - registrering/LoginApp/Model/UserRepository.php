@@ -1,17 +1,18 @@
 <?php
-require_once('./model/User.php');
 require_once ('./model/UserList.php');
 require_once ('./model/DatabaseConnection.php');
 
 class UserRepository extends DatabaseConnection{
 	private $users;
+	private $user;
 	private static $userId = 'userId';
 	private static $username = 'username';
 	private static $password = 'password';
 
-	public function __construct(){
+	public function __construct(UserList $userList, User $user){
 		$this->dbTable = 'member';
-		$this->users = new UserList();
+		$this->users = $userList;
+		$this->user = $user;
 	}
 
 	//
