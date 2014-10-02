@@ -69,7 +69,7 @@ class RegisterView{
 
 	public function getPasswordRepeat(){
 		if (isset($_POST['passwordRepeat'])) {
-			$this->username = $_POST['passwordRepeat'];
+			$this->passwordRepeat = $_POST['passwordRepeat'];
 			return $this->passwordRepeat;
 		} 
 		else {

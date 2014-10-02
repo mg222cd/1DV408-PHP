@@ -43,7 +43,12 @@ class UserModel{
 
     //Kontrollerar om namnet redan finns
     public function nameAlreadyExists($nameToCheck){
-        return FALSE;
+        $userRepo = new UserRepository();
+        $existingUsers = $userRepo->getAll();
+        foreach ($existingUsers as $user) {
+            var_dump($user);
+            die();
+        }
     }
 
 
