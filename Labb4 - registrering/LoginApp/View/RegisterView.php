@@ -34,7 +34,7 @@ class RegisterView{
 		$this->message = "<p>Lösenorden matchar inte.</p>";
 	}
 
-	public function setUsernameBusy(){
+	public function setUsernameAlreadyExists(){
 		$this->message = "<p>Användarnamnet är redan upptaget.</p>";
 	}
 
@@ -58,7 +58,7 @@ class RegisterView{
 	}
 
 	public function getPassword(){
-		if (isset($_POST['passwordRepeat'])) {
+		if (isset($_POST['password'])) {
 			$this->password = $_POST['password'];
 			return $this->password;
 		} 

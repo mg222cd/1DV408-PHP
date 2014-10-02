@@ -109,6 +109,7 @@ class LoginController{
                         //kontrollera att lösenordsfälten matchar
                         $password = $this->registerView->getPassword();
                         $passwordRepeat = $this->registerView->getPasswordRepeat();
+                        var_dump($password, $passwordRepeat);
                         if ($password != $passwordRepeat) {
                             $this->registerView->setPasswordMismatch();
                         } 
