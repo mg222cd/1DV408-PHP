@@ -114,7 +114,7 @@ class LoginController{
                         } 
                         else {
                             //Kontrollera så att användarnamnet är ledigt
-                            if ($this->userModel->nameAlreadyExists == TRUE) {
+                            if ($this->userModel->nameAlreadyExists($this->registerView->getUsername()) == TRUE) {
                                 $this->registerView->setUsernameAlreadyExists();
                             } 
                             else {

@@ -22,9 +22,4 @@ class User{
 	public function getPassword(){
 		return $this->password;
 	}
-
-	//Funktion för att kontrollera att inskrivet namn ej redan finns
-	public function nameControl($nameToControl){
-		
-	}
 }

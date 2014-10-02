@@ -1,4 +1,5 @@
 <?php
+require_once('./Model/UserRepository.php');
 
 class UserModel{
     private $username = 'Admin';
@@ -37,8 +38,12 @@ class UserModel{
         } 
         else {
             return FALSE;
-        }
-        
+        }  
+    }
+
+    //Kontrollerar om namnet redan finns
+    public function nameAlreadyExists($nameToCheck){
+        return FALSE;
     }
 
 
