@@ -34,6 +34,10 @@ class RegisterView{
 		$this->message = "<p>Lösenorden matchar inte.</p>";
 	}
 
+	public function setUsernameBusy(){
+		$this->message = "<p>Användarnamnet är redan upptaget.</p>";
+	}
+
 	public function confirmedRegister(){
 		if (isset($_POST['sendButton'])) {
 			return TRUE;

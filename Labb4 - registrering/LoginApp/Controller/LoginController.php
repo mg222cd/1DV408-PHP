@@ -114,7 +114,13 @@ class LoginController{
                         } 
                         else {
                             //Kontrollera så att användarnamnet är ledigt
-
+                            if ($this->userModel->nameAlreadyExists == TRUE) {
+                                $this->registerView->setUsernameAlreadyExists();
+                            } 
+                            else {
+                                echo "Username ledigt, hurra hurra, fortsätt med koden och lägg till användaren.";
+                            }
+                            
                         }
                         
                     }
@@ -131,8 +137,7 @@ class LoginController{
             if ($this->loginView->clickedRegister()) {
                 return $this->registerView->registerForm();
             }
-            //return $loginView;
-            return $this->userRepository->getAll();
+            return $loginView;
         }
     }
 }

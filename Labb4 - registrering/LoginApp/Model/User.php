@@ -11,7 +11,20 @@ class User{
 		$this->password = $password;
 	}
 
+	public function getUserId(){
+		return $this->userId;
+	}
+
 	public function getName(){
 		return $this->username;
+	}
+
+	public function getPassword(){
+		return $this->password;
+	}
+
+	//Funktion för att kontrollera att inskrivet namn ej redan finns
+	public function nameControl($nameToControl){
+		
 	}
 }

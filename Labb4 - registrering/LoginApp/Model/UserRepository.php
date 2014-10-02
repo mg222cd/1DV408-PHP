@@ -53,7 +53,7 @@ class UserRepository extends DatabaseConnection{
 
 				$this->userList[] = new User($userId, $username, $password);
 			}
-			var_dump($this->userList);
+			return $this->userList;
 			
 		}
 		catch(\PDOException $e){
