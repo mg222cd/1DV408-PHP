@@ -1,28 +1,9 @@
 <?php
 
-/*
-abstract class Repository {
-	protected $dbUsername = 'appUser';
-	protected $dbPassword = '1br@Lösen=rd?';
-	protected $dbConnstring = 'mysql:host=127.0.0.1;dbname=portfoliodb';
-	protected $dbConnection;
-	protected $dbTable;
-	
-	protected function connection() {
-		if ($this->dbConnection == NULL)
-			$this->dbConnection = new \PDO($this->dbConnstring, $this->dbUsername, $this->dbPassword);
-		
-		$this->dbConnection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-		
-		return $this->dbConnection;
-	}
-}
-*/
-
-abstract class Repository{
+abstract class DatabaseConnection{
 	protected $dbUsername = 'root';
 	protected $dbPassword = 'root';
-	protected $dbConnstring = 'mysql:host=127.0.0.1;dbname=login';
+	protected $dbConnstring = 'mysql:host=127.0.0.1;dbname=login;charset=utf8';
 	protected $dbConnection;
 	protected $dbTable;
 
@@ -35,5 +16,4 @@ abstract class Repository{
 
 		return $this->dbConnection;
 	}
-
 }

@@ -1,5 +1,9 @@
 <?php
 
+require_once ('./model/User.php');
+require_once ('./model/UserList.php');
+require_once ('./model/DatabaseConnection.php');
+
 class UserRepository extends DatabaseConnection{
 	private $users;
 	private static $userId = 'userId';

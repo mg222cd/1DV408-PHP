@@ -1,6 +1,6 @@
 <?php
 
-class registerView{
+class RegisterView{
 	private $message;
 	private $username;
 	private $password;
