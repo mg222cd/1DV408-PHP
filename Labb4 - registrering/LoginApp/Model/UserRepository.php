@@ -1,5 +1,4 @@
 <?php
-require_once ('./model/UserList.php');
 require_once ('./model/DatabaseConnection.php');
 
 class UserRepository extends DatabaseConnection{
@@ -56,9 +55,10 @@ class UserRepository extends DatabaseConnection{
 				$password = $user['password'];
 
 				$user = new User($userId, $username, $password);
-				$this->users->add($user);
+				//$this->users->add($user);
 			}
-			return $this->users;
+			//return $this->users;
+			var_dump($this->users);
 		}
 		catch(\PDOException $e){
 			echo "<pre>";

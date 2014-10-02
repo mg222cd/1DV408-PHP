@@ -1,11 +1,11 @@
 <?php
 
-class UserNew{
+class User{
 	private $userId;
 	private $username;
 	private $password;
 
-	public function __construct($userId, $username, $password){
+	public function __construct($userId = NULL, $username = NULL, $password = NULL){
 		$this->userId = $userId;
 		$this->username = $username;
 		$this->password = $password;
