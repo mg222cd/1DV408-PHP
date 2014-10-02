@@ -62,4 +62,29 @@ class UserRepository extends DatabaseConnection{
 			die("Error while connection to database.");
 		}
 	}
+
+	public function add($username, $password){
+		try{
+			/*
+			$db = $this -> connection();
+
+			$sql = "INSERT INTO $this->dbTable (" . self::$key . ", " . self::$name . ") VALUES (?, ?)";
+			$params = array($participant -> getUnique(), $participant -> getName());
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+			foreach($participant->getProjects()->toArray() as $project) {
+				$sql = "INSERT INTO ".self::$projectTable." (" . self::$key . ", " . self::$name . ", participantUnique) VALUES (?, ?, ?)";
+				$query = $db->prepare($sql);
+				$query->execute(array($project->getUnique(), $project->getName(), $participant->getUnique()));
+			}
+			*/
+			$db = $this->connection();
+
+		}
+		catch(\PDOException $e){
+			die('An unknown error have occured');
+		}
+	}
 }

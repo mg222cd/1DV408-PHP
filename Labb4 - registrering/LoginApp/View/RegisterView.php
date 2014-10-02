@@ -38,6 +38,11 @@ class RegisterView{
 		$this->message = "<p>Användarnamnet är redan upptaget.</p>";
 	}
 
+	public function setInvalidUsername($strippedUsername){
+		$_POST['username'] = $strippedUsername;
+		$this->message = "<p>Användarnamnet innehåller ogiltiga tecken.</p>";
+	}
+
 	public function confirmedRegister(){
 		if (isset($_POST['sendButton'])) {
 			return TRUE;

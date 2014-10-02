@@ -31,6 +31,23 @@ class UserModel{
         }   
     }
 
+    //Funktion för att kryptera password
+    public function encryptPassword($password){
+        $encryptedPassword = password_hash($password, PASSWORD_DEFAULT);
+        return $encryptedPassword;
+    }
+
+    //Funktion för att filtrera bort ogiltiga tecken.
+    public function stripTags($username){
+        $strippedUsername = strip_tags($username);
+        if ($strippedUsername != $username) {
+            return $strippedUsername;
+        }
+        else{
+            return NULL;
+        }
+    }
+
     //Kontrollerar längden på Password
     public function validatePassword($password){
         if (strlen($password) >= self::MIN_VALUE_PASSWORD) {

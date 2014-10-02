@@ -118,7 +118,17 @@ class LoginController{
                                 $this->registerView->setUsernameAlreadyExists();
                             } 
                             else {
-                                echo "Username ledigt, hurra hurra, fortsätt med koden och lägg till användaren.";
+                                //Filtrera användarnamn
+                                $strippedUsername = $this->userModel->stripTags($this->registerView->getUsername());
+                                if ($strippedUsername != NULL) {
+                                    $this->registerView->setInvalidUsername($strippedUsername);
+                                } else {
+                                    echo "NAMNET OKEJ ... FORTSÄTT MED KODEN";
+                                    //Kryptera lösenord
+                                
+                                    //Till add-funktion
+                                }
+        
                             }
                             
                         }
