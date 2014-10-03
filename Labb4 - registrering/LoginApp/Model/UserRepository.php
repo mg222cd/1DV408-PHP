@@ -1,6 +1,6 @@
 <?php
-require_once ('./model/DatabaseConnection.php');
-require_once('./model/User.php');
+require_once ('./Model/DatabaseConnection.php');
+require_once('./Model/User.php');
 
 class UserRepository extends DatabaseConnection{
 	private $userList = array();
