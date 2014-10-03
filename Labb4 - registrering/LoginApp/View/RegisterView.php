@@ -17,7 +17,7 @@ class RegisterView{
             <p>Namn: <input type='text' name='username' value='$username'></p>
             <p>Lösenord: <input type='password' name='password'></p>
             <p>Repetera Lösenord: <input type='password' name='passwordRepeat'></p>
-            <input type='submit' value='Skicka' name='sendButton'>
+            <input type='submit' value='Registrera' name='sendButton'>
         </form>";
         return $ret;
 	}
