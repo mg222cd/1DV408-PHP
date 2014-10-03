@@ -60,17 +60,13 @@ class UserModel{
 
     //Kontrollerar om namnet redan finns
     public function nameAlreadyExists($nameToCheck){
-        $returnValue = FALSE;
         $userRepo = new UserRepository();
         $existingUsers = $userRepo->getAll();
-        var_dump($existingUsers);
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
-            var_dump($name);
             if ($name == $nameToCheck) {
-                $returnValue = TRUE;
+                return TRUE;
             }
-            return $returnValue;
         }
     }
 
@@ -89,13 +85,12 @@ class UserModel{
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
             $password = $existingUser->getPassword();
-            if ($name == $usernameToCheck && $password == $passwordToCheck) {
+            if ($name == $usernameToCheck && password_verify($passwordToCheck, $password)) {
                 $this->authenticatedUser = TRUE;
             }
         }
-        //$this->authenticatedUser = ($this->username === $username && $this->password === $password);
         if($this->authenticatedUser){
-            $_SESSION["ValidLogin"] = $this->username;
+            $_SESSION["ValidLogin"] = $usernameToCheck;
             $_SESSION["UserAgent"] = $userAgent;
         }
         return $this->authenticatedUser;

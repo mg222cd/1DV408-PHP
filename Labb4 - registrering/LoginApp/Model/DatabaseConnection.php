@@ -1,9 +1,9 @@
 <?php
 
 abstract class DatabaseConnection{
-	protected $dbUsername = 'root';
-	protected $dbPassword = 'root';
-	protected $dbConnstring = 'mysql:host=localhost;dbname=login;charset=utf8';
+	protected $dbUsername = '101368-fs50541';
+	protected $dbPassword = 'Katt1234%';
+	protected $dbConnstring = 'mysql:host=mysql01.citynetwork.se;dbname=login;charset=utf8';
 	protected $dbConnection;
 	protected $dbTable;
 
