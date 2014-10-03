@@ -38,8 +38,8 @@ class LoginController{
         if($this->loginView->getSubmit()){
             $this->loginView->getInformation();
             $username = $this->loginView->getUsername();
-            //$password = $this->loginView->getPassword();
-            $encryptedPassword = $this->userModel($this->loginView->getPassword());
+            $password = $this->loginView->getPassword();
+            $encryptedPassword = $this->userModel->encryptPassword($this->loginView->getPassword());
             $realAgent = $this->serviceHelper->getUserAgent();
             if(!$this->userModel->validateLogin($username, $encryptedPassword, $realAgent)){
                 $this->loginView->failedLogIn($username, $password);

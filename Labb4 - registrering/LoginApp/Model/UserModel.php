@@ -60,14 +60,17 @@ class UserModel{
 
     //Kontrollerar om namnet redan finns
     public function nameAlreadyExists($nameToCheck){
+        $returnValue = FALSE;
         $userRepo = new UserRepository();
         $existingUsers = $userRepo->getAll();
+        var_dump($existingUsers);
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
+            var_dump($name);
             if ($name == $nameToCheck) {
-                return TRUE;
+                $returnValue = TRUE;
             }
-            return FALSE;
+            return $returnValue;
         }
     }
 
@@ -82,16 +85,15 @@ class UserModel{
     public function validateLogin($usernameToCheck, $passwordToCheck, $userAgent){
         //Sätt authenticatedUser till true eller false beroende på om uppgifterna stämmer med dem i DB
         $userRepo = new UserRepository();
-        $existingUsers = userRepo->getAll();
+        $existingUsers = $userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
             $password = $existingUser->getPassword();
-            if ($name == $nameToCheck && $password == $passwordToCheck) {
-                # code...
+            if ($name == $usernameToCheck && $password == $passwordToCheck) {
+                $this->authenticatedUser = TRUE;
             }
         }
-
-        $this->authenticatedUser = ($this->username === $username && $this->password === $password);
+        //$this->authenticatedUser = ($this->username === $username && $this->password === $password);
         if($this->authenticatedUser){
             $_SESSION["ValidLogin"] = $this->username;
             $_SESSION["UserAgent"] = $userAgent;
