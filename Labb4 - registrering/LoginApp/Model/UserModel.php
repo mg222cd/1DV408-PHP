@@ -79,7 +79,18 @@ class UserModel{
      * @return bool
      * Tittar om användarnamn och lösenord från användaren stämmer överens.
      */
-    public function validateLogin($username, $password, $userAgent){
+    public function validateLogin($usernameToCheck, $passwordToCheck, $userAgent){
+        //Sätt authenticatedUser till true eller false beroende på om uppgifterna stämmer med dem i DB
+        $userRepo = new UserRepository();
+        $existingUsers = userRepo->getAll();
+        foreach ($existingUsers as $existingUser) {
+            $name = $existingUser->getName();
+            $password = $existingUser->getPassword();
+            if ($name == $nameToCheck && $password == $passwordToCheck) {
+                # code...
+            }
+        }
+
         $this->authenticatedUser = ($this->username === $username && $this->password === $password);
         if($this->authenticatedUser){
             $_SESSION["ValidLogin"] = $this->username;
