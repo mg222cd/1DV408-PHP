@@ -3,7 +3,7 @@
 abstract class DatabaseConnection{
 	protected $dbUsername = '101368-fs50541';
 	protected $dbPassword = 'Katt1234%';
-	protected $dbConnstring = 'mysql:host=mysql01.citynetwork.se;dbname=login;charset=utf8';
+	protected $dbConnstring = 'mysql:host=mysql01.citynetwork.se;dbname=101368-hqyoas945941;charset=utf8';
 	protected $dbConnection;
 	protected $dbTable;
 
