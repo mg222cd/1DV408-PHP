@@ -118,15 +118,17 @@ class LoginController{
                                 $this->registerView->setUsernameAlreadyExists();
                             } 
                             else {
-                                //Filtrera användarnamn
+                                //Ev. filtrera användarnamn från skadlig kod
                                 $strippedUsername = $this->userModel->stripTags($this->registerView->getUsername());
                                 if ($strippedUsername != NULL) {
                                     $this->registerView->setInvalidUsername($strippedUsername);
                                 } else {
-                                    echo "NAMNET OKEJ ... FORTSÄTT MED KODEN";
                                     //Kryptera lösenord
-                                
+                                    $encryptedPassword = $this->userModel->encryptPassword($this->registerView->getPassword());
                                     //Till add-funktion
+                                    if ($this->userRepository->add($this->registerView->getUsername(), $encryptedPassword) == TRUE) {
+                                        echo "det fungerar!!";
+                                    } 
                                 }
         
                             }
