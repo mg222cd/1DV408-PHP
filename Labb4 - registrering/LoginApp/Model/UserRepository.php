@@ -34,7 +34,7 @@ class UserRepository extends DatabaseConnection{
 
 			return NULL;
 		} catch (\PDOException $e) {
-			die('An unknown error have occured.');
+			throw new Exception('Fel uppstod i samband anslutning till databasen.');
 		}
 	}
 
