@@ -56,17 +56,14 @@ class UserRepository extends DatabaseConnection{
 			return $this->userList;	
 		}
 		catch(\PDOException $e){
-			echo "<pre>";
-			var_dump($e);
-			echo "</pre>";
-			die("Error while connection to database.");
+			throw new Exception('Fel uppstod i samband med hämtning av namn från databasen.');
 		}
 	}
 
 	public function add($username, $password){
 		try{
 			$db = $this->connection();
-			$sql = "INSERT INTO member (self::$username, self::$password) VALUES (?, ?)";
+			 $sql = "INSERT INTO member (".self::$username.",". self::$password.") VALUES (?, ?)";
 			$params = array($username, $password);
 
 			$query = $db->prepare($sql);
@@ -75,7 +72,7 @@ class UserRepository extends DatabaseConnection{
 			return TRUE;
 		}
 		catch(\PDOException $e){
-			die('An unknown error have occured');
+			throw new Exception('Fel uppstod då användare skulle tilläggas i databasen.');
 		}
 	}
 }

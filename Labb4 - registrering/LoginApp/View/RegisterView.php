@@ -43,6 +43,10 @@ class RegisterView{
 		$this->message = "<p>Användarnamnet innehåller ogiltiga tecken.</p>";
 	}
 
+	public function setSucceedAddingNewUser(){
+		$this->message = "<p>Registrering av ny användare lyckades.</p>";
+	}
+
 	public function confirmedRegister(){
 		if (isset($_POST['sendButton'])) {
 			return TRUE;

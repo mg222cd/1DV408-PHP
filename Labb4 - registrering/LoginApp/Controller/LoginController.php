@@ -118,23 +118,19 @@ class LoginController{
                                 $this->registerView->setUsernameAlreadyExists();
                             } 
                             else {
-                                //Ev. filtrera användarnamn från skadlig kod
+                                //Filtrera användarnamn från skadlig kod
                                 $strippedUsername = $this->userModel->stripTags($this->registerView->getUsername());
                                 if ($strippedUsername != NULL) {
                                     $this->registerView->setInvalidUsername($strippedUsername);
                                 } else {
-                                    //Kryptera lösenord
                                     $encryptedPassword = $this->userModel->encryptPassword($this->registerView->getPassword());
-                                    //Till add-funktion
                                     if ($this->userRepository->add($this->registerView->getUsername(), $encryptedPassword) == TRUE) {
-                                        echo "det fungerar!!";
+                                        $this->loginView->setMessage("Registrering av ny användare lyckades.");
+                                        return $this->loginView->ViewLogin();
                                     } 
                                 }
-        
                             }
-                            
                         }
-                        
                     }
                     else{
                         if (!$checkUsername) {
