@@ -22,7 +22,7 @@ class LoggedInView{
     }
 
     public function LoggedInView(){
-        $ret = "<h2>Laborationskod för mg222cd/h2>
+        $ret = "<h2>Laborationskod för mg222cd</h2>
 
         <h3>Admin är inloggad</h3>
 
