@@ -66,7 +66,7 @@ class UserRepository extends DatabaseConnection{
 	public function add($username, $password){
 		try{
 			$db = $this->connection();
-			$sql = "INSERT INTO $this->dbTable (" . self::$username . ", " . self::$password . ") VALUES ($username, $password)";
+			$sql = "INSERT INTO member (self::$username, self::$password) VALUES (?, ?)";
 			$params = array($username, $password);
 
 			$query = $db->prepare($sql);
