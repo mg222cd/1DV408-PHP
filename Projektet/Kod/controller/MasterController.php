@@ -1,15 +1,25 @@
 <?php
 namespace Controller;
 
-class MasterController{
+require_once("./View/LoginView.php");
 
-	/* 
+class MasterController{
+private $loginView;
+
+/**
+ * Creates new instances of loginview, 
+ */
+public function __construct(){
+	$this->loginView = new \View\LoginView();
+}
+	/** 
  	 * Determinds the page content
 	 *
  	 * @return string (generatet from different view-functions)
 	 */ 
 	public function controlNavigation(){
-		return "some text... Lorem Ipsum";
+		
+		return $this->loginView->loginForm();
 	}
 
 }
