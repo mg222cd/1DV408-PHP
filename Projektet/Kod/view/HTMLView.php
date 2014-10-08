@@ -15,14 +15,15 @@ class HTMLView{
               <body>
                 <header>
                   <h1>DinSpring</h1>
-                  <p>statistik för distansträning<p>
+                  <p class='tight'>statistik för distansträning<p>
                 </header>
                 <div id='content'>
                   $body
                 </div>
                 <footer>
-                  <hr>
-                  <p>Marike Grinde 2014</p>
+                  <p class='tight'>Marike Grinde 2014</p>
+                  <p class='tight'>1DV408 - Webbutveckling med PHP</p>
+                  <p class='tight'>Linnéuniversitetet</p>
                 </footer>
               </body>
               </html>";

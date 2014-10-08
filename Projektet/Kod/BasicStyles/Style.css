@@ -4,6 +4,14 @@
 */
 body{
 	font-family: helvetica;
+	color: #372B30;
+}
+/*
+* DESIGN
+*/
+.tight{
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 /*
 * HEADER
@@ -16,10 +24,6 @@ header{
 }
 header h1{
 	font-weight: bolder;
-	margin-bottom: 0px;
-}
-header p{
-	margin-top: 0px;
 	margin-bottom: 0px;
 }
 #timestring{
@@ -36,7 +40,7 @@ header p{
 	width: 80%;
 	margin: auto;
 	margin-top: 2%;
-	margin-bottom: 2%;
+	margin-bottom: 5%;
 }
 
 
@@ -47,4 +51,9 @@ header p{
 footer{
 	width: 80%;
 	margin: auto;
+	color: #775D67;
+}
+footer p{
+	font-size: 75%;
+	font-style: italic;
 }
