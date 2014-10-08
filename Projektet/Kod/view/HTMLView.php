@@ -10,10 +10,20 @@ class HTMLView{
               <head>
                 <title>Login</title>
                 <meta charset = 'UTF-8'>
+                <link rel='stylesheet' type='text/css' href='./BasicStyles/Style.css'>
               </head>
               <body>
-                $body
-                <p>$time</p>
+                <header>
+                  <h1>DinSpring</h1>
+                  <p>statistik för distansträning<p>
+                </header>
+                <div id='content'>
+                  $body
+                </div>
+                <footer>
+                  <hr>
+                  <p>Marike Grinde 2014</p>
+                </footer>
               </body>
               </html>";
     }

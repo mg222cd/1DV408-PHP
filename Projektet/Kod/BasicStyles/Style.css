@@ -1,0 +1,50 @@
+
+/*
+* TYPOGRAPHY
+*/
+body{
+	font-family: helvetica;
+}
+/*
+* HEADER
+*/
+header{
+	width: 80%;
+	margin: auto;
+	height: 10%;
+	color: #DE979F;
+}
+header h1{
+	font-weight: bolder;
+	margin-bottom: 0px;
+}
+header p{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+#timestring{
+	margin-top: 0px;
+	color: #000000;
+	font-size: 50%;
+}
+/*
+* CONTENT
+*/
+
+#content{
+	background-color: #FFFFFF;
+	width: 80%;
+	margin: auto;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+
+/*
+* FOOTER
+*/
+
+footer{
+	width: 80%;
+	margin: auto;
+}

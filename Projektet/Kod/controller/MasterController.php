@@ -9,7 +9,7 @@ class MasterController{
  	 * @return string (generatet from different view-functions)
 	 */ 
 	public function controlNavigation(){
-
+		return "some text... Lorem Ipsum";
 	}
 
 }
