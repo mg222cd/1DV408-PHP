@@ -23,9 +23,9 @@ class LoggedInView{
     }
 
     public function LoggedInView(){
-        $ret = "<h2>Laborationskod för mg222cd</h2>
+        $ret = "
 
-        <h3>Admin är inloggad</h3>
+        <h3>Inloggad</h3>
 
         <p>$this->message</p>
 

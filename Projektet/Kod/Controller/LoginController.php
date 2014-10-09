@@ -10,6 +10,7 @@ require_once('./Helpers/ServiceHelper.php');
 require_once('./Model/UserRepository.php');
 
 class LoginController{
+
     private $loginView;
     private $userModel;
     private $loggedInView;
@@ -105,14 +106,10 @@ class LoginController{
         else{
             //Om användaren försökt skicka registreringsuppgifter
             if ($this->registerView->confirmedRegister() == TRUE) {
-                    //validera epostadressen, exempel filter_var('bob@example.com', FILTER_VALIDATE_EMAIL);
-                    //
-                    //
-                    //
-                    //
                     $checkUsername = $this->userModel->validateUsername($this->registerView->getUsername());
                     $checkPassword = $this->userModel->validatePassword($this->registerView->getPassword());
-                    if ($checkUsername && $checkPassword == TRUE) {
+                    $checkEmail = $this->userModel->validateEmail($this->registerView->getUsername());
+                    if ($checkEmail && $checkUsername && $checkPassword == TRUE) {
                         //kontrollera att lösenordsfälten matchar
                         $password = $this->registerView->getPassword();
                         $passwordRepeat = $this->registerView->getPasswordRepeat();
@@ -145,6 +142,9 @@ class LoginController{
                         }
                         if (!$checkPassword) {
                             $this->registerView->setWrongPassword($this->userModel->getMinLengthPassword());
+                        }
+                        if (!$checkEmail) {
+                            $this->registerView->setWrongEmail();
                         }
                     }
             }

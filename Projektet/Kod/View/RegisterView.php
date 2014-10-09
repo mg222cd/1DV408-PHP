@@ -43,6 +43,10 @@ class RegisterView{
 		$this->message = "<p>Användarnmanet har för få tecken. Minst " . $number . " tecken.</p>";
 	}
 
+	public function setWrongEmail(){
+		$this->message .= "<p>Ogiltigt format för e-postadress.</p>";
+	}
+
 	public function setWrongPassword($number){
 		$this->message .= "<p>Lösenordet har för få tecken. Minst " . $number . " tecken.</p>";
 	}
