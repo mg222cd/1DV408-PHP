@@ -105,6 +105,11 @@ class LoginController{
         else{
             //Om användaren försökt skicka registreringsuppgifter
             if ($this->registerView->confirmedRegister() == TRUE) {
+                    //validera epostadressen, exempel filter_var('bob@example.com', FILTER_VALIDATE_EMAIL);
+                    //
+                    //
+                    //
+                    //
                     $checkUsername = $this->userModel->validateUsername($this->registerView->getUsername());
                     $checkPassword = $this->userModel->validatePassword($this->registerView->getPassword());
                     if ($checkUsername && $checkPassword == TRUE) {

@@ -16,7 +16,7 @@ class RegisterView{
 		<div id='link'><a href='./'>Tillbaka</a></div>
         <h3>Registrera ny användare</h3>
         <p>$this->message</p>
-        <form method='post' role='form' action='?LoggedIn'>
+        <form method='post' role='form' action='?Register'>
 	        <div class='form-group'>
 	        <label for='username'>E-post</label>
 	        <input type='text' class='form-control' maxlength='255' name='username' id='username' value='$this->username'>
