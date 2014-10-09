@@ -42,5 +42,68 @@ private $register;
         </div>";
 
         return $html;
-	}	
+	}
+
+    public function getInformation(){
+        if(isset($_POST['username'])){
+            $this->username = $_POST['username'];
+        }
+        if(isset($_POST['password'])){
+            $this->password = $_POST['password'];
+        }
+    }
+
+    public function getSubmit(){
+        if(isset($_POST['submit'])){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
+    
+    public function clickedRegister(){
+        if (isset($_GET['Register'])) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function getUsername(){
+        return $this->username;
+    }
+
+    public function getPassword(){
+        return $this->password;
+    }
+
+    public function failedLogIn($username, $password){
+        if($username === ""){
+            $this->message = "Användarnamn saknas";
+        }
+        else if($password === ""){
+            $this->message = "Lösenord saknas";
+        }
+        else{
+            $this->message = "Felaktigt användarnamn och/eller lösenord";
+        }
+    }
+
+    public function LogInSuccessMessage(){
+        return $this->message = "Inloggning lyckades";
+    }
+
+    public function setMessage($message){
+        $this->message = $message;
+    }
+
+    public function wantCookie(){
+        if(isset($_POST['check'])){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }	
 }
