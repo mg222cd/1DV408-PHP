@@ -15,7 +15,7 @@ private $register;
 	public function loginForm(){
 		$html= "
 		<div class='row'>
-		<div class='col-xs-6'>
+		<div class='col-xs-12 col-sm-6'>
         <h3>Logga in</h3>
         <p>$this->message</p>
         <form method='post' role='form' action='?LoggedIn'>
@@ -36,11 +36,10 @@ private $register;
         </form>
         <div id='link'><a href='?Register'>Registrera ny användare</a></div>
         </div>
-        <div class='col-xs-6'>
-        <img src='./BasicStyles/DinSpring.png' class='img-responsive' alt='DinSpring logo'>
+        <div class='col-xs-12 col-sm-6'>
+        <img src='./BasicStyles/DinSpring.png' class='img-responsive image_startpage' alt='DinSpring logo'>
         </div>
         </div>";
-
         return $html;
 	}
 

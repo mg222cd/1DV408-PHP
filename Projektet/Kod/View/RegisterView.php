@@ -10,17 +10,33 @@ class RegisterView{
 
 	public function registerForm(){
 		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$ret = "<h2>Laborationskod för mg222cd</h2>
+        $html = "
+        <div class='row'>
+		<div class='col-xs-12 col-sm-6'> 
 		<div id='link'><a href='./'>Tillbaka</a></div>
-        <h3>Ej inloggad, Registrerar användare</h3>
+        <h3>Registrera ny användare</h3>
         <p>$this->message</p>
-        <form method='post' action='?Register'>
-            <p>Namn: <input type='text' name='username' value='$username'></p>
-            <p>Lösenord: <input type='password' name='password'></p>
-            <p>Repetera Lösenord: <input type='password' name='passwordRepeat'></p>
-            <input type='submit' value='Registrera' name='sendButton'>
-        </form>";
-        return $ret;
+        <form method='post' role='form' action='?LoggedIn'>
+	        <div class='form-group'>
+	        <label for='username'>E-post</label>
+	        <input type='text' class='form-control' maxlength='255' name='username' id='username' value='$this->username'>
+	        </div>
+	        <div class='form-group'>
+            <label for='password'>Lösenord</label>
+			<input type='password' class='form-control' maxlength='255' id='password' name='password'>
+            </div>
+            <div class='form-group'>
+            <label for='passwordRepeat'>Repetera lösenord</label>
+			<input type='password' class='form-control' maxlength='255' id='passwordRepeat' name='passwordRepeat'>
+            </div>
+            <input type='submit' value='Registrera' name='sendButton' class='btn btn-default'>
+            </div>
+        </form>
+        <div class='col-xs-12 col-sm-6'>
+        <img src='./BasicStyles/DinSpring2.png' class='img-responsive image_startpage' alt='DinSpring alternativ logo'>
+        </div>
+        </div>";
+        return $html;
 	}
 
 	public function setWrongUsername($number){
