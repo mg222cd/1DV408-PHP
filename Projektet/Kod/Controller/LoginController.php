@@ -7,7 +7,7 @@ require_once('./View/LoggedinView.php');
 require_once('./View/CookieView.php');
 require_once('./View/RegisterView.php');
 require_once('./Helpers/ServiceHelper.php');
-require_once('./Model/UserRepository.php');
+//require_once('./Model/UserRepository.php');
 
 class LoginController{
 
@@ -17,7 +17,7 @@ class LoginController{
     private $cookieView;
     private $serviceHelper;
     private $registerView;
-    private $userRepository;
+    //private $userRepository;
 
     public function __construct(){
         $this->loginView = new \View\LoginView();
@@ -26,7 +26,7 @@ class LoginController{
         $this->cookieView = new \View\CookieStorage();
         $this->serviceHelper = new \Helper\ServiceHelper();
         $this->registerView = new \View\RegisterView();
-        $this->userRepository = new \Model\UserRepository();
+        //$this->userRepository = new \Model\UserRepository();
     }
 
     public function doControl(){
@@ -104,6 +104,7 @@ class LoginController{
             return $loggedInView;
         }
         else{
+            /*
             //Om användaren försökt skicka registreringsuppgifter
             if ($this->registerView->confirmedRegister() == TRUE) {
                     $checkUsername = $this->userModel->validateUsername($this->registerView->getUsername());
@@ -148,10 +149,14 @@ class LoginController{
                         }
                     }
             }
+            */
+
             //Om användaren tryckt på Registrera
+            /*
             if ($this->loginView->clickedRegister()) {
                 return $this->registerView->registerForm();
             }
+            */
             return $loginView;
         }
     }

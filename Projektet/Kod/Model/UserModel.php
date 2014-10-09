@@ -120,9 +120,11 @@ class UserModel{
         return $this->authenticatedUser;
     }
 
+    /*
     public function __construct(){
         session_start();
     }
+    */
 
     //Om användaren väljer att logga ut så tas sessionen bort.
     public function LogOut(){
