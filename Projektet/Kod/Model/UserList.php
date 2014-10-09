@@ -1,4 +1,6 @@
 <?php
+namespace Model;
+
 require_once('./Model/User.php');
 
 class UserList{

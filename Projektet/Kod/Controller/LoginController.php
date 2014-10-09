@@ -1,4 +1,5 @@
 <?php
+namespace Controller;
 
 require_once('./View/LoginView.php');
 require_once('./Model/UserModel.php');
@@ -18,13 +19,13 @@ class LoginController{
     private $userRepository;
 
     public function __construct(){
-        $this->loginView = new LoginView();
-        $this->userModel = new UserModel();
-        $this->loggedInView = new LoggedInView();
-        $this->cookieView = new CookieStorage();
-        $this->serviceHelper = new ServiceHelper();
-        $this->registerView = new RegisterView();
-        $this->userRepository = new UserRepository();
+        $this->loginView = new \View\LoginView();
+        $this->userModel = new \Model\UserModel();
+        $this->loggedInView = new \View\LoggedInView();
+        $this->cookieView = new \View\CookieStorage();
+        $this->serviceHelper = new \Helper\ServiceHelper();
+        $this->registerView = new \View\RegisterView();
+        $this->userRepository = new \Model\UserRepository();
     }
 
     public function doControl(){
@@ -92,7 +93,7 @@ class LoginController{
             }
         }
 
-        $loginView = $this->loginView->ViewLogin();
+        $loginView = $this->loginView->loginForm();
 
         $loggedInView = $this->loggedInView->LoggedInView();
         $authenticated = $this->userModel->getAuthenticatedUser($userAgent);
@@ -127,7 +128,7 @@ class LoginController{
                                     $encryptedPassword = $this->userModel->encryptPassword($this->registerView->getPassword());
                                     if ($this->userRepository->add($this->registerView->getUsername(), $encryptedPassword) == TRUE) {
                                         $this->loginView->setMessage("Registrering av ny användare lyckades.");
-                                        return $this->loginView->ViewLogin();
+                                        return $this->loginView->loginForm();
                                     } 
                                 }
                             }

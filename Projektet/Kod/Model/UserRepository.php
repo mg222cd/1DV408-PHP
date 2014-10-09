@@ -1,4 +1,6 @@
 <?php
+namespace Model;
+
 require_once ('./Model/DatabaseConnection.php');
 require_once('./Model/User.php');
 
@@ -51,7 +53,7 @@ class UserRepository extends DatabaseConnection{
 				$username = $user['username'];
 				$password = $user['password'];
 
-				$this->userList[] = new User($userId, $username, $password);
+				$this->userList[] = new \Model\User($userId, $username, $password);
 			}
 			return $this->userList;	
 		}

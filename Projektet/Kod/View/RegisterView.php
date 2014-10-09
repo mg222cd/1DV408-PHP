@@ -1,4 +1,5 @@
 <?php
+namespace View;
 
 class RegisterView{
 	private $message;

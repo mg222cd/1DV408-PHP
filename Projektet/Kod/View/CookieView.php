@@ -1,4 +1,5 @@
 <?php
+namespace View;
 
 class CookieStorage{
     private $cookieName = "CookieStorage";

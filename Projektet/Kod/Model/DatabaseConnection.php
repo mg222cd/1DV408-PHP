@@ -1,4 +1,5 @@
 <?php
+namespace Model;
 
 abstract class DatabaseConnection{
 	protected $dbUsername = '101368-fs50541';

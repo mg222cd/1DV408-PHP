@@ -1,4 +1,6 @@
 <?php
+namespace Model;
+
 require_once('./Model/UserRepository.php');
 
 class UserModel{
@@ -60,7 +62,7 @@ class UserModel{
 
     //Kontrollerar om namnet redan finns
     public function nameAlreadyExists($nameToCheck){
-        $userRepo = new UserRepository();
+        $userRepo = new \Model\UserRepository();
         $existingUsers = $userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
@@ -80,7 +82,7 @@ class UserModel{
      */
     public function validateLogin($usernameToCheck, $passwordToCheck, $userAgent){
         //Sätt authenticatedUser till true eller false beroende på om uppgifterna stämmer med dem i DB
-        $userRepo = new UserRepository();
+        $userRepo = new \Model\UserRepository();
         $existingUsers = $userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
