@@ -1,6 +1,8 @@
 <?php
 namespace View;
 
+require_once("./View/NavigationView.php");
+
 class LoginView{
 private $username;
 private $password;
@@ -18,7 +20,7 @@ private $register;
 		<div class='col-xs-12 col-sm-6'>
         <h3>Logga in</h3>
         <p>$this->message</p>
-        <form method='post' role='form' action='?LoggedIn'>
+        <form method='post' role='form' action='?action=".NavigationView::$actionLoggedIn."'> 
         	<div class='form-group'>
         	<label for='username'>E-post</label>
             <input type='text' class='form-control' maxlength='255' name='username' id='username' value='$this->username'>
@@ -34,7 +36,7 @@ private $register;
             </div>
             <input type='submit' value='Logga in' name='submit' class='btn btn-default'>
         </form>
-        <div id='link'><a href='?Register'>Registrera ny användare</a></div>
+        <div id='link'><a href='?action=".NavigationView::$actionRegister."'>Registrera ny användare</a></div>
         </div>
         <div class='col-xs-12 col-sm-6'>
         <img src='./BasicStyles/DinSpring.png' class='img-responsive image_startpage' alt='DinSpring logo'>

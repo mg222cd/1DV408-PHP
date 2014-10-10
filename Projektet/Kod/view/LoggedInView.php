@@ -2,7 +2,7 @@
 namespace View;
 
 class LoggedInView{
-    private $signOut = "SignOut";
+    private $signOut = "signOut";
     private $message;
 
     public function userPressedLogOut(){
