@@ -5,18 +5,27 @@ require_once("./View/NavigationView.php");
 require_once("./Controller/LoginController.php");
 require_once("./Controller/UserController.php");
 require_once("./Controller/WorkoutController.php");
+require_once("./Model/UserModel.php");
+require_once("./View/LoginView.php");
+require_once('./Helpers/ServiceHelper.php');
 
 class MasterController{
 
 private $loginController;
 private $userController;
 private $workoutController;
+private $userModel;
+private $loginView;
+private $serviceHelper;
 
 
 public function __construct(){
 	$this->loginController = new \Controller\LoginController();
 	$this->userController = new \Controller\UserController();
 	$this->workoutController = new \Controller\WorkoutController();
+	$this->userModel = new \Model\UserModel();
+	$this->loginView = new \View\LoginView();
+	$this->serviceHelper = new \Helpers\ServiceHelper();
 }
 
 	public function controlNavigation(){
@@ -25,7 +34,11 @@ public function __construct(){
 				return $this->userController->controlRegistration();
 				break;
 			case \View\NavigationView::$actionLoggedIn:
-				return $this->workoutController->doControl();
+				//säkerhetskontroll
+
+				if (validateLogin($usernameToCheck, $passwordToCheck, $userAgent) == TRUE) {
+					return $this->workoutController->doControl();
+				}
 				break;
 			case \View\NavigationView::$actionSignOut:
 				return $this->loginController->doControl();

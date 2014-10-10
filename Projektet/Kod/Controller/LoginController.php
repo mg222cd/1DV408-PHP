@@ -104,59 +104,6 @@ class LoginController{
             return $loggedInView;
         }
         else{
-            /*
-            //Om användaren försökt skicka registreringsuppgifter
-            if ($this->registerView->confirmedRegister() == TRUE) {
-                    $checkUsername = $this->userModel->validateUsername($this->registerView->getUsername());
-                    $checkPassword = $this->userModel->validatePassword($this->registerView->getPassword());
-                    $checkEmail = $this->userModel->validateEmail($this->registerView->getUsername());
-                    if ($checkEmail && $checkUsername && $checkPassword == TRUE) {
-                        //kontrollera att lösenordsfälten matchar
-                        $password = $this->registerView->getPassword();
-                        $passwordRepeat = $this->registerView->getPasswordRepeat();
-                        if ($password != $passwordRepeat) {
-                            $this->registerView->setPasswordMismatch();
-                        } 
-                        else {
-                            //Kontrollera så att användarnamnet är ledigt
-                            if ($this->userModel->nameAlreadyExists($this->registerView->getUsername()) == TRUE) {
-                                $this->registerView->setUsernameAlreadyExists();
-                            } 
-                            else {
-                                //Filtrera användarnamn från skadlig kod
-                                $strippedUsername = $this->userModel->stripTags($this->registerView->getUsername());
-                                if ($strippedUsername != NULL) {
-                                    $this->registerView->setInvalidUsername($strippedUsername);
-                                } else {
-                                    $encryptedPassword = $this->userModel->encryptPassword($this->registerView->getPassword());
-                                    if ($this->userRepository->add($this->registerView->getUsername(), $encryptedPassword) == TRUE) {
-                                        $this->loginView->setMessage("Registrering av ny användare lyckades.");
-                                        return $this->loginView->loginForm();
-                                    } 
-                                }
-                            }
-                        }
-                    }
-                    else{
-                        if (!$checkUsername) {
-                            $this->registerView->setWrongUsername($this->userModel->getMinLengthUsername());
-                        }
-                        if (!$checkPassword) {
-                            $this->registerView->setWrongPassword($this->userModel->getMinLengthPassword());
-                        }
-                        if (!$checkEmail) {
-                            $this->registerView->setWrongEmail();
-                        }
-                    }
-            }
-            */
-
-            //Om användaren tryckt på Registrera
-            /*
-            if ($this->loginView->clickedRegister()) {
-                return $this->registerView->registerForm();
-            }
-            */
             return $loginView;
         }
     }
