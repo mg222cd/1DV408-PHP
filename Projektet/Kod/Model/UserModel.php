@@ -110,7 +110,6 @@ class UserModel{
     }
     */
 
-    /*
     //Om användaren väljer att logga ut så tas sessionen bort.
     public function LogOut(){
         if(isset($_SESSION["ValidLogin"])){
@@ -118,7 +117,6 @@ class UserModel{
         }
         return $this->authenticatedUser = false;
     }
-    */
 
     //Hämtar ut strängen vars värde ska in i kakan.
     public function getRandomString(){

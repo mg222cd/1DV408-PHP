@@ -108,6 +108,32 @@ class LoginController{
         }
     }
 
+    public function mainController(){
+        $userAgent = $this->serviceHelper->getUserAgent();
+        //om användaren klickat på Logga in-knappen
+        if($this->loginView->getSubmit()){
+            if(!$this->validLogin()){
+                $this->loginView->failedLogIn($username, $password);
+                return $this->loginView->loginForm();
+            }
+            else {
+                if($this->loginView->wantCookie()){
+                    $randomString = $this->userModel->getRandomString();
+                    $time = $this->cookieView->save($randomString);
+                    $this->userModel->saveCookieTime($time);
+                }
+            return TRUE;    
+            }
+        }
+
+    }
+
+    /**
+    * If tryed to login - this function makes sure that the login is valid,
+    * either by button-click (username and password), session or cookies
+    *
+    * @return bool
+    */
     public function validLogin(){
         //Kontrollera vanlig inloggning
         $username = $this->loginView->getUsername();
