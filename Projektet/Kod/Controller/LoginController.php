@@ -81,7 +81,7 @@ class LoginController{
             }
         }
 
-        /*Om användaren är inloggad ska anvämdaren kunna logga ut och om den trycker på logga ut så tas cookien bort om de
+        /*Om användaren är inloggad ska användaren kunna logga ut och om den trycker på logga ut så tas cookien bort om de
         finns på klienten tillsammans med sessionen och man får ett meddelande att man har loggat ut. */
         $authenticated = $this->userModel->getAuthenticatedUser($userAgent);
         if($authenticated === true){
@@ -113,7 +113,7 @@ class LoginController{
         //om användaren klickat på Logga in-knappen
         if($this->loginView->getSubmit()){
             if(!$this->validLogin()){
-                $this->loginView->failedLogIn($username, $password);
+                $this->loginView->failedLogIn($this->loginView->getUsername(), $this->loginView->getPassword());
                 return $this->loginView->loginForm();
             }
             else {
@@ -124,6 +124,13 @@ class LoginController{
                 }
             return TRUE;    
             }
+        }
+        //om användaren nu är inloggad
+        if ($this->validLogin()) {
+            return TRUE;
+        }
+        else{
+            return $this->loginView->loginForm();
         }
 
     }

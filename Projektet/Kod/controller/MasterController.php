@@ -24,7 +24,7 @@ public function __construct(){
 				return $this->userController->controlRegistration();
 				break;
 			case \View\NavigationView::$actionLoggedIn:
-				//säkerhetskontroll
+				//security check:
 				if ($this->loginController->validLogin() == TRUE) {
 					return $this->workoutController->doControl();
 				}
