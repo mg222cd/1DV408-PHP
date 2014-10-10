@@ -4,8 +4,8 @@ namespace Model;
 require_once('./Model/UserRepository.php');
 
 class UserModel{
-    private $username = 'Admin';
-    private $password = 'Password';
+    private $username;
+    //private $password = 'Password';
     private $authenticatedUser = false;
     //Eftersom det bara finns 1 användare så har jag en sträng som jag placerar i kakan som jag jämför med men
     //den ändras inte utan den har ett satt värde.
@@ -35,12 +35,16 @@ class UserModel{
         }   
     }
 
-    /**
-    * Makes sure E-mail address is valid format
-    *
-    * @param string $emailToValidate
-    * @return bool
-    */
+    //Kontrollerar längden på Password
+    public function validatePassword($password){
+        if (strlen($password) >= $this->minValuePassword) {
+            return TRUE;
+        } 
+        else {
+            return FALSE;
+        }  
+    }
+
     public function validateEmail($emailToValidate){
         return filter_var($emailToValidate, FILTER_VALIDATE_EMAIL);
     }
@@ -62,16 +66,6 @@ class UserModel{
         }
     }
 
-    //Kontrollerar längden på Password
-    public function validatePassword($password){
-        if (strlen($password) >= $this->minValuePassword) {
-            return TRUE;
-        } 
-        else {
-            return FALSE;
-        }  
-    }
-
     //Kontrollerar om namnet redan finns
     public function nameAlreadyExists($nameToCheck){
         $userRepo = new UserRepository();
@@ -83,7 +77,6 @@ class UserModel{
             }
         }
     }
-
 
     /**
      * @param $username
@@ -100,6 +93,7 @@ class UserModel{
             $name = $existingUser->getName();
             $password = $existingUser->getPassword();
             if ($name == $usernameToCheck && password_verify($passwordToCheck, $password)) {
+                $this->username = $name;
                 $this->authenticatedUser = TRUE;
             }
         }
@@ -126,6 +120,7 @@ class UserModel{
     }
     */
 
+    /*
     //Om användaren väljer att logga ut så tas sessionen bort.
     public function LogOut(){
         if(isset($_SESSION["ValidLogin"])){
@@ -133,6 +128,7 @@ class UserModel{
         }
         return $this->authenticatedUser = false;
     }
+    */
 
     //Hämtar ut strängen vars värde ska in i kakan.
     public function getRandomString(){
