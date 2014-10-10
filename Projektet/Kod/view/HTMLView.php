@@ -8,7 +8,7 @@ class HTMLView{
       echo "<!DOCTYPE html>
               <html>
               <head>
-                <title>DinSpring - träningsdagbok för distansträning</title>
+                <title>DinSpring | Träningsdagbok</title>
                 <meta charset = 'UTF-8'>
                 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <meta name='viewport' content='width=device-width, initial-scale=1'>
