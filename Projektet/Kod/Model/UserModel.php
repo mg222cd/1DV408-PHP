@@ -10,11 +10,8 @@ class UserModel{
     //Eftersom det bara finns 1 användare så har jag en sträng som jag placerar i kakan som jag jämför med men
     //den ändras inte utan den har ett satt värde.
     private $randomString = "dsdididjsadladacm";
-    //konstanter som håller reda på min.längd för username och password
     private $minValueUsername = 6;
     private $minValuePassword = 6;
-    //const MIN_VALUE_USERNAME = 6;
-    //const MIN_VALUE_PASSWORD = 6;
 
     //Funktioner för att hämta konstanter
     public function getMinLengthUsername(){
@@ -78,13 +75,6 @@ class UserModel{
         }
     }
 
-    /**
-     * @param $username
-     * @param $password
-     * @param $userAgent
-     * @return bool
-     * Tittar om användarnamn och lösenord från användaren stämmer överens.
-     */
     public function validateLogin($usernameToCheck, $passwordToCheck, $userAgent){
         //Sätt authenticatedUser till true eller false beroende på om uppgifterna stämmer med dem i DB
         $userRepo = new UserRepository();

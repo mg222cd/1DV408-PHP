@@ -36,9 +36,6 @@ public function __construct(){
 			case \View\NavigationView::$actionLoggedIn:
 				//säkerhetskontroll
 
-				if (validateLogin($usernameToCheck, $passwordToCheck, $userAgent) == TRUE) {
-					return $this->workoutController->doControl();
-				}
 				break;
 			case \View\NavigationView::$actionSignOut:
 				return $this->loginController->doControl();
