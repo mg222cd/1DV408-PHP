@@ -20,24 +20,8 @@ public function __construct(){
 }
 
 	public function controlNavigation(){
-		/*
-		if (isset($_GET['Register'])) {
-			return $this->userController->controlRegistration();
-		}
-		if (isset($_GET['LoggedIn'])) {
-			return $this->navigationController->doControl();
-		}
-		if (isset($_GET['SignOut'])) {
-			return $this->loginController->doControl();
-		} 
-		else {
-			return $this->loginController->doControl();
-		}
-		*/
 		switch (\View\NavigationView::getAction()) {
 			case \View\NavigationView::$actionRegister:
-				//var_dump($_GET);
-				//die();
 				return $this->userController->controlRegistration();
 				break;
 			case \View\NavigationView::$actionLoggedIn:
@@ -50,10 +34,6 @@ public function __construct(){
 				return $this->loginController->doControl();
 				break;
 		}
-
-
-
-		
 	}
 
 }
