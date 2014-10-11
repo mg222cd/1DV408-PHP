@@ -14,13 +14,16 @@ class UserModel{
         $this->userRepo = new \Model\UserRepository();
     }
 
-    //Funktioner för att hämta konstanter
     public function getMinLengthUsername(){
         return $this->minValueUsername;
     }
 
     public function getMinLengthPassword(){
         return $this->minValuePassword;
+    }
+
+    public function getUsername(){
+        return $this->username;
     }
 
     //Kontrollerar längden på Username

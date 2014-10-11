@@ -42,7 +42,7 @@ private $username;
 				break;
 			default:
 				if ($this->loginController->validLogin() == TRUE) {
-					callWorkoutController();
+					$this->callWorkoutController();
 					return $this->workoutController->doControl();
 				}
 				else{

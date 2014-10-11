@@ -12,6 +12,7 @@ class LoginController{
     private $userModel;
     private $cookieView;
     private $serviceHelper;
+    private $username;
 
 
     public function __construct(){
@@ -22,21 +23,12 @@ class LoginController{
     }
 
     /**
-    * Sets username
-    *
-    * @param string $username
-    */
-    public function setUsername($username){
-        $this->username = $username;
-    }
-
-    /**
     * Returns username
     *
     * @return string $username
     */
     public function getUsername(){
-         return $this->username;
+        $this->username;
     }
 
     /**
@@ -75,12 +67,12 @@ class LoginController{
                     $this->userModel->setTime($time);
                     $this->userModel->saveCookieTime($time);
                 }
-                $this->setUsername($username);
+                $this->username = $username;
                 return TRUE;
         }
         //Kontrollera inloggning med session
         if ($this->userModel->getAuthenticatedUser($realAgent)) {
-            $this->setUsername($username);
+            $this->setUsername($this->userModel->getUsername());
             return TRUE;
         }
         //Kontrollera inloggning med cookies
@@ -92,7 +84,6 @@ class LoginController{
                 $this->loginView->setMessage($message);
             }
             else{
-                $this->setUsername($username);
                 return TRUE;
             }
         }
