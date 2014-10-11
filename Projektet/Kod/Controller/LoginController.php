@@ -3,31 +3,29 @@ namespace Controller;
 
 require_once('./View/LoginView.php');
 require_once('./Model/UserModel.php');
-require_once('./View/LoggedinView.php');
 require_once('./View/CookieView.php');
-require_once('./View/RegisterView.php');
 require_once('./Helpers/ServiceHelper.php');
-//require_once('./Model/UserRepository.php');
 
 class LoginController{
 
     private $loginView;
     private $userModel;
-    private $loggedInView;
     private $cookieView;
     private $serviceHelper;
-    private $registerView;
-    //private $userRepository;
+
 
     public function __construct(){
         $this->loginView = new \View\LoginView();
         $this->userModel = new \Model\UserModel();
-        $this->loggedInView = new \View\LoggedInView();
         $this->cookieView = new \View\CookieStorage();
         $this->serviceHelper = new \Helper\ServiceHelper();
-        $this->registerView = new \View\RegisterView();
-        //$this->userRepository = new \Model\UserRepository();
     }
+
+    /**
+    * Maincontroller for login page scenario
+    *
+    * @return string with HTML
+    */
 
     public function mainController(){
         $userAgent = $this->serviceHelper->getUserAgent();
