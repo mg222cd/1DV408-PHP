@@ -3,7 +3,11 @@ namespace Helper;
 
 class ServiceHelper{
 
-    //Hämtar ut information om användaren så som vilken webbläsare de sitter i och på vilket operativsystem som de använder.
+    /**
+    * Returns  the User-Agent: header from the current request
+    *
+    * @return string
+    */
     public function getUserAgent(){
         return $_SERVER['HTTP_USER_AGENT'];
     }

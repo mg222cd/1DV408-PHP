@@ -4,11 +4,11 @@ namespace Model;
 require_once('./Model/UserRepository.php');
 
 class UserModel{
+    private $userRepo;
     private $username;
     private $authenticatedUser = false;
     private $minValueUsername = 6;
     private $minValuePassword = 6;
-    private $userRepo;
 
     public function __construct(){
         $this->userRepo = new \Model\UserRepository();
