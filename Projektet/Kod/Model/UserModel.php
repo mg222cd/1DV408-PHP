@@ -75,6 +75,11 @@ class UserModel{
         }
     }
 
+    //Fasadfunktion 
+    public function userExists($username){
+        return $this->nameAlreadyExists($username);
+    }
+
     private function getCookieTime($username){
         $existingUsers = $this->userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
@@ -83,10 +88,6 @@ class UserModel{
                 return $existingUser->getTime();
             }
         }
-    }
-
-    public function userExists($username){
-        return $this->nameAlreadyExists($username);
     }
 
     public function setTime($time){

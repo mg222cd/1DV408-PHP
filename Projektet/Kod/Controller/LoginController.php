@@ -22,6 +22,24 @@ class LoginController{
     }
 
     /**
+    * Sets username
+    *
+    * @param string $username
+    */
+    public function setUsername($username){
+        $this->username = $username;
+    }
+
+    /**
+    * Returns username
+    *
+    * @return string $username
+    */
+    public function getUsername(){
+         return $this->username;
+    }
+
+    /**
     * Maincontroller for login page scenario
     *
     * @return string with HTML
@@ -57,10 +75,12 @@ class LoginController{
                     $this->userModel->setTime($time);
                     $this->userModel->saveCookieTime($time);
                 }
+                $this->setUsername($username);
                 return TRUE;
         }
         //Kontrollera inloggning med session
         if ($this->userModel->getAuthenticatedUser($realAgent)) {
+            $this->setUsername($username);
             return TRUE;
         }
         //Kontrollera inloggning med cookies
@@ -72,6 +92,7 @@ class LoginController{
                 $this->loginView->setMessage($message);
             }
             else{
+                $this->setUsername($username);
                 return TRUE;
             }
         }

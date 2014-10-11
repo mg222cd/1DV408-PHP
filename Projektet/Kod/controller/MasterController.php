@@ -11,12 +11,16 @@ class MasterController{
 private $loginController;
 private $userController;
 private $workoutController;
+private $username;
 
-public function __construct(){
-	$this->loginController = new \Controller\LoginController();
-	$this->userController = new \Controller\UserController();
-	$this->workoutController = new \Controller\WorkoutController();
-}
+	public function __construct(){
+		$this->loginController = new \Controller\LoginController();
+		$this->userController = new \Controller\UserController();
+	}
+
+	public function callWorkoutController(){
+		$this->workoutController = new \Controller\WorkoutController($this->loginController->getUsername());
+	}
 
 	public function controlNavigation(){
 		switch (\View\NavigationView::getAction()) {
@@ -26,6 +30,7 @@ public function __construct(){
 			case \View\NavigationView::$actionLoggedIn:
 				//security check:
 				if ($this->loginController->validLogin() == TRUE) {
+					$this->callWorkoutController();
 					return $this->workoutController->doControl();
 				}
 				else{
@@ -37,6 +42,7 @@ public function __construct(){
 				break;
 			default:
 				if ($this->loginController->validLogin() == TRUE) {
+					callWorkoutController();
 					return $this->workoutController->doControl();
 				}
 				else{
