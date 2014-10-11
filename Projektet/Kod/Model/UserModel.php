@@ -5,11 +5,7 @@ require_once('./Model/UserRepository.php');
 
 class UserModel{
     private $username;
-    //private $password = 'Password';
     private $authenticatedUser = false;
-    //Eftersom det bara finns 1 användare så har jag en sträng som jag placerar i kakan som jag jämför med men
-    //den ändras inte utan den har ett satt värde.
-    private $randomString = "dsdididjsadladacm";
     private $minValueUsername = 6;
     private $minValuePassword = 6;
 
@@ -75,6 +71,10 @@ class UserModel{
         }
     }
 
+    public function userExists($username){
+        return $this->nameAlreadyExists($username);
+    }
+
     public function validateLogin($usernameToCheck, $passwordToCheck, $userAgent){
         //Sätt authenticatedUser till true eller false beroende på om uppgifterna stämmer med dem i DB
         $userRepo = new UserRepository();
@@ -104,12 +104,6 @@ class UserModel{
         return $this->authenticatedUser;
     }
 
-    /*
-    public function __construct(){
-        session_start();
-    }
-    */
-
     //Om användaren väljer att logga ut så tas sessionen bort.
     public function LogOut(){
         if(isset($_SESSION["ValidLogin"])){
@@ -118,16 +112,11 @@ class UserModel{
         return $this->authenticatedUser = false;
     }
 
-    //Hämtar ut strängen vars värde ska in i kakan.
-    public function getRandomString(){
-        return $this->randomString;
-    }
-
     //Kontrollerar om kakans värde stämmer överens med randomsStrings värde.
     public function controlCookieValue($cookieValue, $userAgent){
         $time = file_get_contents("exist.txt");
         if($time > time()){
-            if($this->randomString === $cookieValue){
+            if($this->userExists($cookieValue)){
                 $_SESSION["ValidLogin"] = $this->username;
                 $_SESSION["UserAgent"] = $userAgent;
                 return $this->authenticatedUser = true;

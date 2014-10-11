@@ -6,16 +6,15 @@ class CookieStorage{
     private $message;
     private $cookieTime;
 
-    //Sparar ner värdet från $randomString till kakan.
-    public function save($string){
-        $this->cookieTime = time()+120;
-        setcookie($this->cookieName, $string, $this->cookieTime);
+    public function save($username){
+        $this->cookieTime = time()+3600;
+        setcookie($this->cookieName, $username, $this->cookieTime);
         return $this->cookieTime;
     }
 
     //Tar bort kakan när man loggar ut eller när tiden har gått ut.
     public function deleteCookie(){
-        setcookie($this->cookieName, "", time() - 1);
+        setcookie($this->cookieName, "", time() - 3600);
     }
 
     //Tittar om kakan finns.

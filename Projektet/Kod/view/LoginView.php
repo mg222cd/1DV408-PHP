@@ -4,8 +4,8 @@ namespace View;
 require_once("./View/NavigationView.php");
 
 class LoginView{
-private $username;
-private $password;
+private $username = "";
+private $password = "";
 private $message;
 private $register;
 	
@@ -45,15 +45,6 @@ private $register;
         return $html;
 	}
 
-    public function getInformation(){
-        if(isset($_POST['username'])){
-            $this->username = $_POST['username'];
-        }
-        if(isset($_POST['password'])){
-            $this->password = $_POST['password'];
-        }
-    }
-
     public function getSubmit(){
         if(isset($_POST['submit'])){
             return TRUE;
@@ -72,10 +63,16 @@ private $register;
     }
 
     public function getUsername(){
+        if(isset($_POST['username'])){
+            $this->username = $_POST['username'];
+        }
         return $this->username;
     }
 
     public function getPassword(){
+        if(isset($_POST['password'])){
+            $this->password = $_POST['password'];
+        }
         return $this->password;
     }
 

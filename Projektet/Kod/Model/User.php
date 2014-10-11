@@ -5,11 +5,16 @@ class User{
 	private $userId;
 	private $username;
 	private $password;
+	private $time;
 
 	public function __construct($userId, $username, $password){
 		$this->userId = $userId;
 		$this->username = $username;
 		$this->password = $password;
+	}
+
+	public function setTime($time){
+		$this->time = $time;
 	}
 
 	public function getUserId(){
@@ -22,5 +27,9 @@ class User{
 
 	public function getPassword(){
 		return $this->password;
+	}
+
+	public function getTime(){
+		return $this->time;
 	}
 }

@@ -77,4 +77,20 @@ class UserRepository extends DatabaseConnection{
 			throw new Exception('Fel uppstod då användare skulle tilläggas i databasen.');
 		}
 	}
+
+	public function setTime($username, $timeToSet){
+		try{
+			$db = $this->connection();
+			 $sql = "INSERT INTO member (".self::$username.",". self::$password.") VALUES (?, ?)";
+			$params = array($username, $password);
+
+			$query = $db->prepare($sql);
+			$query->execute($params);
+
+			return TRUE;
+		}
+		catch(\PDOException $e){
+			throw new Exception('Fel uppstod då användare skulle tilläggas i databasen.');
+		}
+	}
 }

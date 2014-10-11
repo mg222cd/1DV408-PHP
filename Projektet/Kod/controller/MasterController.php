@@ -29,14 +29,19 @@ public function __construct(){
 					return $this->workoutController->doControl();
 				}
 				else{
-					return $this->loginController->doControl();
+					return $this->loginController->mainController();
 				}
 				break;
 			case \View\NavigationView::$actionSignOut:
-				return $this->loginController->doControl();
+				return $this->loginController->mainController();
 				break;
 			default:
-				return $this->loginController->doControl();
+				if ($this->loginController->validLogin() == TRUE) {
+					return $this->workoutController->doControl();
+				}
+				else{
+					return $this->loginController->mainController();
+				}
 				break;
 		}
 	}

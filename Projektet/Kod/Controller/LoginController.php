@@ -29,110 +29,15 @@ class LoginController{
         //$this->userRepository = new \Model\UserRepository();
     }
 
-    public function doControl(){
-        $userAgent = $this->serviceHelper->getUserAgent();
-
-        /*När användaren trycker på logga in knappen så hämtas information ut om vad användaren skrev in för lösenord och
-        användarnamn och skickar den vidare för att kontrollera om dem är korrekta och i sådana fall loggas man in annars
-        visas ett felmeddelande.
-        Vill användaren att man ska komma ihåg den så skapas en cookie och sparar en identifierare i cookien så att man vet
-        vilken användare som är inloggad. */
-        if($this->loginView->getSubmit()){
-            $this->loginView->getInformation();
-            $username = $this->loginView->getUsername();
-            $password = $this->loginView->getPassword();
-            $realAgent = $this->serviceHelper->getUserAgent();
-            if(!$this->userModel->validateLogin($username, $password, $realAgent)){
-                $this->loginView->failedLogIn($username, $password);
-            }
-            else {
-                if($this->loginView->wantCookie()){
-                    $randomString = $this->userModel->getRandomString();
-                    $time = $this->cookieView->save($randomString);
-                    $this->userModel->saveCookieTime($time);
-                    $message = $this->cookieView->cookieSaveMessage();
-                    $this->loggedInView->setMessage($message);
-                }
-                else{
-                    $message = $this->loginView->LogInSuccessMessage();
-                    $this->loggedInView->setMessage($message);
-                }
-            }
-        }
-
-        /*Tittar om användaren redan är inloggad med sessioner och om den inte är det 
-        så laddas cookie in och kollar om
-        det finns och om det inte gör det så visas ett felmeddelande, men om cookie skulle finnas på klienten så jämförs
-        dem och tittar så att identifieraren i cookien stämmer överens med den på servern och om de gör det så loggas man
-        in annars visas ett felmeddelande.*/
-        $authenticated = $this->userModel->getAuthenticatedUser($userAgent);
-        if($authenticated === false){
-            if($this->cookieView->loadCookie()){
-                $cookieValue = $this->cookieView->cookieExist();
-                if($this->userModel->controlCookieValue($cookieValue, $userAgent)){
-                    $message = $this->cookieView->cookieLoadMessage();
-                    $this->loggedInView->setMessage($message);
-                }
-                else{
-                    $this->cookieView->deleteCookie();
-                    $message = $this->cookieView->cookieModifiedMessage();
-                    $this->loginView->setMessage($message);
-                }
-            }
-        }
-
-        /*Om användaren är inloggad ska användaren kunna logga ut och om den trycker på logga ut så tas cookien bort om de
-        finns på klienten tillsammans med sessionen och man får ett meddelande att man har loggat ut. */
-        $authenticated = $this->userModel->getAuthenticatedUser($userAgent);
-        if($authenticated === true){
-            $userLogOut = $this->loggedInView->userPressedLogOut();
-            if($userLogOut === true){
-                $this->cookieView->deleteCookie();
-                $message = $this->loggedInView->logOutSuccessMessage();
-                $this->loginView->setMessage($message);
-                $this->userModel->LogOut();
-            }
-        }
-
-        $loginView = $this->loginView->loginForm();
-
-        $loggedInView = $this->loggedInView->LoggedInView();
-        $authenticated = $this->userModel->getAuthenticatedUser($userAgent);
-
-        if($authenticated === true){
-            //Returnerar den inloggade vyn.
-            return $loggedInView;
-        }
-        else{
-            return $loginView;
-        }
-    }
-
     public function mainController(){
         $userAgent = $this->serviceHelper->getUserAgent();
         //om användaren klickat på Logga in-knappen
         if($this->loginView->getSubmit()){
             if(!$this->validLogin()){
                 $this->loginView->failedLogIn($this->loginView->getUsername(), $this->loginView->getPassword());
-                return $this->loginView->loginForm();
-            }
-            else {
-                if($this->loginView->wantCookie()){
-                    $randomString = $this->userModel->getRandomString();
-                    $time = $this->cookieView->save($randomString);
-                    $this->userModel->saveCookieTime($time);
-                }
-            return TRUE;    
             }
         }
-        //om användaren nu är inloggad
-        if ($this->validLogin()) {
-            return TRUE;
-        }
-        else{
-            return $this->loginView->loginForm();
-        }
-
+        return $this->loginView->loginForm();
     }
 
     /**
@@ -146,24 +51,31 @@ class LoginController{
         $username = $this->loginView->getUsername();
         $password = $this->loginView->getPassword();
         $realAgent = $this->serviceHelper->getUserAgent();
-        if(!$this->userModel->validateLogin($username, $password, $realAgent)){
+        if($this->userModel->validateLogin($username, $password, $realAgent)){
                 $this->loginView->failedLogIn($username, $password);
-                return FALSE;
+                //om Cookies ska sättas
+                if($this->loginView->wantCookie()){
+                    $time = $this->cookieView->save($username);
+                    $this->userModel->saveCookieTime($time);
+                }
+                return TRUE;
         }
         //Kontrollera inloggning med session
-        if (!$this->userModel->getAuthenticatedUser($realAgent)) {
-            return FALSE;
+        if ($this->userModel->getAuthenticatedUser($realAgent)) {
+            return TRUE;
         }
         //Kontrollera inloggning med cookies
         if($this->cookieView->loadCookie()){ //om kaka finns
             $cookieValue = $this->cookieView->cookieExist(); //Kakans värde
-            if(!$this->userModel->controlCookieValue($cookieValue, $userAgent)){
+            if(!$this->userModel->controlCookieValue($cookieValue, $realAgent)){
                 $this->cookieView->deleteCookie();
                 $message = $this->cookieView->cookieModifiedMessage();
                 $this->loginView->setMessage($message);
-                return FALSE;
+            }
+            else{
+                return TRUE;
             }
         }
-        return TRUE;
+        return FALSE;
     }
 }
