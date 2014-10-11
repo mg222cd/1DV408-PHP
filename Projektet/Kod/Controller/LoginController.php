@@ -56,6 +56,7 @@ class LoginController{
                 //om Cookies ska sättas
                 if($this->loginView->wantCookie()){
                     $time = $this->cookieView->save($username);
+                    $this->userModel->setTime($time);
                     $this->userModel->saveCookieTime($time);
                 }
                 return TRUE;

@@ -44,10 +44,3 @@ class CookieStorage{
         return $this->message = "Felaktig information i cookie";
     }
 }
-
-/**
- * Created by PhpStorm.
- * User: Martin
- * Date: 2014-09-15
- * Time: 10:36
- */ 

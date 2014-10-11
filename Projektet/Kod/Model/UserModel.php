@@ -8,6 +8,11 @@ class UserModel{
     private $authenticatedUser = false;
     private $minValueUsername = 6;
     private $minValuePassword = 6;
+    private $userRepo;
+
+    public function __construct(){
+        $this->userRepo = new \Model\UserRepository();
+    }
 
     //Funktioner för att hämta konstanter
     public function getMinLengthUsername(){
@@ -61,8 +66,7 @@ class UserModel{
 
     //Kontrollerar om namnet redan finns
     public function nameAlreadyExists($nameToCheck){
-        $userRepo = new UserRepository();
-        $existingUsers = $userRepo->getAll();
+        $existingUsers = $this->userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
             if ($name == $nameToCheck) {
@@ -71,14 +75,27 @@ class UserModel{
         }
     }
 
+    private function getCookieTime($username){
+        $existingUsers = $this->userRepo->getAll();
+        foreach ($existingUsers as $existingUser) {
+            $name = $existingUser->getName();
+            if ($name == $username) {
+                return $existingUser->getTime();
+            }
+        }
+    }
+
     public function userExists($username){
         return $this->nameAlreadyExists($username);
     }
 
+    public function setTime($time){
+        return $this->userRepo->setTime($this->username, $time);
+    }
+
     public function validateLogin($usernameToCheck, $passwordToCheck, $userAgent){
         //Sätt authenticatedUser till true eller false beroende på om uppgifterna stämmer med dem i DB
-        $userRepo = new UserRepository();
-        $existingUsers = $userRepo->getAll();
+        $existingUsers = $this->userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
             $password = $existingUser->getPassword();
@@ -114,14 +131,15 @@ class UserModel{
 
     //Kontrollerar om kakans värde stämmer överens med randomsStrings värde.
     public function controlCookieValue($cookieValue, $userAgent){
-        $time = file_get_contents("exist.txt");
-        if($time > time()){
-            if($this->userExists($cookieValue)){
+        if($this->userExists($cookieValue)){
+            $time = $this->getCookieTime($cookieValue);
+            if($time > time()){
                 $_SESSION["ValidLogin"] = $this->username;
                 $_SESSION["UserAgent"] = $userAgent;
                 return $this->authenticatedUser = true;
             }
             else{
+                $this->LogOut();
                 return $this->authenticatedUser = false;
             }
         }

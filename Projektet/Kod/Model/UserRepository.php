@@ -52,8 +52,8 @@ class UserRepository extends DatabaseConnection{
 				$userId = $user['userId'];
 				$username = $user['username'];
 				$password = $user['password'];
-
-				$this->userList[] = new \Model\User($userId, $username, $password);
+				$time = $user['time'];
+				$this->userList[] = new \Model\User($userId, $username, $password, $time);
 			}
 			return $this->userList;	
 		}
@@ -65,7 +65,7 @@ class UserRepository extends DatabaseConnection{
 	public function add($username, $password){
 		try{
 			$db = $this->connection();
-			 $sql = "INSERT INTO member (".self::$username.",". self::$password.") VALUES (?, ?)";
+			$sql = "INSERT INTO member (".self::$username.",". self::$password.") VALUES (?, ?)";
 			$params = array($username, $password);
 
 			$query = $db->prepare($sql);
@@ -81,8 +81,8 @@ class UserRepository extends DatabaseConnection{
 	public function setTime($username, $timeToSet){
 		try{
 			$db = $this->connection();
-			 $sql = "INSERT INTO member (".self::$username.",". self::$password.") VALUES (?, ?)";
-			$params = array($username, $password);
+			$sql = "UPDATE member SET time=? WHERE username=?";
+			$params = array($timeToSet, $username);
 
 			$query = $db->prepare($sql);
 			$query->execute($params);
