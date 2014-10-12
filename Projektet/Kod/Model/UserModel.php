@@ -22,7 +22,8 @@ class UserModel{
         return $this->minValuePassword;
     }
 
-    public function getUsername(){
+    public function setAndGetUsername(){
+        $this->username = $_SESSION["ValidLogin"];
         return $this->username;
     }
 
@@ -138,7 +139,8 @@ class UserModel{
         if($this->userExists($cookieValue)){
             $time = $this->getCookieTime($cookieValue);
             if($time > time()){
-                $_SESSION["ValidLogin"] = $this->username;
+                var_dump($this->username);
+                $_SESSION["ValidLogin"] = $cookieValue;
                 $_SESSION["UserAgent"] = $userAgent;
                 return $this->authenticatedUser = true;
             }
@@ -149,10 +151,15 @@ class UserModel{
         }
     }
 
+
+    /*
+    * DÖD KOD - TA BORT NEDAN:
+    *
     //Sparar tiden när kakan skapades i en fil.
     public function saveCookieTime($time){
         file_put_contents("exist.txt", $time);
     }
+    */
 
 
 }

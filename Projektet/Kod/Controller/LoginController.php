@@ -55,13 +55,12 @@ class LoginController{
                 if($this->loginView->wantCookie()){
                     $time = $this->cookieView->save($username);
                     $this->userModel->setTime($time);
-                    $this->userModel->saveCookieTime($time);
+                    //$this->userModel->saveCookieTime($time);
                 }
                 return TRUE;
         }
         //Kontrollera inloggning med session
         if ($this->userModel->getAuthenticatedUser($realAgent)) {
-            $this->setUsername($this->userModel->getUsername());
             return TRUE;
         }
         //Kontrollera inloggning med cookies

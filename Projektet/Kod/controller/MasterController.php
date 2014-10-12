@@ -38,7 +38,6 @@ private $workoutController;
 				break;
 			default:
 				if ($this->loginController->validLogin() == TRUE) {
-					$this->callWorkoutController();
 					return $this->workoutController->doControl();
 				}
 				else{

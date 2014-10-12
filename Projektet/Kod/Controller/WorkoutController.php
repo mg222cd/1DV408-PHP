@@ -16,8 +16,13 @@ class WorkoutController{
 		$this->workoutView = new \View\WorkoutView();
 		$this->cookieView = new \View\CookieStorage();
 	}
+
+	private function setUsername(){
+		$this->username = $this->userModel->setAndGetUsername();
+	}
 	
 	public function doControl(){
+		$this->setUsername();
 		return $this->workoutView->userMenu($this->username);
 	}
 }
