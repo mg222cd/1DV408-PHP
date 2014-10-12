@@ -12,7 +12,6 @@ class LoginController{
     private $userModel;
     private $cookieView;
     private $serviceHelper;
-    private $username;
 
 
     public function __construct(){
@@ -20,15 +19,6 @@ class LoginController{
         $this->userModel = new \Model\UserModel();
         $this->cookieView = new \View\CookieStorage();
         $this->serviceHelper = new \Helper\ServiceHelper();
-    }
-
-    /**
-    * Returns username
-    *
-    * @return string $username
-    */
-    public function getUsername(){
-        $this->username;
     }
 
     /**
@@ -67,7 +57,6 @@ class LoginController{
                     $this->userModel->setTime($time);
                     $this->userModel->saveCookieTime($time);
                 }
-                $this->username = $username;
                 return TRUE;
         }
         //Kontrollera inloggning med session

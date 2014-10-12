@@ -9,13 +9,12 @@ class WorkoutController{
 	private $userModel;
 	private $workoutView;
 	private $cookieView;
-	private $username;
+	private $username = "hårdkodat namn";
 
-	public function __construct($username){
+	public function __construct(){
 		$this->userModel = new \Model\UserModel();
 		$this->workoutView = new \View\WorkoutView();
 		$this->cookieView = new \View\CookieStorage();
-		$this->username = $username;
 	}
 	
 	public function doControl(){

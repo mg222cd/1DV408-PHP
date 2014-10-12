@@ -133,7 +133,7 @@ class UserModel{
         return $this->authenticatedUser = false;
     }
 
-    //Kontrollerar om kakans värde stämmer överens med randomsStrings värde.
+    //Kontrollerar om kakans värde stämmer överens
     public function controlCookieValue($cookieValue, $userAgent){
         if($this->userExists($cookieValue)){
             $time = $this->getCookieTime($cookieValue);

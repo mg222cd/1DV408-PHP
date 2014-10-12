@@ -11,15 +11,11 @@ class MasterController{
 private $loginController;
 private $userController;
 private $workoutController;
-private $username;
 
 	public function __construct(){
 		$this->loginController = new \Controller\LoginController();
 		$this->userController = new \Controller\UserController();
-	}
-
-	public function callWorkoutController(){
-		$this->workoutController = new \Controller\WorkoutController($this->loginController->getUsername());
+		$this->workoutController = new \Controller\WorkoutController();
 	}
 
 	public function controlNavigation(){
@@ -30,7 +26,6 @@ private $username;
 			case \View\NavigationView::$actionLoggedIn:
 				//security check:
 				if ($this->loginController->validLogin() == TRUE) {
-					$this->callWorkoutController();
 					return $this->workoutController->doControl();
 				}
 				else{
