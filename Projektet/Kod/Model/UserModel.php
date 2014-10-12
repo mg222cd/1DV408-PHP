@@ -126,7 +126,7 @@ class UserModel{
     }
 
     //Om användaren väljer att logga ut så tas sessionen bort.
-    public function LogOut(){
+    public function logout(){
         if(isset($_SESSION["ValidLogin"])){
             unset($_SESSION["ValidLogin"]);
         }
@@ -143,7 +143,7 @@ class UserModel{
                 return $this->authenticatedUser = true;
             }
             else{
-                $this->LogOut();
+                $this->logout();
                 return $this->authenticatedUser = false;
             }
         }

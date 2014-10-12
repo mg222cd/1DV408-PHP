@@ -38,6 +38,7 @@ private $username;
 				}
 				break;
 			case \View\NavigationView::$actionSignOut:
+				$this->loginController->logoutTasks();
 				return $this->loginController->mainController();
 				break;
 			default:

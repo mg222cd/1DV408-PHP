@@ -89,4 +89,9 @@ class LoginController{
         }
         return FALSE;
     }
+
+    public function logoutTasks(){
+        $this->cookieView->deleteCookie();
+        $this->userModel->logout();
+    }
 }

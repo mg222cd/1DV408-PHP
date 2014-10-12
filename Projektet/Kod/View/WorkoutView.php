@@ -14,4 +14,5 @@ class WorkoutView{
         </div>";
 		return $html;
 	}
+	
 }
