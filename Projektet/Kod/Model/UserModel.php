@@ -27,6 +27,16 @@ class UserModel{
         return $this->username;
     }
 
+    public function getUserId($username){
+        $existingUsers = $this->userRepo->getAll();
+        foreach ($existingUsers as $existingUser) {
+            $name = $existingUser->getName();
+            if ($name == $username) {
+                return $existingUser->getUserId();
+            }
+        }
+    }
+
     //Kontrollerar längden på Username
     public function validateUsername($username){
         if (strlen($username) >= $this->minValueUsername) {

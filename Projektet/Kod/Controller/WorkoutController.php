@@ -9,12 +9,16 @@ class WorkoutController{
 	private $userModel;
 	private $workoutView;
 	private $cookieView;
-	private $username = "hårdkodat namn";
+	private $username;
+	private $userId;
 
 	public function __construct(){
 		$this->userModel = new \Model\UserModel();
 		$this->workoutView = new \View\WorkoutView();
 		$this->cookieView = new \View\CookieStorage();
+		//sets values to userId and username
+		$this->setUsername();
+		$this->userId = $this->userModel->getUserId($this->username);
 	}
 
 	private function setUsername(){
@@ -22,7 +26,6 @@ class WorkoutController{
 	}
 	
 	public function doControl(){
-		$this->setUsername();
 		return $this->workoutView->userMenu($this->username);
 	}
 }
