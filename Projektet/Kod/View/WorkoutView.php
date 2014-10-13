@@ -25,17 +25,18 @@ class WorkoutView{
 								<td>'.$workout->getTime().'</td>
 								<td>'.$workout->getAverage().'</td>
 								<td>'.$workout->getComment().'</td>
-								<td>knappar här senare...</td>
+								<td>knappar</td>
 							<tr>';
 		}
 		$html= "
 			<div class 'row'>
 			<div class='col-xs-12'>
 			<div id='workoutTable' class='table-responsive'>
-			<table class='table table-striped table-bordered'>
+			<table class='table table-bordered table table-striped '>
+				<h2 id='headertext'>Dina träningspass</h2>
 				<tr>
-					<th>Datum</th>
-					<th>Träningstyp</th>
+					<th>Träningsdatum</th>
+					<th>Typ</th>
 					<th>Distans (km)</th>
 					<th>Tid</th>
 					<th>Snitt(/km)</th>

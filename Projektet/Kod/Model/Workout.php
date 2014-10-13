@@ -56,8 +56,21 @@ class Workout{
 	}
 
 	public function getAverage(){
-		$newtime = $this->wtime - 50;
-		return $newtime;
+		$time = $this->wtime;
+		$explodedTime = explode(":", $time);
+		$hours = $explodedTime[0];
+		$minutes = $explodedTime[1];
+		$seconds = $explodedTime[2];
+		$totalTimeInSeconds =  ($hours*3600) + ($minutes*60) + $seconds;
+		$timePerKilometerInSeconds = $totalTimeInSeconds / $this->distance;
+		$hoursWithDec = $timePerKilometerInSeconds / 3600;
+		$hours = floor($hoursWithDec);
+		$totalTimeInSecondsMinusHours = $timePerKilometerInSeconds - ($hours*3600);
+		$minutesWithDec = $totalTimeInSecondsMinusHours / 60;
+		$minutes = floor($minutesWithDec);
+		$seconds = round($timePerKilometerInSeconds - ($hours*3600) - ($minutes*60));
+		$average = $hours . ":" . $minutes . ":" . $seconds;
+		return $average;
 	}
 
 }

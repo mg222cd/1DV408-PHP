@@ -46,6 +46,10 @@ header h1{
 /*
 * CONTENT
 */
+#headertext{
+	font-size: 200%;
+	color: #775C67;
+}
 #content{
 	background-color: #FFFFFF;
 	width: 80%;
