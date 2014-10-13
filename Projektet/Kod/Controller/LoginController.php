@@ -40,7 +40,7 @@ class LoginController{
 
     /**
     * If tryed to login - this function makes sure that the login is valid,
-    * either by button-click (username and password), session or cookies
+    * either by username and password, session or cookies
     *
     * @return bool
     */
