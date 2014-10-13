@@ -20,11 +20,12 @@ class WorkoutView{
 		foreach ($workoutList as $workout) {
 			$resultsrow .= '<tr>
 								<td>'.$workout->getDate().'</td>
-								<td>'.$workout->getWorkoutTypeId().'</td>
+								<td>'.$workout->getWorkoutTypeName().'</td>
 								<td>'.$workout->getDistance().'</td>
 								<td>'.$workout->getTime().'</td>
-								<td>'.'ej klart'.'</td>
+								<td>'.$workout->getAverage().'</td>
 								<td>'.$workout->getComment().'</td>
+								<td>knappar här senare...</td>
 							<tr>';
 		}
 		$html= "
@@ -39,6 +40,7 @@ class WorkoutView{
 					<th>Tid</th>
 					<th>Snitt(/km)</th>
 					<th>Kommentar</th>
+					<th>Val</th>
 				<tr>"
 				.$resultsrow."
 			</table>

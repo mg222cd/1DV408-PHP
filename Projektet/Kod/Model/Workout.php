@@ -6,19 +6,21 @@ class Workout{
 	private $workoutId;
 	private $userId;
 	private $workoutTypeId;
-	private $date;
+	private $wdate;
 	private $distance;
-	private $time;
+	private $wtime;
 	private $comment;
+	private $workoutTypeName;
 	
-	public function __construct($workoutId, $userId, $workoutTypeId, $date, $distance, $time, $comment){
+	public function __construct($workoutId, $userId, $workoutTypeId, $wdate, $distance, $wtime, $comment, $workoutTypeName){
 		$this->workoutId = $workoutId;
 		$this->userId = $userId;
 		$this->workoutTypeId = $workoutTypeId;
-		$this->date = $date;
+		$this->wdate = $wdate;
 		$this->distance = $distance;
-		$this->time = $time;
+		$this->wtime = $wtime;
 		$this->comment = $comment;
+		$this->workoutTypeName = $workoutTypeName;
 	}
 
 	public function getWorkoutId(){
@@ -34,7 +36,7 @@ class Workout{
 	}
 
 	public function getDate(){
-		return $this->date;
+		return $this->wdate;
 	}
 
 	public function getDistance(){
@@ -42,16 +44,20 @@ class Workout{
 	}
 
 	public function getTime(){
-		return $this->time;
+		return $this->wtime;
 	}
 
 	public function getComment(){
 		return $this->comment;
 	}
 
-	public function getWorkoutName(){
-		
+	public function getWorkoutTypeName(){
+		return $this->workoutTypeName;
 	}
 
+	public function getAverage(){
+		$newtime = $this->wtime - 50;
+		return $newtime;
+	}
 
 }
