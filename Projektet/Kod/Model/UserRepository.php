@@ -36,7 +36,7 @@ class UserRepository extends DatabaseConnection{
 
 			return NULL;
 		} catch (\PDOException $e) {
-			throw new Exception('Fel uppstod i samband anslutning till databasen.');
+			throw new \Exception('Fel uppstod i samband anslutning till databasen.');
 		}
 	}
 
@@ -58,7 +58,7 @@ class UserRepository extends DatabaseConnection{
 			return $this->userList;	
 		}
 		catch(\PDOException $e){
-			throw new Exception('Fel uppstod i samband med hämtning av namn från databasen.');
+			throw new \Exception('Fel uppstod i samband med hämtning av namn från databasen.');
 		}
 	}
 
@@ -74,7 +74,7 @@ class UserRepository extends DatabaseConnection{
 			return TRUE;
 		}
 		catch(\PDOException $e){
-			throw new Exception('Fel uppstod då användare skulle tilläggas i databasen.');
+			throw new \Exception('Fel uppstod då användare skulle tilläggas i databasen.');
 		}
 	}
 
@@ -90,7 +90,7 @@ class UserRepository extends DatabaseConnection{
 			return TRUE;
 		}
 		catch(\PDOException $e){
-			throw new Exception('Fel uppstod då användare skulle tilläggas i databasen.');
+			throw new \Exception('Fel uppstod då tid på användare skulle tilläggas i databasen.');
 		}
 	}
 }

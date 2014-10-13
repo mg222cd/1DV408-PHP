@@ -5,35 +5,61 @@ require_once("./Model/DatabaseConnection.php");
 require_once("./Model/Workout.php");
 
 class WorkoutRepository extends DatabaseConnection{
+	private $workoutList = array();
 	private static $workoutId = 'workoutId';
 	private static $userId = 'userId';
 	private static $workoutTypeId = 'workoutTypeId';
-	private static $date = 'date',
+	private static $date = 'date';
 	private static $distance = 'distance';
 	private static $time = 'time';
 	private static $comment ='comment';
 	
-	/*
-		//Funktion för att hämta alla namn ur databasen.
-	public function getAll(){
+	public function __construct(){
+		$this->dbTable = 'workout';
+	}
+
+	/**
+	* Pickup all workouts to a specific user
+	*
+	* @param int $userId
+	* @return Workout $WorkoutList
+	*/
+	public function getAllWorkouts($userId){
 		try{
 			$db = $this->connection();
-			$sql = "SELECT * FROM $this->dbTable";
-			$query = $db->prepare($sql);
-			$query->execute();
+			$sql = "SELECT * FROM $this->dbTable WHERE userId = :userId";
+			$params = array(':userId' => $userId);
 
-			foreach ($query->fetchAll() as $user) {
-				$userId = $user['userId'];
-				$username = $user['username'];
-				$password = $user['password'];
-				$time = $user['time'];
-				$this->userList[] = new \Model\User($userId, $username, $password, $time);
+			$query = $db->prepare($sql);
+			$query->execute($params);
+
+			/*
+			$sql = "SELECT * FROM $table WHERE username = :username;";
+			$params = array(':username' => $userId);
+
+			$query = $db->prepare($sql);
+			$query->excute($params);
+		*/
+
+			foreach ($query->fetchAll() as $workout) {
+				$workoutId = $workout['workoutId'];
+				$userId = $workout['userId'];
+				$workoutTypeId = $workout['workoutTypeId'];
+				$date = $workout['date'];
+				$distance = $workout['distance'];
+				$time = $workout['time'];
+				$comment = $workout ['comment'];
+				$this->workoutList[] = new \Model\Workout($workoutId, $userId, $workoutTypeId, $date, $distance, $time, $comment);
 			}
-			return $this->userList;	
+			return $this->workoutList;
 		}
 		catch(\PDOException $e){
-			throw new Exception('Fel uppstod i samband med hämtning av namn från databasen.');
+			//throw new \Exception('Fel uppstod i samband med hämtning av träningspass från databasen.');
+			echo '<pre>';
+			var_dump($e);
+			echo '</pre>';
+
+			die('Error while connection to database.');
 		}
 	}
-	*/
 }

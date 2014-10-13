@@ -6,7 +6,7 @@ class Workout{
 	private $workoutId;
 	private $userId;
 	private $workoutTypeId;
-	private $date,
+	private $date;
 	private $distance;
 	private $time;
 	private $comment;
