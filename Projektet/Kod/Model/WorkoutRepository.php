@@ -33,14 +33,6 @@ class WorkoutRepository extends DatabaseConnection{
 			$query = $db->prepare($sql);
 			$query->execute($params);
 
-			/*
-			$sql = "SELECT * FROM $table WHERE username = :username;";
-			$params = array(':username' => $userId);
-
-			$query = $db->prepare($sql);
-			$query->excute($params);
-		*/
-
 			foreach ($query->fetchAll() as $workout) {
 				$workoutId = $workout['workoutId'];
 				$userId = $workout['userId'];
@@ -54,12 +46,7 @@ class WorkoutRepository extends DatabaseConnection{
 			return $this->workoutList;
 		}
 		catch(\PDOException $e){
-			//throw new \Exception('Fel uppstod i samband med hämtning av träningspass från databasen.');
-			echo '<pre>';
-			var_dump($e);
-			echo '</pre>';
-
-			die('Error while connection to database.');
+			throw new \Exception('Fel uppstod i samband med hämtning av träningspass från databasen.');
 		}
 	}
 }

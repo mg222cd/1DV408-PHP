@@ -15,6 +15,19 @@ class WorkoutController{
 	private $userId;
 
 	public function __construct(){
+		$this->initialize();
+	}
+	
+	public function doControl(){
+		return $this->workoutView->userMenu($this->username);
+
+	}
+
+	private function setUsername(){ // flytta till konstruktor?
+		$this->username = $this->userModel->setAndGetUsername();
+	}
+
+	private function initialize(){
 		$this->userModel = new \Model\UserModel();
 		$this->workoutView = new \View\WorkoutView();
 		$this->cookieView = new \View\CookieStorage();
@@ -22,15 +35,7 @@ class WorkoutController{
 		//sets values to userId and username
 		$this->setUsername();
 		$this->userId = $this->userModel->getUserId($this->username);
-	}
-
-	private function setUsername(){ // flytta till konstruktor?
-		$this->username = $this->userModel->setAndGetUsername();
-	}
-	
-	public function doControl(){
+		//show headermenu
 		$this->workoutRepo->getAllWorkouts($this->userId);
-		return $this->workoutView->userMenu($this->username);
-
 	}
 }
