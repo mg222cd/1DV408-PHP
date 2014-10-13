@@ -13,13 +13,18 @@ class WorkoutController{
 	private $workoutRepo;
 	private $username;
 	private $userId;
+	private $workoutPage;
 
 	public function __construct(){
 		$this->initialize();
 	}
 	
 	public function doControl(){
-		return $this->workoutView->userMenu($this->username);
+		//show list on startpage
+		$workoutList = $this->workoutRepo->getAllWorkouts($this->userId);
+		$workoutListView = $this->workoutView->workoutList($workoutList);
+		$this->workoutPage .= $workoutListView;
+		return $this->workoutPage;
 
 	}
 
@@ -35,7 +40,6 @@ class WorkoutController{
 		//sets values to userId and username
 		$this->setUsername();
 		$this->userId = $this->userModel->getUserId($this->username);
-		//show headermenu
-		$this->workoutRepo->getAllWorkouts($this->userId);
+		$this->workoutPage = $this->workoutView->userMenu($this->username);
 	}
 }

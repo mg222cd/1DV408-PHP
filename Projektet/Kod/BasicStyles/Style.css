@@ -60,6 +60,11 @@ header h1{
 .image_startpage{
 	padding-top: 50px;
 }
+#workoutTable{
+	margin-right: -15px;
+	margin-left: -15px;
+	margin-top: 5%;
+}
 /*
 * FOOTER
 */

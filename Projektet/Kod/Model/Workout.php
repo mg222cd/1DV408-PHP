@@ -48,4 +48,10 @@ class Workout{
 	public function getComment(){
 		return $this->comment;
 	}
+
+	public function getWorkoutName(){
+		
+	}
+
+
 }
