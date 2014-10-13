@@ -65,10 +65,13 @@ class Workout{
 		$timePerKilometerInSeconds = $totalTimeInSeconds / $this->distance;
 		$hoursWithDec = $timePerKilometerInSeconds / 3600;
 		$hours = floor($hoursWithDec);
+		$hours = strlen($hours)<2 ? $hours='0'.$hours : $hours=$hours;
 		$totalTimeInSecondsMinusHours = $timePerKilometerInSeconds - ($hours*3600);
 		$minutesWithDec = $totalTimeInSecondsMinusHours / 60;
 		$minutes = floor($minutesWithDec);
+		$minutes = strlen($minutes)<2 ? $minutes='0'.$minutes : $minutes=$minutes;
 		$seconds = round($timePerKilometerInSeconds - ($hours*3600) - ($minutes*60));
+		$seconds = strlen($seconds)<2 ? $seconds='0'.$seconds : $seconds=$seconds;
 		$average = $hours . ":" . $minutes . ":" . $seconds;
 		return $average;
 	}

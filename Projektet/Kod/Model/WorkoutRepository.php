@@ -35,6 +35,7 @@ class WorkoutRepository extends DatabaseConnection{
 					LEFT JOIN workoutType
 					ON $this->dbTable.workoutTypeId = $this->workouttypeTable.workoutTypeId
 					WHERE userId = :userId
+					ORDER BY $this->dbTable.wdate DESC
 					";
 			
 			//$sql = "SELECT * FROM $this->dbTable WHERE userId = :userId";
