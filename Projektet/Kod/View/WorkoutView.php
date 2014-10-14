@@ -3,6 +3,7 @@ namespace View;
 
 class WorkoutView{
 	private $today;
+	private $time = '00:00:00';
 	private $addWorkout;
 	private $updateWorkout;
 	private $deleteWorkout;
@@ -10,6 +11,12 @@ class WorkoutView{
 	private $submitAdd;
 	private $dateAdd;
 	private $typeAdd;
+	private $distanceAdd;
+	private $timeAdd;
+	private $minutesAdd;
+	private $secondsAdd;
+	private $hoursAdd;
+	private $commentAdd;
 	
 
 	public function __construct(){
@@ -83,28 +90,43 @@ class WorkoutView{
 							$this->typeAdd = $workoutType->getWorkoutTypeId();
 		}
 		$html= "
-		<div class='row'>
-		<div class='col-xs-12 col-sm-6'>
+		<div class='row' id='add_table'>
+		<div class='col-xs-12'>
         <h3>Nytt träningspass</h3>
         <div id='link'><a href='./'>Tillbaka till översikt</a></div>
         <p>$this->message</p>
+        <div class='col-xs-12 col-sm-6'>
         <form method='post' role='form' action='?addWorkout'> 
         	<div class='form-group'>
         	<label for='dateAdd'>Träningsdatum</label>
-            <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today'>
+            <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today' min='2014-01-01' max='$this->today'>
             </div>
-
             <div class='form-group'>
         	<label for='typeAdd'>Typ</label>
-            <select class='form-control' name='typeAdd'>
-            	<option selected>- Välj träningstyp -</option>"
+            <select class='form-control' name='typeAdd'>"
 			  . $optionValues .
 			"</select>
+            </div>
+            <div class='form-group'>
+        	<label for='distanceAdd'>Distans (anges i kilometer)</label>
+            <input type='number' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd'>
+            </div>
+            <div class='form-group'>
+        	<label for='timeAdd'>Tid</label>
+			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000'>
+            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59'>
+            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59'>
+
+            <div class='form-group'>
+        	<label for='commentAdd'>Kommentar</label>
+            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd'>
+            </div>
             </div>
             <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
         </form>
         </div>
         </div>";
+        var_dump($_POST);
         return $html;
 	}
 
