@@ -2,6 +2,17 @@
 namespace View;
 
 class WorkoutView{
+	private $addWorkout;
+	private $updateWorkout;
+	private $deleteWorkout;
+	private $message = '';
+	private $submitAdd;
+	private $dateAdd;
+	private $today;
+
+	public function __construct(){
+		$this->today = date("Y-m-d");
+	}
 	
 	public function userMenu($username){
 		$html= "
@@ -35,7 +46,7 @@ class WorkoutView{
 			<div id='workoutTable' class='table-responsive'>
 			<table class='table table-bordered table table-striped '>
 				<h2 id='headertext'>Dina träningspass</h2>
-				<p><a id='link_add' href='?action=".NavigationView::$actionSignOut."'>Lägg till</a></p>
+				<p><a id='link_add' href='?addWorkout'>Lägg till</a></p>
 				<tr>
 					<th>Träningsdatum</th>
 					<th>Typ</th>
@@ -52,6 +63,43 @@ class WorkoutView{
 			</div>
 		";
 		return $html;
+	}
+
+	public function clickedAdd(){
+		if (isset($_GET['addWorkout'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	public function addWorkoutForm($workoutTypes){
+		$html= "
+		<div class='row'>
+		<div class='col-xs-12 col-sm-6'>
+        <h3>Nytt träningspass</h3>
+        <div id='link'><a href='./'>Tillbaka till översikt</a></div>
+        <p>$this->message</p>
+        <form method='post' role='form' action='?addWorkout'> 
+        	<div class='form-group'>
+        	<label for='dateAdd'>Träningsdatum</label>
+            <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today'>
+            </div>
+            
+            <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
+        </form>
+        </div>
+        </div>";
+        return $html;
+	}
+
+	public function getDateAdd(){
+		if (isset($_POST['dateAdd'])) {
+			$this->dateAdd = $_POST['dateAdd'];
+			return $this->dateAdd;
+		} 
+		else {
+			return "";
+		}
 	}
 	
 }

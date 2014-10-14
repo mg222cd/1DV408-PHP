@@ -14,6 +14,9 @@ class UserRepository extends DatabaseConnection{
 		$this->dbTable = 'member';
 	}
 
+	/*
+	DÖD KOD? TABORT om någon dag om allt fungerar!
+	*
 	public function query($sql, $params = NULL) {
 		try {
 			$db = $this -> connection();
@@ -39,6 +42,7 @@ class UserRepository extends DatabaseConnection{
 			throw new \Exception('Fel uppstod i samband anslutning till databasen.');
 		}
 	}
+	*/
 
 	//Funktion för att hämta alla namn ur databasen.
 	public function getAll(){

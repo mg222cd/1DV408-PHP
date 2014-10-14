@@ -2,16 +2,16 @@
 namespace Model;
 
 class Workouttype{
-	private $workoutId;
+	private $workoutTypeId;
 	private $name;
 
-	public function __construct($workoutId, $name){
-		$this->workoutId = $workoutId;
+	public function __construct($workoutTypeId, $name){
+		$this->workoutTypeId = $workoutTypeId;
 		$this->name = $name;
 	}
 
-	public function getWorkoutId(){
-		return $this->workoutId;
+	public function getWorkoutTypeId(){
+		return $this->workoutTypeId;
 	}
 
 	public function getName(){
