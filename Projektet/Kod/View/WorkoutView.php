@@ -2,13 +2,15 @@
 namespace View;
 
 class WorkoutView{
+	private $today;
 	private $addWorkout;
 	private $updateWorkout;
 	private $deleteWorkout;
 	private $message = '';
 	private $submitAdd;
 	private $dateAdd;
-	private $today;
+	private $typeAdd;
+	
 
 	public function __construct(){
 		$this->today = date("Y-m-d");
@@ -73,6 +75,13 @@ class WorkoutView{
 	}
 
 	public function addWorkoutForm($workoutTypes){
+		$optionValues='';
+		foreach ($workoutTypes as $workoutType) {
+			$optionValues .= '
+							<option value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>
+							';
+							$this->typeAdd = $workoutType->getWorkoutTypeId();
+		}
 		$html= "
 		<div class='row'>
 		<div class='col-xs-12 col-sm-6'>
@@ -84,7 +93,14 @@ class WorkoutView{
         	<label for='dateAdd'>Träningsdatum</label>
             <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today'>
             </div>
-            
+
+            <div class='form-group'>
+        	<label for='typeAdd'>Typ</label>
+            <select class='form-control' name='typeAdd'>
+            	<option selected>- Välj träningstyp -</option>"
+			  . $optionValues .
+			"</select>
+            </div>
             <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
         </form>
         </div>
