@@ -126,7 +126,6 @@ class WorkoutView{
         </form>
         </div>
         </div>";
-        var_dump($_POST);
         return $html;
 	}
 
