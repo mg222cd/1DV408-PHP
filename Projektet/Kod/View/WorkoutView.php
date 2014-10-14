@@ -25,7 +25,8 @@ class WorkoutView{
 								<td>'.$workout->getTime().'</td>
 								<td>'.$workout->getAverage().'</td>
 								<td>'.$workout->getComment().'</td>
-								<td>knappar</td>
+								<td><input type="submit" value="Radera" name="submit_delete" class="btn btn-default">
+									<input type="submit" value="Ändra" name="submit_update" class="btn btn-default"></td>
 							<tr>';
 		}
 		$html= "
@@ -34,6 +35,7 @@ class WorkoutView{
 			<div id='workoutTable' class='table-responsive'>
 			<table class='table table-bordered table table-striped '>
 				<h2 id='headertext'>Dina träningspass</h2>
+				<p><a id='link_add' href='?action=".NavigationView::$actionSignOut."'>Lägg till</a></p>
 				<tr>
 					<th>Träningsdatum</th>
 					<th>Typ</th>

@@ -15,7 +15,6 @@ private $workoutController;
 	public function __construct(){
 		$this->loginController = new \Controller\LoginController();
 		$this->userController = new \Controller\UserController();
-		$this->workoutController = new \Controller\WorkoutController();
 	}
 
 	public function controlNavigation(){
@@ -26,6 +25,7 @@ private $workoutController;
 			case \View\NavigationView::$actionLoggedIn:
 				//security check:
 				if ($this->loginController->validLogin() == TRUE) {
+					$this->callWorkoutController();
 					return $this->workoutController->doControl();
 				}
 				else{
@@ -38,6 +38,7 @@ private $workoutController;
 				break;
 			default:
 				if ($this->loginController->validLogin() == TRUE) {
+					$this->callWorkoutController();
 					return $this->workoutController->doControl();
 				}
 				else{
@@ -45,6 +46,10 @@ private $workoutController;
 				}
 				break;
 		}
+	}
+
+	public function callWorkoutController(){
+		$this->workoutController = new \Controller\WorkoutController();
 	}
 
 }
