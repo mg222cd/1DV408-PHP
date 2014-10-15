@@ -28,7 +28,8 @@ class Validator {
 	* XXXXXXXX­XXXX
 	* XXXXXXXXXXXX */
 	static function isPersonalIdNumber($var) {
-		$pattern = “^(19|20)?([0­9]{6}[­]?[0­9]{4}$”; $stdForm = substr(str_replace(‘­’, ‘’, $var), ­10, 10);
+		$pattern = “^(19|20)?([0­9]{6}[­]?[0­9]{4}$”; 
+		$stdForm = substr(str_replace(‘­’, ‘’, $var), ­10, 10);
 		if (preg_match($pattern, $var) && Validator::isLuhn($stdForm)){ 
 			return TRUE;
 		} 
@@ -59,7 +60,8 @@ class Validator {
 		//yy­mm­dd
 		$pattern2 = “^\d\d[­ /.](0[1­9]|1[012])[­ /.](0[1­9]|[12]\d|3[01])$”; //yymmdd
 		$pattern3 = “^\d\d(0[1­9]|1[012])(0[1­9]|[12]\d|3[01])$”;
-		if (preg_match($pattern1, $var) || preg_match($pattern2, $var) || preg_match($pattern3, $var) { 
+		$pattern4 = '/^[0-9]{4,4}\-[0-9]{2,2}\-[0-9]{2,2}$/ ';
+		if (preg_match($pattern4, $var) { 
 			return TRUE;
 		} else { 
 			return FALSE; 

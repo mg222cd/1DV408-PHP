@@ -90,6 +90,13 @@ class WorkoutView{
 							';
 							$this->typeAdd = $workoutType->getWorkoutTypeId();
 		}
+		$date = isset($_POST['dateAdd']) ? $_POST['dateAdd'] : '';
+		$username = isset($_POST['username']) ? $_POST['username'] : '';
+		$username = isset($_POST['username']) ? $_POST['username'] : '';
+		$username = isset($_POST['username']) ? $_POST['username'] : '';
+		$username = isset($_POST['username']) ? $_POST['username'] : '';
+		$username = isset($_POST['username']) ? $_POST['username'] : '';
+		$username = isset($_POST['username']) ? $_POST['username'] : '';
 		$html= "
 		<div class='row' id='add_table'>
 		<div class='col-xs-12'>
@@ -100,7 +107,7 @@ class WorkoutView{
         <form method='post' role='form' action='?addWorkout'> 
         	<div class='form-group'>
         	<label for='dateAdd'>Träningsdatum</label>
-            <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today' min='2014-01-01' max='$this->today'>
+            <input type='text' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today' min='2014-01-01' max='$this->today'>
             </div>
             <div class='form-group'>
         	<label for='typeAdd'>Typ</label>
@@ -110,12 +117,12 @@ class WorkoutView{
             </div>
             <div class='form-group'>
         	<label for='distanceAdd'>Distans (anges i kilometer)</label>
-            <input type='number' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd'>
+            <input type='text' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd'>
             </div>
             <div class='form-group'>
         	<label for='timeAdd'>Tid</label>
 			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000'>
-            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59'>
+            <input type='text' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59'>
             <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59'>
             </div>
             <div class='form-group'>
@@ -127,6 +134,7 @@ class WorkoutView{
         </form>
         </div>
         </div>";
+        var_dump($_POST);
         return $html;
 	}
 
@@ -207,8 +215,19 @@ class WorkoutView{
 		return FALSE;
 	}
 
+	public function clearMessage(){
+		$this->message = '';
+	}
+
 	public function failRequiredFields(){
 		$this->message = '<p class="error">Oligatoriska fält saknas, fälten "Distans" och "minuter" måste vara ifyllda.</p>';
 	}
+
+	public function failDateFormat(){
+		$this->message = '<p class="error">Fel format på datum. Rätt format ska vara ÅÅÅÅ-MM-DD</p>';
+	}
 	
+	public function failDistanceFormat(){
+		$this->message .= '<p class="error">Fel format på distans-fältet. Rätt format ska 1-4 st heltal</p>';
+	}
 }

@@ -6,6 +6,7 @@ require_once("./View/WorkoutView.php");
 require_once("./View/CookieView.php");
 require_once("./Model/WorkoutRepository.php");
 require_once("./Model/WorkouttypeRepository.php");
+require_once("./Model/WorkoutModel.php");
 
 class WorkoutController{
 	private $userModel;
@@ -13,6 +14,7 @@ class WorkoutController{
 	private $cookieView;
 	private $workoutRepo;
 	private $workouttypeRepo;
+	private $workoutModel;
 	private $username;
 	private $userId;
 	private $workoutPage;
@@ -24,6 +26,7 @@ class WorkoutController{
 		$this->cookieView = new \View\CookieStorage();
 		$this->workoutRepo = new \Model\WorkoutRepository();
 		$this->workouttypeRepo = new \Model\WorkouttypeRepository();
+		$this->workoutModel = new \Model\WorkoutModel();
 		$this->initialize();
 	}
 	
@@ -31,13 +34,30 @@ class WorkoutController{
 		//add
 		if ($this->workoutView->clickedAdd()) {
 			//kontrollera ifyllda fält
-			if (!$this->workoutView->isFilledDistance() || $this->workoutView->isFilledMinutes()) {
+			if (!$this->workoutView->isFilledDistance() || !$this->workoutView->isFilledMinutes()) {
 				$this->workoutView->failRequiredFields();
 			}
-			//kontrollera validering
-			//giltigt format på datum, 
-			//att distans och tid är heltal och av rätt längd. 
-			//och köra en strip_tags() på fritextfält?
+			else{
+				$this->workoutView->clearMessage();
+				//kontrollera validering...
+				//...giltigt format på datum
+				if (!$this->workoutModel->isShortDate($this->workoutView->getDateAdd())) {
+			 		$this->workoutView->failDateFormat();
+			 	}
+			 	else{
+			 		//...att distans...
+			 		if (!$this->workoutModel->validateDistance($this->workoutView->getDistanceAdd())) {
+			 			$this->workoutView->failDistanceFormat();
+			 		}
+			 	} 
+
+			}
+			
+			
+			
+			//...och tid är heltal och av rätt längd. 
+			//...och köra en strip_tags() på fritextfält?
+			//...säkerhetskontroll att alla fält är ifyllda fortf
 			$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
 			return $this->workoutPage;
 		}
