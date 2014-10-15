@@ -72,7 +72,10 @@ header h1{
 .time{
 	width: 20%;
 }
-
+.error{
+	font-weight: bold;
+	color:#ff0000;
+}
 /*
 * FOOTER
 */

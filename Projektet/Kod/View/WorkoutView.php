@@ -81,6 +81,7 @@ class WorkoutView{
 		return FALSE;
 	}
 
+
 	public function addWorkoutForm($workoutTypes){
 		$optionValues='';
 		foreach ($workoutTypes as $workoutType) {
@@ -116,13 +117,13 @@ class WorkoutView{
 			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000'>
             <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59'>
             <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59'>
-
+            </div>
             <div class='form-group'>
         	<label for='commentAdd'>Kommentar</label>
             <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd'>
             </div>
-            </div>
             <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
+            </div>
         </form>
         </div>
         </div>";
@@ -133,10 +134,81 @@ class WorkoutView{
 		if (isset($_POST['dateAdd'])) {
 			$this->dateAdd = $_POST['dateAdd'];
 			return $this->dateAdd;
-		} 
-		else {
-			return "";
 		}
+		return '';
+	}
+
+	public function getTypeAdd(){
+		if (isset($_POST['typeAdd]'])) {
+			$this->typeAdd = $_POST['typeAdd'];
+			return $this->typeAdd;
+		}
+		return '';
+	}
+
+	public function getDistanceAdd(){
+		if (isset($_POST['distanceAdd'])) {
+			$this->distanceAdd = $_POST['distanceAdd'];
+			return $this->distanceAdd;
+		}
+		return '';
+	}
+	//["commentAdd"]=> string(12) "en text här" ["submitAdd"]=> string(10) "Lägg till" }
+	public function getHoursAdd(){
+		if (isset($_POST['hoursAdd'])) {
+			$this->hoursAdd = $_POST['hoursAdd'];
+			return $this->hoursAdd;
+		}
+		$this->hoursAdd = '00';
+		return $this->hoursAdd;
+	}
+
+	public function getMinutesAdd(){
+		if (isset($_POST['minutesAdd'])) {
+			$this->minutesAdd = $_POST['minutesAdd'];
+			return $this->minutesAdd;
+		}
+		$this->minutesAdd = '00';
+		return $this->minutesAdd;
+	}
+
+	public function getSecondsAdd(){
+		if (isset($_POST['secondsAdd'])) {
+			$this->secondsAdd = $_POST['secondsAdd'];
+			return $this->secondsAdd;
+		}
+		$this->secondsAdd = '00';
+		return $this->secondsAdd;
+	}
+
+	public function getTimeAdd(){
+
+	}
+
+	public function getCommentAdd(){
+		if (isset($_POST['commentAdd'])) {
+			$this->commentAdd = $_POST['commentAdd'];
+			return $this->commentAdd;
+		}
+		return '';
+	}
+
+	public function isFilledDistance(){
+		if (isset($_POST['distanceAdd']) && !empty($_POST['distanceAdd'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	public function isFilledMinutes(){
+		if (isset($_POST['minutesAdd']) && !empty($_POST['minutesAdd'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	public function failRequiredFields(){
+		$this->message = '<p class="error">Oligatoriska fält saknas, fälten "Distans" och "minuter" måste vara ifyllda.</p>';
 	}
 	
 }

@@ -30,6 +30,14 @@ class WorkoutController{
 	public function doControl(){
 		//add
 		if ($this->workoutView->clickedAdd()) {
+			//kontrollera ifyllda fält
+			if (!$this->workoutView->isFilledDistance() || $this->workoutView->isFilledMinutes()) {
+				$this->workoutView->failRequiredFields();
+			}
+			//kontrollera validering
+			//giltigt format på datum, 
+			//att distans och tid är heltal och av rätt längd. 
+			//och köra en strip_tags() på fritextfält?
 			$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
 			return $this->workoutPage;
 		}
@@ -57,4 +65,6 @@ class WorkoutController{
 		$this->userId = $this->userModel->getUserId($this->username);
 		$this->workoutPage = $this->workoutView->userMenu($this->username);
 	}
+
+
 }
