@@ -90,13 +90,11 @@ class WorkoutView{
 							';
 							$this->typeAdd = $workoutType->getWorkoutTypeId();
 		}
-		$date = isset($_POST['dateAdd']) ? $_POST['dateAdd'] : '';
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
+		$distance = isset($_POST['distanceAdd']) ? $_POST['distanceAdd'] : '';
+		$hours = isset($_POST['hoursAdd']) ? $_POST['hoursAdd'] : '';
+		$minutes = isset($_POST['minutesAdd']) ? $_POST['minutesAdd'] : '';
+		$seconds = isset($_POST['secondsAdd']) ? $_POST['secondsAdd'] : '';
+		$comment = isset($_POST['commentAdd']) ? $_POST['commentAdd'] : '';
 		$html= "
 		<div class='row' id='add_table'>
 		<div class='col-xs-12'>
@@ -117,17 +115,17 @@ class WorkoutView{
             </div>
             <div class='form-group'>
         	<label for='distanceAdd'>Distans (anges i kilometer)</label>
-            <input type='text' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd'>
+            <input type='text' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd' value='$distance'>
             </div>
             <div class='form-group'>
         	<label for='timeAdd'>Tid</label>
-			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000'>
-            <input type='text' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59'>
-            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59'>
+			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='$hours'>
+            <input type='text' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='$minutes'>
+            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59' value='$seconds'>
             </div>
             <div class='form-group'>
         	<label for='commentAdd'>Kommentar</label>
-            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd'>
+            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='$comment'>
             </div>
             <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
             </div>
@@ -220,7 +218,7 @@ class WorkoutView{
 	}
 
 	public function failRequiredFields(){
-		$this->message = '<p class="error">Oligatoriska fält saknas, fälten "Distans" och "minuter" måste vara ifyllda.</p>';
+		$this->message = '<p class="error">Oligatoriska fält saknas. Båda fälten "Distans" och "minuter" måste vara ifyllda.</p>';
 	}
 
 	public function failDateFormat(){
