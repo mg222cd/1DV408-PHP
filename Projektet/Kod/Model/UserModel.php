@@ -149,7 +149,6 @@ class UserModel{
         if($this->userExists($cookieValue)){
             $time = $this->getCookieTime($cookieValue);
             if($time > time()){
-                var_dump($this->username);
                 $_SESSION["ValidLogin"] = $cookieValue;
                 $_SESSION["UserAgent"] = $userAgent;
                 return $this->authenticatedUser = true;

@@ -14,36 +14,6 @@ class UserRepository extends DatabaseConnection{
 		$this->dbTable = 'member';
 	}
 
-	/*
-	DÖD KOD? TABORT om någon dag om allt fungerar!
-	*
-	public function query($sql, $params = NULL) {
-		try {
-			$db = $this -> connection();
-
-			$query = $db -> prepare($sql);
-			$result;
-			if ($params != NULL) {
-				if (!is_array($params)) {
-					$params = array($params);
-				}
-
-				$result = $query -> execute($params);
-			} else {
-				$result = $query -> execute();
-			}
-
-			if ($result) {
-				return $result -> fetchAll();
-			}
-
-			return NULL;
-		} catch (\PDOException $e) {
-			throw new \Exception('Fel uppstod i samband anslutning till databasen.');
-		}
-	}
-	*/
-
 	//Funktion för att hämta alla namn ur databasen.
 	public function getAll(){
 		try{
@@ -69,7 +39,7 @@ class UserRepository extends DatabaseConnection{
 	public function add($username, $password){
 		try{
 			$db = $this->connection();
-			$sql = "INSERT INTO member (".self::$username.",". self::$password.") VALUES (?, ?)";
+			$sql = "INSERT INTO member (".self::$username.",".self::$password.") VALUES (?, ?)";
 			$params = array($username, $password);
 
 			$query = $db->prepare($sql);

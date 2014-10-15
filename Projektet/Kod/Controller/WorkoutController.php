@@ -38,8 +38,8 @@ class WorkoutController{
 		//delete
 		//update
 		//annars:
+		$this->workoutRepo->addWorkout('1', '1', '2014-10-15', '50', '10:00:23', 'inga kommentarer');
 		return $this->showList();
-		//return $this->workouttypeRepo->getAll();
 	}
 
 	public function showList(){
@@ -89,6 +89,8 @@ class WorkoutController{
                 if ($strippedComment != NULL) {
                     $this->workoutView->failComment($strippedComment);
                 }
+                //hämta värden
+
 		 	} 
 		}
 		$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
