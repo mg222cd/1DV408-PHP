@@ -18,4 +18,22 @@ class WorkoutModel{
 		}
 		return FALSE;
 	}
+
+	public function validateTime($hours, $minutes, $seconds){
+		$regex = '/^[0-9]{1,2}$/';
+		if (preg_match($regex, $hours) && preg_match($regex, $minutes) && preg_match($regex, $seconds)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	public function sanitizeText($comment){
+        $strippedComment = strip_tags($comment);
+        if ($strippedComment != $comment) {
+            return $strippedComment;
+        }
+        else{
+            return NULL;
+        }
+    }
 }

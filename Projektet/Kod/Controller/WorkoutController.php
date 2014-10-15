@@ -34,30 +34,37 @@ class WorkoutController{
 		//add
 		if ($this->workoutView->clickedAdd()) {
 			//kontrollera ifyllda fält
-			if (!$this->workoutView->isFilledDistance() || !$this->workoutView->isFilledMinutes()) {
+			if (!$this->workoutView->isFilledDistance() || !$this->workoutView->isFilledMinutes() || !$this->workoutView->isFilledType()) {
 				$this->workoutView->failRequiredFields();
 			}
 			else{
 				$this->workoutView->clearMessage();
 				//kontrollera validering...
-				//...giltigt format på datum
+				//...datum
 				if (!$this->workoutModel->isShortDate($this->workoutView->getDateAdd())) {
 			 		$this->workoutView->failDateFormat();
 			 	}
 			 	else{
-			 		//...att distans...
+			 		//...distans
 			 		if (!$this->workoutModel->validateDistance($this->workoutView->getDistanceAdd())) {
 			 			$this->workoutView->failDistanceFormat();
 			 		}
+			 		//...tid (timmar, minuter, sekunder)
+			 		$hours = $this->workoutView->getHoursAdd();
+			 		$minutes = $this->workoutView->getMinutesAdd();
+			 		$seconds = $this->workoutView->getSecondsAdd();
+			 		if (!$this->workoutModel->validateTime($hours, $minutes, $seconds)) {
+			 			$this->workoutView->failTimeFormat();
+			 		}
+			 		//...otillåtna tecken
+			 		$strippedComment = $this->workoutModel->sanitizeText($this->workoutView->getCommentAdd());
+                    if ($strippedComment != NULL) {
+                        $this->workoutView->failComment($strippedComment);
+                    }
+			 		//KOM IHÅG - ändra tillbaka input types.
 			 	} 
 
 			}
-			
-			
-			
-			//...och tid är heltal och av rätt längd. 
-			//...och köra en strip_tags() på fritextfält?
-			//...säkerhetskontroll att alla fält är ifyllda fortf
 			$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
 			return $this->workoutPage;
 		}

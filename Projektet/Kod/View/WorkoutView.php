@@ -105,27 +105,31 @@ class WorkoutView{
         <form method='post' role='form' action='?addWorkout'> 
         	<div class='form-group'>
         	<label for='dateAdd'>Träningsdatum</label>
-            <input type='text' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today' min='2014-01-01' max='$this->today'>
+            <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$this->today' min='2014-01-01' max='$this->today'>
             </div>
             <div class='form-group'>
         	<label for='typeAdd'>Typ</label>
-            <select class='form-control' name='typeAdd'>"
-			  . $optionValues .
+            <select class='form-control' name='typeAdd'>
+            	<option selected>- Välj träningstyp -</option>"
+			  	. $optionValues .
 			"</select>
             </div>
             <div class='form-group'>
         	<label for='distanceAdd'>Distans (anges i kilometer)</label>
-            <input type='text' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd' value='$distance'>
+            <input type='number' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd' value='$distance'>
             </div>
             <div class='form-group'>
         	<label for='timeAdd'>Tid</label>
 			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='$hours'>
-            <input type='text' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='$minutes'>
+			<p>Timmar</p>
+            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='$minutes'>
+            <p>Minuter</p>
             <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59' value='$seconds'>
+            <p>Sekunder</p>
             </div>
             <div class='form-group'>
         	<label for='commentAdd'>Kommentar</label>
-            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='$comment'>
+            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='comment'>
             </div>
             <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
             </div>
@@ -159,10 +163,13 @@ class WorkoutView{
 		}
 		return '';
 	}
-	//["commentAdd"]=> string(12) "en text här" ["submitAdd"]=> string(10) "Lägg till" }
+	
 	public function getHoursAdd(){
 		if (isset($_POST['hoursAdd'])) {
 			$this->hoursAdd = $_POST['hoursAdd'];
+			if (strlen($this->hoursAdd == 1)) {
+				$this->hoursAdd = '0'.$this->hoursAdd;
+			}
 			return $this->hoursAdd;
 		}
 		$this->hoursAdd = '00';
@@ -172,6 +179,9 @@ class WorkoutView{
 	public function getMinutesAdd(){
 		if (isset($_POST['minutesAdd'])) {
 			$this->minutesAdd = $_POST['minutesAdd'];
+			if (strlen($this->minutesAdd == 1)) {
+				$this->minutesAdd = '0'.$this->minutesAdd;
+			}
 			return $this->minutesAdd;
 		}
 		$this->minutesAdd = '00';
@@ -181,6 +191,9 @@ class WorkoutView{
 	public function getSecondsAdd(){
 		if (isset($_POST['secondsAdd'])) {
 			$this->secondsAdd = $_POST['secondsAdd'];
+			if (strlen($this->secondsAdd == 1)) {
+				$this->secondsAdd = '0'.$secondsAdd;
+			}
 			return $this->secondsAdd;
 		}
 		$this->secondsAdd = '00';
@@ -197,6 +210,13 @@ class WorkoutView{
 			return $this->commentAdd;
 		}
 		return '';
+	}
+
+	public function isFilledType(){
+		if ($_POST['typeAdd'] != '- Välj träningstyp -') {
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	public function isFilledDistance(){
@@ -218,7 +238,8 @@ class WorkoutView{
 	}
 
 	public function failRequiredFields(){
-		$this->message = '<p class="error">Oligatoriska fält saknas. Båda fälten "Distans" och "minuter" måste vara ifyllda.</p>';
+		$this->message = '<p class="error">Oligatoriska fält saknas.</p>
+			<p class="error">Fälten "Typ", "Distans" och "Minuter" måste vara ifyllda.</p>';
 	}
 
 	public function failDateFormat(){
@@ -227,5 +248,14 @@ class WorkoutView{
 	
 	public function failDistanceFormat(){
 		$this->message .= '<p class="error">Fel format på distans-fältet. Rätt format ska 1-4 st heltal</p>';
+	}
+
+	public function failTimeFormat(){
+		$this->message .= '<p class="error">Fel format på något av tidsfälten. Rätt format ska 1-2 st heltal</p>';
+	}
+
+	public function failComment($strippedComment){
+		$this->message .= '<p class="error">Otillåtna tecken i kommentarsfältet</p>';
+		$_POST['commentAdd'] = $strippedComment;
 	}
 }
