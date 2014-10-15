@@ -33,40 +33,7 @@ class WorkoutController{
 	public function doControl(){
 		//add
 		if ($this->workoutView->clickedAdd()) {
-			//kontrollera ifyllda fält
-			if (!$this->workoutView->isFilledDistance() || !$this->workoutView->isFilledMinutes() || !$this->workoutView->isFilledType()) {
-				$this->workoutView->failRequiredFields();
-			}
-			else{
-				$this->workoutView->clearMessage();
-				//kontrollera validering...
-				//...datum
-				if (!$this->workoutModel->isShortDate($this->workoutView->getDateAdd())) {
-			 		$this->workoutView->failDateFormat();
-			 	}
-			 	else{
-			 		//...distans
-			 		if (!$this->workoutModel->validateDistance($this->workoutView->getDistanceAdd())) {
-			 			$this->workoutView->failDistanceFormat();
-			 		}
-			 		//...tid (timmar, minuter, sekunder)
-			 		$hours = $this->workoutView->getHoursAdd();
-			 		$minutes = $this->workoutView->getMinutesAdd();
-			 		$seconds = $this->workoutView->getSecondsAdd();
-			 		if (!$this->workoutModel->validateTime($hours, $minutes, $seconds)) {
-			 			$this->workoutView->failTimeFormat();
-			 		}
-			 		//...otillåtna tecken
-			 		$strippedComment = $this->workoutModel->sanitizeText($this->workoutView->getCommentAdd());
-                    if ($strippedComment != NULL) {
-                        $this->workoutView->failComment($strippedComment);
-                    }
-			 		//KOM IHÅG - ändra tillbaka input types.
-			 	} 
-
-			}
-			$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
-			return $this->workoutPage;
+			$this->addScenarios();
 		}
 		//delete
 		//update
@@ -91,6 +58,41 @@ class WorkoutController{
 		$this->setUsername();
 		$this->userId = $this->userModel->getUserId($this->username);
 		$this->workoutPage = $this->workoutView->userMenu($this->username);
+	}
+
+	private function addScenarios(){
+		//kontrollera ifyllda fält
+		if (!$this->workoutView->isFilledDistance() || !$this->workoutView->isFilledMinutes() || !$this->workoutView->isFilledType()) {
+			$this->workoutView->failRequiredFields();
+		}
+		else{
+			$this->workoutView->clearMessage();
+			//kontrollera validering...
+			//...datum
+			if (!$this->workoutModel->isShortDate($this->workoutView->getDateAdd())) {
+		 		$this->workoutView->failDateFormat();
+		 	}
+		 	else{
+		 		//...distans
+		 		if (!$this->workoutModel->validateDistance($this->workoutView->getDistanceAdd())) {
+		 			$this->workoutView->failDistanceFormat();
+		 		}
+		 		//...tid (timmar, minuter, sekunder)
+		 		$hours = $this->workoutView->getHoursAdd();
+		 		$minutes = $this->workoutView->getMinutesAdd();
+		 		$seconds = $this->workoutView->getSecondsAdd();
+		 		if (!$this->workoutModel->validateTime($hours, $minutes, $seconds)) {
+		 			$this->workoutView->failTimeFormat();
+		 		}
+		 		//...otillåtna tecken
+		 		$strippedComment = $this->workoutModel->sanitizeText($this->workoutView->getCommentAdd());
+                if ($strippedComment != NULL) {
+                    $this->workoutView->failComment($strippedComment);
+                }
+		 	} 
+		}
+		$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
+		return $this->workoutPage;
 	}
 
 
