@@ -78,23 +78,22 @@ class WorkoutRepository extends DatabaseConnection{
 			throw new \Exception('Fel uppstod då användare skulle tilläggas i databasen.');
 		}
 	}*/
+	//$sql2 = 'INSERT INTO $this->dbTable (".self::$userId.", ".self::$workoutTypeId.", ".self::$wdate.", ".self::$distance.", 
+			//		".self::$wtime.", ".self::$comment.") 
+			//		VALUES ("1", "5", "2014-10-15", "33", "03:22:22", "marike grinde test hejhej")';
+	//$sql = "INSERT INTO $this->dbTable (".self::$userId.", ".self::$workoutTypeId.", ".self::$wdate.", ".self::$distance.", ".self::$wtime.", ".self::$comment.")";
+
 
 	public function addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment){
 		try{
 			$db = $this->connection();
-			//$sql = "INSERT INTO $this->dbTable (".self::$userId.", ".self::$workoutTypeId.", ".self::$wdate.", ".self::$distance.", ".self::$wtime.", ".self::$comment.")";
-			$sql = 'INSERT INTO $this->dbTable (".self::$userId.",".self::$workoutTypeId.",".self::$wdate.",".self::$distance.",
-					".self::$wtime.",".self::$comment.")
-					VALUES (userId = :userId, workoutTypeId = :workoutTypeId, wdate = :wdate, distance = :distance
-						wtime = :wtime, comment = :comment)
-					';
-			//$sql2 = 'INSERT INTO $this->dbTable (".self::$userId.", ".self::$workoutTypeId.", ".self::$wdate.", ".self::$distance.", 
-			//		".self::$wtime.", ".self::$comment.") 
-			//		VALUES ("1", "5", "2014-10-15", "33", "03:22:22", "marike grinde test hejhej")';
+			
+			$sql = "INSERT INTO $this->dbTable (".self::$userId.",".self::$workoutTypeId.",".self::$wdate.",".self::$distance.",".self::$wtime.",".self::$comment.")
+               VALUES (userId = :userId, workoutTypeId = :workoutTypeId, wdate = :wdate, distance = :distance wtime = :wtime, comment = :comment);";
 			$params = array (':userId' => $userId, ':workoutTypeId' => $workoutTypeId, ':wdate' => $wdate, 
 				':distance' => $distance, ':wtime' => $wtime, ':comment' => $comment);
 
-			$query = $db->prepare($sql2);
+			$query = $db->prepare($sql);
 			$query->execute($params);
 
 			return TRUE;
