@@ -62,36 +62,13 @@ class WorkoutRepository extends DatabaseConnection{
 		}
 	}
 
-	/*
-	public function add($username, $password){
-		try{
-			$db = $this->connection();
-			$sql = "INSERT INTO member (".self::$username.",". self::$password.") VALUES (?, ?)";
-			$params = array($username, $password);
-
-			$query = $db->prepare($sql);
-			$query->execute($params);
-
-			return TRUE;
-		}
-		catch(\PDOException $e){
-			throw new \Exception('Fel uppstod då användare skulle tilläggas i databasen.');
-		}
-	}*/
-	//$sql2 = 'INSERT INTO $this->dbTable (".self::$userId.", ".self::$workoutTypeId.", ".self::$wdate.", ".self::$distance.", 
-			//		".self::$wtime.", ".self::$comment.") 
-			//		VALUES ("1", "5", "2014-10-15", "33", "03:22:22", "marike grinde test hejhej")';
-	//$sql = "INSERT INTO $this->dbTable (".self::$userId.", ".self::$workoutTypeId.", ".self::$wdate.", ".self::$distance.", ".self::$wtime.", ".self::$comment.")";
-
-
 	public function addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment){
 		try{
 			$db = $this->connection();
 			
 			$sql = "INSERT INTO $this->dbTable (".self::$userId.",".self::$workoutTypeId.",".self::$wdate.",".self::$distance.",".self::$wtime.",".self::$comment.")
-               VALUES (userId = :userId, workoutTypeId = :workoutTypeId, wdate = :wdate, distance = :distance wtime = :wtime, comment = :comment);";
-			$params = array (':userId' => $userId, ':workoutTypeId' => $workoutTypeId, ':wdate' => $wdate, 
-				':distance' => $distance, ':wtime' => $wtime, ':comment' => $comment);
+               VALUES (?, ?, ?, ?, ?, ?);";
+			$params = array ($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment);
 
 			$query = $db->prepare($sql);
 			$query->execute($params);
@@ -99,8 +76,7 @@ class WorkoutRepository extends DatabaseConnection{
 			return TRUE;
 		}
 		catch(\PDOException $e){
-			var_dump($e);
-			//throw new \Exception('Fel uppstod då träningspass skulle tilläggas i databasen.');
+			throw new \Exception('Fel uppstod då träningspass skulle tilläggas i databasen.');
 		}	
 	}
 }

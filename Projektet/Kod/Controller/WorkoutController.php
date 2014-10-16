@@ -38,7 +38,7 @@ class WorkoutController{
 		//delete
 		//update
 		//annars:
-		$this->workoutRepo->addWorkout('1', '1', '2014-10-15', '50', '10:00:23', 'inga kommentarer');
+		$this->workoutRepo->addWorkout('1', '1', '2014-10-06', '50', '10:00:23', 'ett nytt test!! en kommentar. na na na nana ');
 		return $this->showList();
 	}
 
