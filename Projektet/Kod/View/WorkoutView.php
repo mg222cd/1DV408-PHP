@@ -1,6 +1,8 @@
 <?php
 namespace View;
 
+require_once("./Helpers/Message.php");
+
 class WorkoutView{
 	private $today;
 	private $time = '00:00:00';
@@ -17,10 +19,16 @@ class WorkoutView{
 	private $secondsAdd;
 	private $hoursAdd;
 	private $commentAdd;
+	private $messageClass;
 	
 
 	public function __construct(){
 		$this->today = date("Y-m-d");
+		$this->messageClass = new \Helpers\Message();
+		$message = $this->messageClass->getMessage();
+		if ($message != '') {
+			$this->message = $message;
+		}
 	}
 	
 	public function userMenu($username){
@@ -284,10 +292,19 @@ class WorkoutView{
 	}
 
 	public function succeedAdd(){
-		$this->message .= '<p class="succeed">Nytt träningspass lades till.</p>';
+		$this->messageClass->setMessage('<p class="succeed">Nytt träningspass lades till.</p>');
+	}
+
+	public function succeedDelete(){
+		$this->messageClass->setMessage('<p class="succeed">Träningspasset raderades!</p>');
 	}
 
 	public function confirmDelete(){
-		$this->message .= '<p class="error">Vill du verkligen radera träningspasset? <a href="?delete='.$this->getDelete().'&confirm">Ja, radera!</a> <a href="./">Nej, ångra.</a> </p>';
+		$this->message .= '<p class="error">Vill du verkligen radera träningspasset? 
+		<a class="btn btn-default" href="?delete='.$this->getDelete().'&confirm">Ja, radera!</a> <a class="btn btn-default" href="./">Nej, ångra.</a> </p>';
+	}
+
+	public function failDelete(){
+		$this->messageClass->setMessage('<p class="error">Valt träningspass kunde inte raderas.</p>');
 	}
 }

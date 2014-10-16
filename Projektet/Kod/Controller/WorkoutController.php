@@ -41,6 +41,7 @@ class WorkoutController{
 				$wtime = $this->workoutView->getTimeAdd();
 				$comment = $this->workoutView->getCommentAdd();
 				if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
+					$this->workoutView->succeedAdd();
 					header('Location: ./');
 					die();
 				}
@@ -53,8 +54,14 @@ class WorkoutController{
 			$this->workoutView->confirmDelete();
 			if ($this->workoutView->getConfirm()) {
 				if ($this->workoutRepo->deleteWorkout($this->workoutView->getDelete(), $this->userId)) {
+					$this->workoutView->succeedDelete();
 					header('Location: ./');
 					die();
+				}
+				else{
+				$this->workoutView->failDelete();
+				header('Location: ./');
+				die();
 				}
 			}
 		}
