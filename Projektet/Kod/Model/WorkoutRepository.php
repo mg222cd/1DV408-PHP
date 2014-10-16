@@ -78,4 +78,21 @@ class WorkoutRepository extends DatabaseConnection{
 			throw new \Exception('Fel uppstod då träningspass skulle tilläggas i databasen.');
 		}	
 	}
+
+	public function deleteWorkout($workoutId, $userId){
+		try{
+			$db = $this->connection();
+			
+			$sql = "DELETE FROM $this->dbTable WHERE workoutId=? AND userid=?";
+			$params = array ($workoutId, $userId);
+
+			$query = $db->prepare($sql);
+			$query->execute($params);
+
+			return $query->rowCount() > 0;
+		}
+		catch(\PDOException $e){
+			throw new \Exception('Fel uppstod då träningspass skulle tas bort ur databasen.');
+		}	
+	}
 }

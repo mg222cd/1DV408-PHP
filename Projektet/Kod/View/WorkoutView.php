@@ -35,6 +35,20 @@ class WorkoutView{
 		return $html;
 	}
 
+	public function getDelete(){
+		if (isset($_GET['delete'])) {
+			return $_GET['delete'];
+		}
+		return NULL;
+	}
+
+	public function getConfirm(){
+		if (isset($_GET['confirm'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}	
+
 	public function workoutList($workoutList){
 		$resultsrow='';
 		foreach ($workoutList as $workout) {
@@ -45,8 +59,7 @@ class WorkoutView{
 								<td>'.$workout->getTime().'</td>
 								<td>'.$workout->getAverage().'</td>
 								<td>'.$workout->getComment().'</td>
-								<td><input type="submit" value="Radera" name="submit_delete" class="btn btn-default">
-									<input type="submit" value="Ändra" name="submit_update" class="btn btn-default"></td>
+								<td><a class="btn btn-default" href="?delete='.$workout->getWorkoutId().'">Ta bort</a></td>
 							<tr>';
 		}
 		$html= "
@@ -272,5 +285,9 @@ class WorkoutView{
 
 	public function succeedAdd(){
 		$this->message .= '<p class="succeed">Nytt träningspass lades till.</p>';
+	}
+
+	public function confirmDelete(){
+		$this->message .= '<p class="error">Vill du verkligen radera träningspasset? <a href="?delete='.$this->getDelete().'&confirm">Ja, radera!</a> <a href="./">Nej, ångra.</a> </p>';
 	}
 }

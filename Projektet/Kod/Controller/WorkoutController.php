@@ -48,8 +48,16 @@ class WorkoutController{
 			$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
 			return $this->workoutPage;
 		}
-		//
 		//delete
+		if (!is_null($this->workoutView->getDelete())) {
+			$this->workoutView->confirmDelete();
+			if ($this->workoutView->getConfirm()) {
+				if ($this->workoutRepo->deleteWorkout($this->workoutView->getDelete(), $this->userId)) {
+					header('Location: ./');
+					die();
+				}
+			}
+		}
 		//update
 		//annars:
 		
