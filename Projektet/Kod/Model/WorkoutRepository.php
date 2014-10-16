@@ -38,7 +38,6 @@ class WorkoutRepository extends DatabaseConnection{
 					ORDER BY $this->dbTable.wdate DESC
 					";
 			
-			//$sql = "SELECT * FROM $this->dbTable WHERE userId = :userId";
 			$params = array(':userId' => $userId);
 
 			$query = $db->prepare($sql);

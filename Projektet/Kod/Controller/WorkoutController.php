@@ -33,12 +33,26 @@ class WorkoutController{
 	public function doControl(){
 		//add
 		if ($this->workoutView->clickedAdd()) {
-			$this->addScenarios();
+			if ($this->validateInputs() == TRUE) {
+				$userId = $this->userId;
+				$workoutTypeId = $this->workoutView->getTypeAdd();
+				$wdate = $this->workoutView->getDateAdd();
+				$distance = $this->workoutView->getDistanceAdd();
+				$wtime = $this->workoutView->getTimeAdd();
+				$comment = $this->workoutView->getCommentAdd();
+				if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
+					header('Location: ./');
+					die();
+				}
+			}
+			$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
+			return $this->workoutPage;
 		}
+		//
 		//delete
 		//update
 		//annars:
-		$this->workoutRepo->addWorkout('1', '1', '2014-10-06', '50', '10:00:23', 'ett nytt test!! en kommentar. na na na nana ');
+		
 		return $this->showList();
 	}
 
@@ -60,10 +74,11 @@ class WorkoutController{
 		$this->workoutPage = $this->workoutView->userMenu($this->username);
 	}
 
-	private function addScenarios(){
+	private function validateInputs(){
 		//kontrollera ifyllda fält
 		if (!$this->workoutView->isFilledDistance() || !$this->workoutView->isFilledMinutes() || !$this->workoutView->isFilledType()) {
 			$this->workoutView->failRequiredFields();
+			return FALSE;
 		}
 		else{
 			$this->workoutView->clearMessage();
@@ -71,11 +86,13 @@ class WorkoutController{
 			//...datum
 			if (!$this->workoutModel->isShortDate($this->workoutView->getDateAdd())) {
 		 		$this->workoutView->failDateFormat();
+		 		return FALSE;
 		 	}
 		 	else{
 		 		//...distans
 		 		if (!$this->workoutModel->validateDistance($this->workoutView->getDistanceAdd())) {
 		 			$this->workoutView->failDistanceFormat();
+		 			return FALSE;
 		 		}
 		 		//...tid (timmar, minuter, sekunder)
 		 		$hours = $this->workoutView->getHoursAdd();
@@ -83,18 +100,17 @@ class WorkoutController{
 		 		$seconds = $this->workoutView->getSecondsAdd();
 		 		if (!$this->workoutModel->validateTime($hours, $minutes, $seconds)) {
 		 			$this->workoutView->failTimeFormat();
+		 			return FALSE;
 		 		}
 		 		//...otillåtna tecken
 		 		$strippedComment = $this->workoutModel->sanitizeText($this->workoutView->getCommentAdd());
                 if ($strippedComment != NULL) {
                     $this->workoutView->failComment($strippedComment);
+                    return FALSE;
                 }
-                //hämta värden
-
-		 	} 
+		 	}
 		}
-		$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
-		return $this->workoutPage;
+		return TRUE;
 	}
 
 
