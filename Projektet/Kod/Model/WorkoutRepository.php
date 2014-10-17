@@ -100,7 +100,10 @@ class WorkoutRepository extends DatabaseConnection{
 		try{
 			$db = $this->connection();
 			
-			$sql = "SELECT * FROM $this->dbTable WHERE workoutID=? AND userId=?";
+			$sql = "SELECT * FROM $this->dbTable 
+					LEFT JOIN workoutType
+					ON $this->dbTable.workoutTypeId = $this->workouttypeTable.workoutTypeId
+					WHERE workoutID=? AND userId=?";
 			$params = array ($workoutId, $userId);
 
 			$query = $db->prepare($sql);
