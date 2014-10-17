@@ -95,4 +95,35 @@ class WorkoutRepository extends DatabaseConnection{
 			throw new \Exception('Fel uppstod då träningspass skulle tas bort ur databasen.');
 		}	
 	}
+
+	public function certificatedToUpdate($workoutId, $userId){
+		try{
+			$db = $this->connection();
+			
+			$sql = "SELECT * FROM $this->dbTable WHERE workoutID=? AND userId=?";
+			$params = array ($workoutId, $userId);
+
+			$query = $db->prepare($sql);
+			$query->execute($params);
+
+			foreach ($query->fetchAll() as $workout) {
+				if ($workout['workoutId'] == $workoutId && $workout['userId'] == $userId) {
+					$workoutId = $workout['workoutId'];
+					$userId = $workout['userId'];
+					$workoutTypeId = $workout['workoutTypeId'];
+					$wdate = $workout['wdate'];
+					$distance = $workout['distance'];
+					$wtime = $workout['wtime'];
+					$comment = $workout['comment'];
+					$workoutTypeName = $workout['name'];
+					$this->workoutList[] = new \Model\Workout($workoutId, $userId, $workoutTypeId, $wdate, $distance, $wtime, $comment, $workoutTypeName);
+					return $this->workoutList;
+				}
+			}
+			return FALSE;
+		}
+		catch(\PDOException $e){
+			throw new \Exception('Fel uppstod då träningspass skulle tas bort ur databasen.');
+		}	
+	}
 }

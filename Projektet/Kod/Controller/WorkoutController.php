@@ -66,6 +66,23 @@ class WorkoutController{
 			}
 		}
 		//update
+		if (!is_null($this->workoutView->getUpdate())) {
+			//säkerhetskontroll att id't tillhör inloggad user
+			if (!$this->workoutRepo->certificatedToUpdate($this->workoutView->getUpdate(), $this->userId)) {
+				//vid manipulerad URL, obehörig att ändra.
+				var_dump("kommer in i FEL");
+				die();
+				$this->workoutView->failDelete();
+				header('Location: ./');
+				die();
+
+			} 
+			else {
+				//vidare till formulär med alla värden ifyllda.
+				echo "kommer in i RÄTT";
+			}
+			
+		}
 		//annars:
 		
 		return $this->showList();

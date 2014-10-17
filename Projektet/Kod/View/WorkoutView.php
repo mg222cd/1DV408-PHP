@@ -43,19 +43,6 @@ class WorkoutView{
 		return $html;
 	}
 
-	public function getDelete(){
-		if (isset($_GET['delete'])) {
-			return $_GET['delete'];
-		}
-		return NULL;
-	}
-
-	public function getConfirm(){
-		if (isset($_GET['confirm'])) {
-			return TRUE;
-		}
-		return FALSE;
-	}	
 
 	public function workoutList($workoutList){
 		$resultsrow='';
@@ -67,7 +54,10 @@ class WorkoutView{
 								<td>'.$workout->getTime().'</td>
 								<td>'.$workout->getAverage().'</td>
 								<td>'.$workout->getComment().'</td>
-								<td><a class="btn btn-default" href="?delete='.$workout->getWorkoutId().'">Ta bort</a></td>
+								<td>
+									<a class="btn btn-default" href="?delete='.$workout->getWorkoutId().'">Ta bort</a>
+									<a class="btn btn-default" href="?update='.$workout->getWorkoutId().'">Ändra</a>
+								</td>
 							<tr>';
 		}
 		$html= "
@@ -108,6 +98,27 @@ class WorkoutView{
 			return TRUE;
 		}
 		return FALSE;
+	}
+
+		public function getDelete(){
+		if (isset($_GET['delete'])) {
+			return $_GET['delete'];
+		}
+		return NULL;
+	}
+
+	public function getConfirm(){
+		if (isset($_GET['confirm'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	public function getUpdate(){
+		if (isset($_GET['update'])) {
+			return $_GET['update'];
+		}
+		return NULL;
 	}
 
 	public function addWorkoutForm($workoutTypes){
@@ -306,5 +317,9 @@ class WorkoutView{
 
 	public function failDelete(){
 		$this->messageClass->setMessage('<p class="error">Valt träningspass kunde inte raderas.</p>');
+	}
+
+	public function failUpdate(){
+		$this->messageClass->setMessage('<p class="error">Behörighet saknas att ändra valt träningspass</p>');
 	}
 }
