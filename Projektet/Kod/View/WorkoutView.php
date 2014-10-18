@@ -182,6 +182,67 @@ class WorkoutView{
         return $html;
 	}
 
+	public function changeWorkoutForm($workoutToUpdate, $workoutTypes){
+		//default values
+		$wdate = isset($_POST['timeAdd']) ? $_POST['timeAdd'] : $this->today;
+		//dropdownlist
+		$optionValues='';
+		$this->typeAdd = $this->getTypeAdd();
+		foreach ($workoutTypes as $workoutType) {
+			if ($this->typeAdd != '' && $this->typeAdd == $workoutType->getWorkoutTypeId()) {
+				$optionValues .= '<option selected value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>';
+			}
+			else{
+				$optionValues .= '<option value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>';
+			}
+		}
+		if (!$this->submitAdd()) {
+			$this->message = '';
+		}
+		$html= "
+		<div class='row' id='add_table'>
+		<div class='col-xs-12'>
+        <h3>Ändra träningspass</h3>
+        <div id='link'><a href='./'>Tillbaka till översikt</a></div>
+        <p>$this->message</p>
+        <div class='col-xs-12 col-sm-6'>
+        <form method='post' id='addWorkout' role='form' action='?addWorkout'> 
+        	<div class='form-group'>
+        	<label for='dateAdd'>Träningsdatum</label>
+            <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$wdate' min='2014-01-01' max='$this->today'>
+            </div>
+            <div class='form-group'>
+        	<label for='typeAdd'>Typ</label>
+            <select class='form-control' name='typeAdd'>
+            	<option>- Välj träningstyp -</option>"
+			  	. $optionValues .
+			"</select>
+            </div>
+            <div class='form-group'>
+        	<label for='distanceAdd'>Distans (anges i kilometer)</label>
+            <input type='number' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd' value='".$this->getDistanceAdd()."'>
+            </div>
+            <div class='form-group'>
+        	<label for='timeAdd'>Tid</label>
+			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$this->getHoursAdd()."'>
+			<p>Timmar</p>
+            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$this->getMinutesAdd()."'>
+            <p>Minuter</p>
+            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$this->getSecondsAdd()."'>
+            <p>Sekunder</p>
+            </div>
+            <div class='form-group'>
+        	<label for='commentAdd'>Kommentar</label>
+            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='".$this->getCommentAdd()."'>
+            </div>
+            <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
+            </div>
+        </form>
+        </div>
+        </div>";
+        return $html;
+	}
+
 	public function getDateAdd(){
 		if (isset($_POST['dateAdd'])) {
 			$this->dateAdd = $_POST['dateAdd'];

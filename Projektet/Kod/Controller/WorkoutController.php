@@ -67,19 +67,31 @@ class WorkoutController{
 		}
 		//update
 		if (!is_null($this->workoutView->getUpdate())) {
+			//rad som ska ändras
+			$workoutToUpdate = $this->workoutRepo->certificatedToUpdate($this->workoutView->getUpdate(), $this->userId);
 			//säkerhetskontroll att id't tillhör inloggad user
-			if (!$this->workoutRepo->certificatedToUpdate($this->workoutView->getUpdate(), $this->userId)) {
-				//vid manipulerad URL, obehörig att ändra.
-				var_dump("kommer in i FEL");
-				die();
-				$this->workoutView->failDelete();
+			if (!$workoutToUpdate) {
+				$this->workoutView->failUpdate();
 				header('Location: ./');
 				die();
-
 			} 
 			else {
 				//vidare till formulär med alla värden ifyllda.
-				echo "kommer in i RÄTT";
+				$this->workoutPage .= $this->workoutView->changeWorkoutForm($workoutToUpdate, $this->workouttypeRepo->getAll());
+				if ($this->validateInputs() == TRUE) {
+				/*$userId = $this->userId;
+				$workoutTypeId = $this->workoutView->getTypeAdd();
+				$wdate = $this->workoutView->getDateAdd();
+				$distance = $this->workoutView->getDistanceAdd();
+				$wtime = $this->workoutView->getTimeAdd();
+				$comment = $this->workoutView->getCommentAdd();*/
+				/*if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
+					$this->workoutView->succeedAdd();
+					header('Location: ./');
+					die();
+				}*/
+				}
+			return $this->workoutPage;
 			}
 			
 		}
