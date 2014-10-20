@@ -67,9 +67,8 @@ class WorkoutController{
 		}
 		//update
 		if (!is_null($this->workoutView->getUpdate())) {
-			//rad som ska ändras
+			//rad ur DB'n som ska ändras
 			$workoutToUpdate = $this->workoutRepo->certificatedToUpdate($this->workoutView->getUpdate(), $this->userId);
-			
 			//säkerhetskontroll att id't tillhör inloggad user
 			if (!$workoutToUpdate) {
 				$this->workoutView->failUpdate();
@@ -77,23 +76,24 @@ class WorkoutController{
 				die();
 			} 
 			else {
-				//vidare till formulär med alla värden ifyllda.
+				//if ($this->workoutView->clickedChange() || !is_null($this->workoutView->getUpdate())) {
+				//visa formulär med alla värden ifyllda.
 				$this->workoutPage .= $this->workoutView->changeWorkoutForm($workoutToUpdate, $this->workouttypeRepo->getAll());
 				if ($this->validateInputs() == TRUE) {
-				$userId = $this->userId;
-				$workoutTypeId = $this->workoutView->getTypeAdd();
-				$wdate = $this->workoutView->getDateAdd();
-				$distance = $this->workoutView->getDistanceAdd();
-				$wtime = $this->workoutView->getTimeAdd();
-				$comment = $this->workoutView->getCommentAdd();
-				var_dump($this->getUpdate);
-				die;
-				/*if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
-					$this->workoutView->succeedAdd();
-					header('Location: ./');
-					die();
-				}*/
-				}
+					echo "kommer in i GODKÄND VALIDERING";
+					$userId = $this->userId;
+					$workoutTypeId = $this->workoutView->getTypeAdd();
+					$wdate = $this->workoutView->getDateAdd();
+					$distance = $this->workoutView->getDistanceAdd();
+					$wtime = $this->workoutView->getTimeAdd();
+					$comment = $this->workoutView->getCommentAdd();
+					/*if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
+						$this->workoutView->succeedAdd();
+						header('Location: ./');
+						die();
+					}*/
+				//}
+			}
 			return $this->workoutPage;
 			}
 			

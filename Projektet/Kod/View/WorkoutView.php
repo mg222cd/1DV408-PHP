@@ -17,11 +17,12 @@ class WorkoutView{
 	private $typeAdd;
 	private $distanceAdd;
 	private $timeAdd;
+	private $hoursAdd;
 	private $minutesAdd;
 	private $secondsAdd;
-	private $hoursAdd;
 	private $commentAdd;
 	//change
+	private $updateAction;
 	private $oldDate;
 	private $oldType;
 	private $oldDistance;
@@ -108,7 +109,7 @@ class WorkoutView{
 		return FALSE;
 	}
 
-		public function getDelete(){
+	public function getDelete(){
 		if (isset($_GET['delete'])) {
 			return $_GET['delete'];
 		}
@@ -124,6 +125,7 @@ class WorkoutView{
 
 	public function getUpdate(){
 		if (isset($_GET['update'])) {
+			$this->updateAction = $_GET['update'];
 			return $_GET['update'];
 		}
 		return NULL;
@@ -153,7 +155,7 @@ class WorkoutView{
         <div id='link'><a href='./'>Tillbaka till översikt</a></div>
         <p>$this->message</p>
         <div class='col-xs-12 col-sm-6'>
-        <form method='post' id='addWorkout' role='form' action='?addWorkout'> 
+        <form method='post' class='addWorkout' role='form' action='?addWorkout'> 
         	<div class='form-group'>
         	<label for='dateAdd'>Träningsdatum</label>
             <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$wdate' min='2014-01-01' max='$this->today'>
@@ -200,17 +202,19 @@ class WorkoutView{
 		}
 		//default values
 		$wdate = $this->getDateAdd() != '' ? $this->dateAdd : $this->oldDate;
-		$distance = $this->getDistanceAdd() != '' ? $this->distanceAdd : $this->oldDistance;
 		$type = $this->getTypeAdd() != '' ? $this->typeAdd : $this->oldType;
-		$hours = $this->hoursAdd  != '' ? $this->hoursAdd : $this->getOldTime('hours');
-		$minutes = $this->minutesAdd  != '' ? $this->minutesAdd : $this->getOldTime('minutes');
-		$seconds = $this->secondsAdd  != '' ? $this->secondsAdd : $this->getOldTime('seconds');
+		$distance = $this->getDistanceAdd() != '' ? $this->distanceAdd : $this->oldDistance;
+		$hours = !is_null($this->hoursAdd) ? $this->hoursAdd : $this->getOldTime('hours');
+		$minutes = $this->minutesAdd  != NULL ? $this->minutesAdd : $this->getOldTime('minutes');
+		$seconds = $this->secondsAdd  != NULL ? $this->secondsAdd : $this->getOldTime('seconds');
 		$comment = $this->getCommentAdd() != '' ? $this->commentAdd : $this->oldComment;
+		//var_dump($this->minutesAdd);
+		//var_dump($minutes);
+		//die();
 		//dropdownlist
 		$optionValues='';
-		$this->typeAdd = $this->getTypeAdd();
 		foreach ($workoutTypes as $workoutType) {
-			if ($this->oldType == $workoutType->getWorkoutTypeId()) {
+			if ($workoutType->getWorkoutTypeId() == $type) {
 				$optionValues .= '<option selected value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>';
 			}
 			else{
@@ -221,13 +225,13 @@ class WorkoutView{
 			$this->message = '';
 		}
 		$html= "
-		<div class='row' id='add_table'>
+		<div class='row' id='change_table'>
 		<div class='col-xs-12'>
         <h3>Ändra träningspass</h3>
         <div id='link'><a href='./'>Tillbaka till översikt</a></div>
         <p>$this->message</p>
         <div class='col-xs-12 col-sm-6'>
-        <form method='post' id='changeWorkout' role='form' action='?changeWorkout'> 
+        <form method='post' class='addWorkout' role='form' action='?update=".$this->updateAction."'> 
         	<div class='form-group'>
         	<label for='dateAdd'>Träningsdatum</label>
             <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$wdate' min='2014-01-01' max='$this->today'>
@@ -256,7 +260,7 @@ class WorkoutView{
         	<label for='commentAdd'>Kommentar</label>
             <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='".$comment."'>
             </div>
-            <input type='submit' value='Uppdatera' name='submitChange' class='btn btn-default'>
+            <input type='submit' value='Lägg till' name='submitChange' class='btn btn-default'>
             </div>
         </form>
         </div>
