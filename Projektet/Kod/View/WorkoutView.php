@@ -4,12 +4,14 @@ namespace View;
 require_once("./Helpers/Message.php");
 
 class WorkoutView{
+	private $messageClass;
 	private $today;
 	private $time = '00:00:00';
 	private $addWorkout;
 	private $updateWorkout;
 	private $deleteWorkout;
 	private $message = '';
+	//add
 	private $submitAdd;
 	private $dateAdd;
 	private $typeAdd;
@@ -19,7 +21,13 @@ class WorkoutView{
 	private $secondsAdd;
 	private $hoursAdd;
 	private $commentAdd;
-	private $messageClass;
+	//change
+	private $oldDate;
+	private $oldType;
+	private $oldDistance;
+	private $oldTime;
+	private $oldComment;
+	
 	
 
 	public function __construct(){
@@ -123,7 +131,7 @@ class WorkoutView{
 
 	public function addWorkoutForm($workoutTypes){
 		//default values
-		$wdate = isset($_POST['timeAdd']) ? $_POST['timeAdd'] : $this->today;
+		$wdate = isset($_POST['timeAdd']) ? $this->dateAdd : $this->today;
 		//dropdownlist
 		$optionValues='';
 		$this->typeAdd = $this->getTypeAdd();
@@ -183,13 +191,26 @@ class WorkoutView{
 	}
 
 	public function changeWorkoutForm($workoutToUpdate, $workoutTypes){
+		foreach ($workoutToUpdate as $workout) {
+				$this->oldDate = $workout->getDate();
+				$this->oldType = $workout->getWorkoutTypeId();
+				$this->oldDistance = $workout->getDistance();
+				$this->oldTime = $workout->getTime();
+				$this->oldComment = $workout->getComment();
+		}
 		//default values
-		$wdate = isset($_POST['timeAdd']) ? $_POST['timeAdd'] : $this->today;
+		$wdate = $this->getDateAdd() != '' ? $this->dateAdd : $this->oldDate;
+		$distance = $this->getDistanceAdd() != '' ? $this->distanceAdd : $this->oldDistance;
+		$type = $this->getTypeAdd() != '' ? $this->typeAdd : $this->oldType;
+		$hours = $this->hoursAdd  != '' ? $this->hoursAdd : $this->getOldTime('hours');
+		$minutes = $this->minutesAdd  != '' ? $this->minutesAdd : $this->getOldTime('minutes');
+		$seconds = $this->secondsAdd  != '' ? $this->secondsAdd : $this->getOldTime('seconds');
+		$comment = $this->getCommentAdd() != '' ? $this->commentAdd : $this->oldComment;
 		//dropdownlist
 		$optionValues='';
 		$this->typeAdd = $this->getTypeAdd();
 		foreach ($workoutTypes as $workoutType) {
-			if ($this->typeAdd != '' && $this->typeAdd == $workoutType->getWorkoutTypeId()) {
+			if ($this->oldType == $workoutType->getWorkoutTypeId()) {
 				$optionValues .= '<option selected value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>';
 			}
 			else{
@@ -206,7 +227,7 @@ class WorkoutView{
         <div id='link'><a href='./'>Tillbaka till översikt</a></div>
         <p>$this->message</p>
         <div class='col-xs-12 col-sm-6'>
-        <form method='post' id='addWorkout' role='form' action='?addWorkout'> 
+        <form method='post' id='changeWorkout' role='form' action='?changeWorkout'> 
         	<div class='form-group'>
         	<label for='dateAdd'>Träningsdatum</label>
             <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$wdate' min='2014-01-01' max='$this->today'>
@@ -220,22 +241,22 @@ class WorkoutView{
             </div>
             <div class='form-group'>
         	<label for='distanceAdd'>Distans (anges i kilometer)</label>
-            <input type='number' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd' value='".$this->getDistanceAdd()."'>
+            <input type='number' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd' value='".$distance."'>
             </div>
             <div class='form-group'>
         	<label for='timeAdd'>Tid</label>
-			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$this->getHoursAdd()."'>
+			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$hours."'>
 			<p>Timmar</p>
-            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$this->getMinutesAdd()."'>
+            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$minutes."'>
             <p>Minuter</p>
-            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$this->getSecondsAdd()."'>
+            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$seconds."'>
             <p>Sekunder</p>
             </div>
             <div class='form-group'>
         	<label for='commentAdd'>Kommentar</label>
-            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='".$this->getCommentAdd()."'>
+            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='".$comment."'>
             </div>
-            <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
+            <input type='submit' value='Uppdatera' name='submitChange' class='btn btn-default'>
             </div>
         </form>
         </div>
@@ -304,8 +325,24 @@ class WorkoutView{
 	}
 
 	public function getTimeAdd(){
-		$totalTime = $this->hoursAdd.':'.$this->minutesAdd.':'.$this->secondsAdd;
+		$totalTime = $hours = $this->getHoursAdd().':'.$this->getMinutesAdd().':'.$this->getSecondsAdd();
 		return $totalTime;
+	}
+
+	public function getOldTime($timeFormat){
+		$explodedTime = explode(":", $this->oldTime);
+		$hours = $explodedTime[0];
+		$minutes = $explodedTime[1];
+		$seconds = $explodedTime[2];
+		if ($timeFormat == 'hours') {
+			return $seconds;
+		}
+		if ($timeFormat == 'minutes') {
+			return $minutes;
+		}
+		if ($timeFormat == 'seconds') {
+			return $seconds;
+		}
 	}
 
 	public function getCommentAdd(){
@@ -343,7 +380,8 @@ class WorkoutView{
 
 	public function failRequiredFields(){
 		$this->message = '<p class="error">Oligatoriska fält saknas.</p>
-			<p class="error">Fälten "Typ", "Distans" och "Minuter" måste vara ifyllda.</p>';
+			<p class="error">Fälten "Typ" och "Minuter" måste vara ifyllda.</p>
+			<p class="error">Den totala tiden måste vara större än 00:00:00</p>';
 	}
 
 	public function failDateFormat(){

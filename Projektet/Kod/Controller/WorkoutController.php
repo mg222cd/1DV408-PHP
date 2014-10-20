@@ -69,6 +69,7 @@ class WorkoutController{
 		if (!is_null($this->workoutView->getUpdate())) {
 			//rad som ska ändras
 			$workoutToUpdate = $this->workoutRepo->certificatedToUpdate($this->workoutView->getUpdate(), $this->userId);
+			
 			//säkerhetskontroll att id't tillhör inloggad user
 			if (!$workoutToUpdate) {
 				$this->workoutView->failUpdate();
@@ -79,12 +80,14 @@ class WorkoutController{
 				//vidare till formulär med alla värden ifyllda.
 				$this->workoutPage .= $this->workoutView->changeWorkoutForm($workoutToUpdate, $this->workouttypeRepo->getAll());
 				if ($this->validateInputs() == TRUE) {
-				/*$userId = $this->userId;
+				$userId = $this->userId;
 				$workoutTypeId = $this->workoutView->getTypeAdd();
 				$wdate = $this->workoutView->getDateAdd();
 				$distance = $this->workoutView->getDistanceAdd();
 				$wtime = $this->workoutView->getTimeAdd();
-				$comment = $this->workoutView->getCommentAdd();*/
+				$comment = $this->workoutView->getCommentAdd();
+				var_dump($this->getUpdate);
+				die;
 				/*if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
 					$this->workoutView->succeedAdd();
 					header('Location: ./');
@@ -120,7 +123,7 @@ class WorkoutController{
 
 	private function validateInputs(){
 		//kontrollera ifyllda fält
-		if (!$this->workoutView->isFilledDistance() || !$this->workoutView->isFilledMinutes() || !$this->workoutView->isFilledType()) {
+		if (!$this->workoutView->isFilledDistance() || $this->workoutView->getTimeAdd() == '00:00:00' || !$this->workoutView->isFilledType()) {
 			$this->workoutView->failRequiredFields();
 			return FALSE;
 		}
