@@ -1,6 +1,11 @@
 <?php
 namespace View;
 
+/**
+* Helper class for MasterController which action/scenario to be shown.
+*
+* @return active action if any of declared here, else sign in page
+*/
 class NavigationView{
 	private static $action = 'action';
 	public static $actionSignIn = 'signIn';
