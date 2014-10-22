@@ -2,12 +2,14 @@
 namespace View;
 
 class RegisterView{
+	//POST-values
 	private $message;
 	private $username;
 	private $password;
 	private $passwordRepeat;
 	private $sendButton;
 
+	//FORMS
 	public function registerForm(){
 		$username = isset($_POST['username']) ? $_POST['username'] : '';
         $html = "
@@ -39,31 +41,7 @@ class RegisterView{
         return $html;
 	}
 
-	public function setWrongUsername($number){
-		$this->message = "<p>Användarnmanet har för få tecken. Minst " . $number . " tecken.</p>";
-	}
-
-	public function setWrongEmail(){
-		$this->message .= "<p>Ogiltigt format för e-postadress.</p>";
-	}
-
-	public function setWrongPassword($number){
-		$this->message .= "<p>Lösenordet har för få tecken. Minst " . $number . " tecken.</p>";
-	}
-
-	public function setPasswordMismatch(){
-		$this->message = "<p>Lösenorden matchar inte.</p>";
-	}
-
-	public function setUsernameAlreadyExists(){
-		$this->message = "<p>Användarnamnet är redan upptaget.</p>";
-	}
-
-	public function setInvalidUsername($strippedUsername){
-		$_POST['username'] = $strippedUsername;
-		$this->message = "<p>Användarnamnet innehåller ogiltiga tecken.</p>";
-	}
-
+	//GETTERS
 	public function confirmedRegister(){
 		if (isset($_POST['sendButton'])) {
 			return TRUE;
@@ -72,7 +50,7 @@ class RegisterView{
 			return FALSE;
 		}	
 	}
-
+	//GETTERS
 	public function getUsername(){
 		if (isset($_POST['username'])) {
 			$this->username = $_POST['username'];
@@ -82,7 +60,7 @@ class RegisterView{
 			return "";
 		}
 	}
-
+	//GETTERS
 	public function getPassword(){
 		if (isset($_POST['password'])) {
 			$this->password = $_POST['password'];
@@ -92,7 +70,7 @@ class RegisterView{
 			return "";
 		}
 	}
-
+	//GETTERS
 	public function getPasswordRepeat(){
 		if (isset($_POST['passwordRepeat'])) {
 			$this->passwordRepeat = $_POST['passwordRepeat'];
@@ -103,6 +81,30 @@ class RegisterView{
 		}
 	}
 
-
+	//ERROR-messages
+	public function setWrongUsername($number){
+		$this->message = "<p class='error'>Användarnmanet har för få tecken. Minst " . $number . " tecken.</p>";
+	}
+	//ERROR-messages
+	public function setWrongEmail(){
+		$this->message .= "<p class='error'>Ogiltigt format för e-postadress.</p>";
+	}
+	//ERROR-messages
+	public function setWrongPassword($number){
+		$this->message .= "<p class='error'>Lösenordet har för få tecken. Minst " . $number . " tecken.</p>";
+	}
+	//ERROR-messages
+	public function setPasswordMismatch(){
+		$this->message = "<p class='error'>Lösenorden matchar inte.</p>";
+	}
+	//ERROR-messages
+	public function setUsernameAlreadyExists(){
+		$this->message = "<p class='error'>Användarnamnet är redan upptaget.</p>";
+	}
+	//ERROR-messages
+	public function setInvalidUsername($strippedUsername){
+		$_POST['username'] = $strippedUsername;
+		$this->message = "<p class='error'>Användarnamnet innehåller ogiltiga tecken.</p>";
+	}
 
 }
