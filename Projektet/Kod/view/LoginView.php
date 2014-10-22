@@ -9,11 +9,7 @@ private $password = "";
 private $message;
 private $register;
 	
-	/**
-	* Login form to show on start page
-	*
-	* param string $html
-	*/
+	//FORMS
 	public function loginForm(){
 		$html= "
 		<div class='row'>
@@ -45,6 +41,7 @@ private $register;
         return $html;
 	}
 
+    //GETTERS
     public function getSubmit(){
         if(isset($_POST['submit'])){
             return TRUE;
@@ -53,7 +50,30 @@ private $register;
             return FALSE;
         }
     }
-    
+    //GETTERS
+    public function getUsername(){
+        if(isset($_POST['username'])){
+            $this->username = $_POST['username'];
+        }
+        return $this->username;
+    }
+    //GETTERS
+    public function getPassword(){
+        if(isset($_POST['password'])){
+            $this->password = $_POST['password'];
+        }
+        return $this->password;
+    }
+    //GETTERS
+    public function wantCookie(){
+        if(isset($_POST['check'])){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }   
+    //GETTERS
     public function clickedRegister(){
         if (isset($_GET['Register'])) {
             return TRUE;
@@ -61,21 +81,11 @@ private $register;
             return FALSE;
         }
     }
-
-    public function getUsername(){
-        if(isset($_POST['username'])){
-            $this->username = $_POST['username'];
-        }
-        return $this->username;
+    //SETTER for messages (used for suceed registration)
+    public function setMessage($message){
+        $this->message = $message;
     }
-
-    public function getPassword(){
-        if(isset($_POST['password'])){
-            $this->password = $_POST['password'];
-        }
-        return $this->password;
-    }
-
+    //ERROR MESSAGES
     public function failedLogIn($username, $password){
         if($username === ""){
             $this->message = "Användarnamn saknas";
@@ -87,21 +97,4 @@ private $register;
             $this->message = "Felaktigt användarnamn och/eller lösenord";
         }
     }
-
-    public function LogInSuccessMessage(){
-        return $this->message = "Inloggning lyckades";
-    }
-
-    public function setMessage($message){
-        $this->message = $message;
-    }
-
-    public function wantCookie(){
-        if(isset($_POST['check'])){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }	
 }

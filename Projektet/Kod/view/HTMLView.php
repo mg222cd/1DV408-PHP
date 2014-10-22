@@ -3,6 +3,7 @@ namespace View;
 
 class HTMLView{
 
+    //Skeleton to be shown on startpage
     public function echoHTML($body){
       $time = $this->getDateAndTime();
       echo "<!DOCTYPE html>
@@ -35,7 +36,7 @@ class HTMLView{
               </body>
               </html>";
     }
-
+    
     private function getDateAndTime(){
       setlocale (LC_ALL, "sv_SE");
       $date = date('d F');

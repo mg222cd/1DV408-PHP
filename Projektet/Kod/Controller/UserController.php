@@ -51,7 +51,7 @@ class UserController{
                                 } else {
                                     $encryptedPassword = $this->userModel->encryptPassword($this->registerView->getPassword());
                                     if ($this->userRepository->add($this->registerView->getUsername(), $encryptedPassword) == TRUE) {
-                                        $this->loginView->setMessage("Registrering av ny användare lyckades.");
+                                        $this->loginView->setMessage("<p class='succeed'>Registrering av ny användare lyckades.</p>");
                                         return $this->loginView->loginForm();
                                     } 
                                 }

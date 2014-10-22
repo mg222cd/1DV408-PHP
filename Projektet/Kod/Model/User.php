@@ -2,11 +2,13 @@
 namespace Model;
 
 class User{
+	//columns in table User
 	private $userId;
 	private $username;
 	private $password;
 	private $time;
 
+	//setters 
 	public function __construct($userId, $username, $password, $time){
 		$this->userId = $userId;
 		$this->username = $username;
@@ -14,6 +16,7 @@ class User{
 		$this->time = $time;
 	}
 
+	//getters
 	public function getUserId(){
 		return $this->userId;
 	}
