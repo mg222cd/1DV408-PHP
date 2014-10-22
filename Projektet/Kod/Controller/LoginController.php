@@ -7,12 +7,11 @@ require_once('./View/CookieView.php');
 require_once('./Helpers/ServiceHelper.php');
 
 class LoginController{
-
+    //instances
     private $loginView;
     private $userModel;
     private $cookieView;
     private $serviceHelper;
-
 
     public function __construct(){
         $this->loginView = new \View\LoginView();
@@ -24,12 +23,12 @@ class LoginController{
     /**
     * Maincontroller for login page scenario
     *
-    * @return string with HTML
+    * @return string with HTML-text
     */
 
     public function mainController(){
         $userAgent = $this->serviceHelper->getUserAgent();
-        //om användaren klickat på Logga in-knappen
+        //if user clicked login-button
         if($this->loginView->getSubmit()){
             if(!$this->validLogin()){
                 $this->loginView->failedLogIn($this->loginView->getUsername(), $this->loginView->getPassword());
@@ -45,27 +44,26 @@ class LoginController{
     * @return bool
     */
     public function validLogin(){
-        //Kontrollera vanlig inloggning
+        //Validate ordinary login
         $username = $this->loginView->getUsername();
         $password = $this->loginView->getPassword();
         $realAgent = $this->serviceHelper->getUserAgent();
         if($this->userModel->validateLogin($username, $password, $realAgent)){
                 $this->loginView->failedLogIn($username, $password);
-                //om Cookies ska sättas
+                //in case of set cookies
                 if($this->loginView->wantCookie()){
                     $time = $this->cookieView->save($username);
                     $this->userModel->setTime($time);
-                    //$this->userModel->saveCookieTime($time);
                 }
                 return TRUE;
         }
-        //Kontrollera inloggning med session
+        //Validate login with session
         if ($this->userModel->getAuthenticatedUser($realAgent)) {
             return TRUE;
         }
-        //Kontrollera inloggning med cookies
-        if($this->cookieView->loadCookie()){ //om kaka finns
-            $cookieValue = $this->cookieView->cookieExist(); //Kakans värde
+        //Validate login with cookies
+        if($this->cookieView->loadCookie()){ //if there is cookie
+            $cookieValue = $this->cookieView->cookieExist(); //value of cookie
             if(!$this->userModel->controlCookieValue($cookieValue, $realAgent)){
                 $this->cookieView->deleteCookie();
                 $message = $this->cookieView->cookieModifiedMessage();
@@ -78,8 +76,15 @@ class LoginController{
         return FALSE;
     }
 
+    /**
+    * Tasks to do if user clicked Logout button.
+    */
     public function logoutTasks(){
         $this->cookieView->deleteCookie();
         $this->userModel->logout();
     }
 }
+
+/**
+* @author Marike Grinde
+*/
