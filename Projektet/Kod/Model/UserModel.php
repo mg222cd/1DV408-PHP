@@ -4,9 +4,12 @@ namespace Model;
 require_once('./Model/UserRepository.php');
 
 class UserModel{
+    //instances
     private $userRepo;
     private $username;
+    //validation
     private $authenticatedUser = false;
+    //rules
     private $minValueUsername = 6;
     private $minValuePassword = 6;
 
@@ -14,60 +17,21 @@ class UserModel{
         $this->userRepo = new \Model\UserRepository();
     }
 
+    //RULES
     public function getMinLengthUsername(){
         return $this->minValueUsername;
     }
-
+    //RULES
     public function getMinLengthPassword(){
         return $this->minValuePassword;
     }
-
-    public function setAndGetUsername(){
-        $this->username = $_SESSION["ValidLogin"];
-        return $this->username;
-    }
-
-    public function getUserId($username){
-        $existingUsers = $this->userRepo->getAll();
-        foreach ($existingUsers as $existingUser) {
-            $name = $existingUser->getName();
-            if ($name == $username) {
-                return $existingUser->getUserId();
-            }
-        }
-    }
-
-    //Kontrollerar längden på Username
-    public function validateUsername($username){
-        if (strlen($username) >= $this->minValueUsername) {
-            return TRUE;
-        } 
-        else {
-            return FALSE;
-        }   
-    }
-
-    //Kontrollerar längden på Password
-    public function validatePassword($password){
-        if (strlen($password) >= $this->minValuePassword) {
-            return TRUE;
-        } 
-        else {
-            return FALSE;
-        }  
-    }
-
-    public function validateEmail($emailToValidate){
-        return filter_var($emailToValidate, FILTER_VALIDATE_EMAIL);
-    }
-
-    //Funktion för att kryptera password
+    //RULES
     public function encryptPassword($password){
         $encryptedPassword = password_hash($password, PASSWORD_DEFAULT);
         return $encryptedPassword;
     }
 
-    //Funktion för att filtrera bort ogiltiga tecken.
+    //RULES
     public function stripTags($username){
         $strippedUsername = strip_tags($username);
         if ($strippedUsername != $username) {
@@ -78,7 +42,52 @@ class UserModel{
         }
     }
 
-    //Kontrollerar om namnet redan finns
+    //VALIDATION
+    public function validateUsername($username){
+        if (strlen($username) >= $this->minValueUsername) {
+            return TRUE;
+        } 
+        else {
+            return FALSE;
+        }   
+    }
+    //VALIDATION
+    public function validatePassword($password){
+        if (strlen($password) >= $this->minValuePassword) {
+            return TRUE;
+        } 
+        else {
+            return FALSE;
+        }  
+    }
+    //VALIDATION
+    public function validateEmail($emailToValidate){
+        return filter_var($emailToValidate, FILTER_VALIDATE_EMAIL);
+    }
+    //VALIDATION
+    //Control if login with SESSION is valid
+    public function getAuthenticatedUser($userAgent){
+        if(isset($_SESSION["UserAgent"]) && $_SESSION["UserAgent"] === $userAgent){
+            if(isset($_SESSION["ValidLogin"])){
+                $this->authenticatedUser = true;
+            }
+        }
+        return $this->authenticatedUser;
+    }
+    
+    //DATABASE-CALL
+    //Get UserId from username
+    public function getUserId($username){
+        $existingUsers = $this->userRepo->getAll();
+        foreach ($existingUsers as $existingUser) {
+            $name = $existingUser->getName();
+            if ($name == $username) {
+                return $existingUser->getUserId();
+            }
+        }
+    }
+    //DATABASE-CALL
+    //Secure Username is avaliable
     public function nameAlreadyExists($nameToCheck){
         $existingUsers = $this->userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
@@ -87,13 +96,12 @@ class UserModel{
                 return TRUE;
             }
         }
-    }
-
-    //Fasadfunktion 
+    }//Facade function
     public function userExists($username){
         return $this->nameAlreadyExists($username);
     }
-
+    //DATABASE-CALL
+    //Get latest timestamp from username
     private function getCookieTime($username){
         $existingUsers = $this->userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
@@ -103,13 +111,15 @@ class UserModel{
             }
         }
     }
-
+    //DATABASE-CALL
+    //Set latest timestamp from username
     public function setTime($time){
         return $this->userRepo->setTime($this->username, $time);
     }
-
+    //DATABASE-CALL
+    //Control if the login-inputs are valid
     public function validateLogin($usernameToCheck, $passwordToCheck, $userAgent){
-        //Sätt authenticatedUser till true eller false beroende på om uppgifterna stämmer med dem i DB
+        //Sets authenticatedUser as true or false depending on if data match database or not
         $existingUsers = $this->userRepo->getAll();
         foreach ($existingUsers as $existingUser) {
             $name = $existingUser->getName();
@@ -125,26 +135,8 @@ class UserModel{
         }
         return $this->authenticatedUser;
     }
-
-    //Tittar om användaren är inloggad redan med sessions eller inte.
-    public function getAuthenticatedUser($userAgent){
-        if(isset($_SESSION["UserAgent"]) && $_SESSION["UserAgent"] === $userAgent){
-            if(isset($_SESSION["ValidLogin"])){
-                $this->authenticatedUser = true;
-            }
-        }
-        return $this->authenticatedUser;
-    }
-
-    //Om användaren väljer att logga ut så tas sessionen bort.
-    public function logout(){
-        if(isset($_SESSION["ValidLogin"])){
-            unset($_SESSION["ValidLogin"]);
-        }
-        return $this->authenticatedUser = false;
-    }
-
-    //Kontrollerar om kakans värde stämmer överens
+    //DATABASE-CALL
+    //Validate if login with cookie really is valid (checks timestamp)
     public function controlCookieValue($cookieValue, $userAgent){
         if($this->userExists($cookieValue)){
             $time = $this->getCookieTime($cookieValue);
@@ -160,15 +152,19 @@ class UserModel{
         }
     }
 
-
-    /*
-    * DÖD KOD - TA BORT NEDAN:
-    *
-    //Sparar tiden när kakan skapades i en fil.
-    public function saveCookieTime($time){
-        file_put_contents("exist.txt", $time);
+    //Function for setting and getting Username from SESSION
+    //(session is set for all scenarios, incl. cookies)
+    public function setAndGetUsername(){
+        $this->username = $_SESSION["ValidLogin"];
+        return $this->username;
     }
-    */
 
 
+    //Logout task, unset session
+    public function logout(){
+        if(isset($_SESSION["ValidLogin"])){
+            unset($_SESSION["ValidLogin"]);
+        }
+        return $this->authenticatedUser = false;
+    }
 }
