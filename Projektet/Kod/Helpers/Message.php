@@ -1,7 +1,12 @@
 <?php
 namespace Helpers;
 
-//Fått hjälp med nedanstående av David Söderberg
+/**
+* Class to handle messages to be shown after redirects from header location (used to show Succeed-messages after CRUD-funktions in Workout-table)
+* Got help with this class from David Söderberg
+*
+* @return string $message
+*/
 class Message{
 	private $message = "message";
 
@@ -12,7 +17,8 @@ class Message{
 	public function getMessage(){
 		if (isset($_SESSION[$this->message])) {
 			$message = $_SESSION[$this->message];
-		}else {
+		}
+		else {
 			$message = "";
 		}
 		unset($_SESSION[$this->message]);

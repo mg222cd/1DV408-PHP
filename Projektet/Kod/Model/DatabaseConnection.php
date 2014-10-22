@@ -1,6 +1,10 @@
 <?php
 namespace Model;
 
+/**
+* Class to handle Database connections in Repository
+* 
+*/
 abstract class DatabaseConnection{
 	
 	protected $dbUsername = 'root';//'101368-fs50541';
