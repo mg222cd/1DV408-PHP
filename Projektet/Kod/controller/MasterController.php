@@ -7,7 +7,7 @@ require_once("./Controller/UserController.php");
 require_once("./Controller/WorkoutController.php");
 
 class MasterController{
-
+//instances
 private $loginController;
 private $userController;
 private $workoutController;
@@ -17,6 +17,12 @@ private $workoutController;
 		$this->userController = new \Controller\UserController();
 	}
 
+	/**
+	* Maincontroller of the scenarios login, logout, registration and logged in.
+	* Default page is the Login page
+	*
+	* @return string with HTML.
+	*/
 	public function controlNavigation(){
 		switch (\View\NavigationView::getAction()) {
 			case \View\NavigationView::$actionRegister:
@@ -48,6 +54,9 @@ private $workoutController;
 		}
 	}
 
+	/**
+	* Instance of WorkoutController-class is only declared if the login is secured as valid.
+	*/
 	public function callWorkoutController(){
 		$this->workoutController = new \Controller\WorkoutController();
 	}

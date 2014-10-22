@@ -7,8 +7,11 @@ require_once("./View/RegisterView.php");
 require_once("./Model/UserModel.php");
 require_once(".//Model/UserRepository.php");
 
+/**
+* Controller class for registration scenarios
+*/
 class UserController{
-
+    //instances
 	private $loginView;
 	private $registerView;
 	private $userModel;
@@ -23,25 +26,25 @@ class UserController{
 	
 	public function controlRegistration(){
 
-		//Om användaren försökt skicka registreringsuppgifter
+		//User tried to Confirm registration
             if ($this->registerView->confirmedRegister() == TRUE) {
                     $checkUsername = $this->userModel->validateUsername($this->registerView->getUsername());
                     $checkPassword = $this->userModel->validatePassword($this->registerView->getPassword());
                     $checkEmail = $this->userModel->validateEmail($this->registerView->getUsername());
                     if ($checkEmail && $checkUsername && $checkPassword == TRUE) {
-                        //kontrollera att lösenordsfälten matchar
+                        //validate passwords match
                         $password = $this->registerView->getPassword();
                         $passwordRepeat = $this->registerView->getPasswordRepeat();
                         if ($password != $passwordRepeat) {
                             $this->registerView->setPasswordMismatch();
                         } 
                         else {
-                            //Kontrollera så att användarnamnet är ledigt
+                            //validate username is available
                             if ($this->userModel->nameAlreadyExists($this->registerView->getUsername()) == TRUE) {
                                 $this->registerView->setUsernameAlreadyExists();
                             } 
                             else {
-                                //Filtrera användarnamn från skadlig kod
+                                //filtrate username
                                 $strippedUsername = $this->userModel->stripTags($this->registerView->getUsername());
                                 if ($strippedUsername != NULL) {
                                     $this->registerView->setInvalidUsername($strippedUsername);
@@ -56,6 +59,7 @@ class UserController{
                         }
                     }
                     else{
+                        //error messages
                         if (!$checkUsername) {
                             $this->registerView->setWrongUsername($this->userModel->getMinLengthUsername());
                         }
@@ -66,11 +70,7 @@ class UserController{
                             $this->registerView->setWrongEmail();
                         }
                     }
+            }
             return $this->registerView->registerForm();
-            }
-            else{
-            	return $this->registerView->registerForm();
-            }
-
 	}
 }
