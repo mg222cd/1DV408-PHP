@@ -66,8 +66,6 @@ class LoginController{
             $cookieValue = $this->cookieView->cookieExist(); //value of cookie
             if(!$this->userModel->controlCookieValue($cookieValue, $realAgent)){
                 $this->cookieView->deleteCookie();
-                $message = $this->cookieView->cookieModifiedMessage();
-                $this->loginView->setMessage($message);
             }
             else{
                 return TRUE;
