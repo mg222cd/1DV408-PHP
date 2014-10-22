@@ -66,6 +66,7 @@ class WorkoutView{
 								<td>
 									<a class="btn btn-default" href="?delete='.$workout->getWorkoutId().'">Ta bort</a>
 									<a class="btn btn-default" href="?update='.$workout->getWorkoutId().'">Ändra</a>
+									<a class="btn btn-default" href="?copy='.$workout->getWorkoutId().'">Kopiera</a>
 								</td>
 							<tr>';
 		}
@@ -109,6 +110,13 @@ class WorkoutView{
 		return FALSE;
 	}
 
+	public function submitChange(){
+		if (isset($_POST['submitChange'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
 	public function getDelete(){
 		if (isset($_GET['delete'])) {
 			return $_GET['delete'];
@@ -129,6 +137,12 @@ class WorkoutView{
 			return $_GET['update'];
 		}
 		return NULL;
+	}
+
+	public function getCopy(){
+		if (isset($_GET['copy'])) {
+			return $_GET['copy'];
+		}
 	}
 
 	public function addWorkoutForm($workoutTypes){
@@ -173,12 +187,14 @@ class WorkoutView{
             </div>
             <div class='form-group'>
         	<label for='timeAdd'>Tid</label>
-			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$this->getHoursAdd()."'>
-			<p>Timmar</p>
-            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$this->getMinutesAdd()."'>
-            <p>Minuter</p>
-            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$this->getSecondsAdd()."'>
-            <p>Sekunder</p>
+			<div class='row'>
+			<div class='col-xs-4'><input type='number' class='form-control' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$this->getHoursAdd()."'>
+			<p>Timmar</p></div>
+            <div class='col-xs-4'><input type='number' class='form-control' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$this->getMinutesAdd()."'>
+            <p>Minuter</p></div>
+            <div class='col-xs-4'><input type='number' class='form-control' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$this->getSecondsAdd()."'>
+            <p>Sekunder</p></div>
+            </div>
             </div>
             <div class='form-group'>
         	<label for='commentAdd'>Kommentar</label>
@@ -201,17 +217,27 @@ class WorkoutView{
 				$this->oldComment = $workout->getComment();
 		}
 		//default values
-		$wdate = $this->getDateAdd() != '' ? $this->dateAdd : $this->oldDate;
-		$type = $this->getTypeAdd() != '' ? $this->typeAdd : $this->oldType;
-		$distance = $this->getDistanceAdd() != '' ? $this->distanceAdd : $this->oldDistance;
-		$hours = !is_null($this->hoursAdd) ? $this->hoursAdd : $this->getOldTime('hours');
-		$minutes = $this->minutesAdd  != NULL ? $this->minutesAdd : $this->getOldTime('minutes');
-		$seconds = $this->secondsAdd  != NULL ? $this->secondsAdd : $this->getOldTime('seconds');
-		$comment = $this->getCommentAdd() != '' ? $this->commentAdd : $this->oldComment;
-		//var_dump($this->minutesAdd);
-		//var_dump($minutes);
-		//die();
-		//dropdownlist
+		if (!$this->submitChange()) {
+			//hämta gamla värden
+			$wdate = $this->oldDate;
+			$type = $this->oldType;
+			$distance = $this->oldDistance;
+			$hours = $this->getOldTime('hours');
+			$minutes = $this->getOldTime('minutes');
+			$seconds = $this->getOldTime('seconds');
+			$comment = $this->oldComment;
+		}
+		else{
+			//hämta postade värden
+			$wdate = $this->getDateAdd();
+			$type = $this->getTypeAdd();
+			$distance = $this->getDistanceAdd();
+			$hours = $this->getHoursAdd();
+			$minutes = $this->getMinutesAdd();
+			$seconds = $this->getSecondsAdd();
+			$comment = $this->getCommentAdd();
+		}
+		//drodown
 		$optionValues='';
 		foreach ($workoutTypes as $workoutType) {
 			if ($workoutType->getWorkoutTypeId() == $type) {
@@ -221,7 +247,7 @@ class WorkoutView{
 				$optionValues .= '<option value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>';
 			}
 		}
-		if (!$this->submitAdd()) {
+		if (!$this->submitChange()) {
 			$this->message = '';
 		}
 		$html= "
@@ -249,18 +275,108 @@ class WorkoutView{
             </div>
             <div class='form-group'>
         	<label for='timeAdd'>Tid</label>
-			<input type='number' class='form-control time' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$hours."'>
-			<p>Timmar</p>
-            <input type='number' class='form-control time' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$minutes."'>
-            <p>Minuter</p>
-            <input type='number' class='form-control time' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$seconds."'>
-            <p>Sekunder</p>
+			<div class='row'>
+			<div class='col-xs-4'><input type='number' class='form-control' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$hours."'>
+			<p>Timmar</p></div>
+            <div class='col-xs-4'><input type='number' class='form-control' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$minutes."'>
+            <p>Minuter</p></div>
+            <div class='col-xs-4'><input type='number' class='form-control' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$seconds."'>
+            <p>Sekunder</p></div>
+            </div>
             </div>
             <div class='form-group'>
         	<label for='commentAdd'>Kommentar</label>
             <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='".$comment."'>
             </div>
             <input type='submit' value='Lägg till' name='submitChange' class='btn btn-default'>
+            </div>
+        </form>
+        </div>
+        </div>";
+        return $html;
+	}
+
+	public function copyWorkoutForm($workoutToUpdate, $workoutTypes){
+		foreach ($workoutToUpdate as $workout) {
+				$this->oldDate = $workout->getDate();
+				$this->oldType = $workout->getWorkoutTypeId();
+				$this->oldDistance = $workout->getDistance();
+				$this->oldTime = $workout->getTime();
+				$this->oldComment = $workout->getComment();
+		}
+		//default values
+		if (!$this->submitChange()) {
+			//dagens datum och kopierade värden
+			$wdate = $this->today;
+			$type = $this->oldType;
+			$distance = $this->oldDistance;
+			$hours = $this->getOldTime('hours');
+			$minutes = $this->getOldTime('minutes');
+			$seconds = $this->getOldTime('seconds');
+			$comment = $this->oldComment;
+		}
+		else{
+			//hämta postade värden
+			$wdate = $this->getDateAdd();
+			$type = $this->getTypeAdd();
+			$distance = $this->getDistanceAdd();
+			$hours = $this->getHoursAdd();
+			$minutes = $this->getMinutesAdd();
+			$seconds = $this->getSecondsAdd();
+			$comment = $this->getCommentAdd();
+		}
+		//drodown
+		$optionValues='';
+		foreach ($workoutTypes as $workoutType) {
+			if ($workoutType->getWorkoutTypeId() == $type) {
+				$optionValues .= '<option selected value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>';
+			}
+			else{
+				$optionValues .= '<option value='.$workoutType->getWorkoutTypeId().'>'.$workoutType->getName().'</option>';
+			}
+		}
+		if (!$this->submitAdd()) {
+			$this->message = '';
+		}
+		$html= "
+		<div class='row' id='change_table'>
+		<div class='col-xs-12'>
+        <h3>Ändra träningspass</h3>
+        <div id='link'><a href='./'>Tillbaka till översikt</a></div>
+        <p>$this->message</p>
+        <div class='col-xs-12 col-sm-6'>
+        <form method='post' class='addWorkout' role='form' action='?addWorkout'> 
+        	<div class='form-group'>
+        	<label for='dateAdd'>Träningsdatum</label>
+            <input type='date' class='form-control' maxlength='10' name='dateAdd' id='dateAdd' value='$wdate' min='2014-01-01' max='$this->today'>
+            </div>
+            <div class='form-group'>
+        	<label for='typeAdd'>Typ</label>
+            <select class='form-control' name='typeAdd'>
+            	<option>- Välj träningstyp -</option>"
+			  	. $optionValues .
+			"</select>
+            </div>
+            <div class='form-group'>
+        	<label for='distanceAdd'>Distans (anges i kilometer)</label>
+            <input type='number' class='form-control' min='1' max='1000' name='distanceAdd' id='distanceAdd' value='".$distance."'>
+            </div>
+            <div class='form-group'>
+        	<label for='timeAdd'>Tid</label>
+			<div class='row'>
+			<div class='col-xs-4'><input type='number' class='form-control' name='hoursAdd' id='hoursAdd' min='0' max='1000' value='".$hours."'>
+			<p>Timmar</p></div>
+            <div class='col-xs-4'><input type='number' class='form-control' name='minutesAdd' id='minutesAdd' min='0' max='59' value='".$minutes."'>
+            <p>Minuter</p></div>
+            <div class='col-xs-4'><input type='number' class='form-control' name='secondsAdd' id='secondsAdd' min='0' max='59' value='".$seconds."'>
+            <p>Sekunder</p></div>
+            </div>
+            </div>
+            <div class='form-group'>
+        	<label for='commentAdd'>Kommentar</label>
+            <input type='text' rows='4' class='form-control' maxlength='255' name='commentAdd' id='commentAdd' value='".$comment."'>
+            </div>
+            <input type='submit' value='Lägg till' name='submitAdd' class='btn btn-default'>
             </div>
         </form>
         </div>
@@ -339,7 +455,7 @@ class WorkoutView{
 		$minutes = $explodedTime[1];
 		$seconds = $explodedTime[2];
 		if ($timeFormat == 'hours') {
-			return $seconds;
+			return $hours;
 		}
 		if ($timeFormat == 'minutes') {
 			return $minutes;
@@ -384,7 +500,7 @@ class WorkoutView{
 
 	public function failRequiredFields(){
 		$this->message = '<p class="error">Oligatoriska fält saknas.</p>
-			<p class="error">Fälten "Typ" och "Minuter" måste vara ifyllda.</p>
+			<p class="error">Fälten "Typ" och "Distans" måste vara ifyllda.</p>
 			<p class="error">Den totala tiden måste vara större än 00:00:00</p>';
 	}
 
@@ -424,5 +540,13 @@ class WorkoutView{
 
 	public function failUpdate(){
 		$this->messageClass->setMessage('<p class="error">Behörighet saknas att ändra valt träningspass</p>');
+	}
+
+	public function succeedUpdate(){
+		$this->messageClass->setMessage('<p class="succeed">Träningspasset uppdaterades.</p>');
+	}
+
+	public function failCopy(){
+		$this->messageClass->setMessage('<p class="error">Behörighet saknas att kopiera valt träningspass</p>');
 	}
 }

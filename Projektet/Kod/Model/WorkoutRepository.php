@@ -129,4 +129,22 @@ class WorkoutRepository extends DatabaseConnection{
 			throw new \Exception('Fel uppstod då träningspass skulle tas bort ur databasen.');
 		}	
 	}
+
+	public function updateWorkout($workoutId, $userId, $workoutTypeId, $wdate, $distance, $wtime, $comment){
+		try{
+			$db = $this->connection();
+			$sql = "UPDATE $this->dbTable 
+					SET workoutTypeId=?, wdate=?, distance=?, wtime=?, comment=? 
+					WHERE workoutID=? AND userId=?";
+			$params = array($workoutTypeId, $wdate, $distance, $wtime, $comment, $workoutId, $userId);
+
+			$query = $db->prepare($sql);
+			$query->execute($params);
+
+			return TRUE;
+		}
+		catch(\PDOException $e){
+			throw new \Exception('Fel uppstod då träningspass skulle tas bort ur databasen.');
+		}	
+	}
 }

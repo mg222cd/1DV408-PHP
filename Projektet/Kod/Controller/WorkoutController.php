@@ -78,28 +78,40 @@ class WorkoutController{
 			else {
 				//if ($this->workoutView->clickedChange() || !is_null($this->workoutView->getUpdate())) {
 				//visa formulär med alla värden ifyllda.
-				$this->workoutPage .= $this->workoutView->changeWorkoutForm($workoutToUpdate, $this->workouttypeRepo->getAll());
 				if ($this->validateInputs() == TRUE) {
-					echo "kommer in i GODKÄND VALIDERING";
+					//lägg till i db
+					$workoutId = $this->workoutView->getUpdate();
 					$userId = $this->userId;
 					$workoutTypeId = $this->workoutView->getTypeAdd();
 					$wdate = $this->workoutView->getDateAdd();
 					$distance = $this->workoutView->getDistanceAdd();
 					$wtime = $this->workoutView->getTimeAdd();
 					$comment = $this->workoutView->getCommentAdd();
-					/*if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
-						$this->workoutView->succeedAdd();
+					if ($this->workoutRepo->updateWorkout($workoutId, $userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
+						$this->workoutView->succeedUpdate();
 						header('Location: ./');
 						die();
-					}*/
-				//}
+					}
+				}
+				$this->workoutPage .= $this->workoutView->changeWorkoutForm($workoutToUpdate, $this->workouttypeRepo->getAll());
 			}
 			return $this->workoutPage;
-			}
-			
 		}
-		//annars:
-		
+		//copy
+		if (!is_null($this->workoutView->getCopy())) {
+			//rad ur DB'n som ska kopieras
+			$workoutToCopy = $this->workoutRepo->certificatedToUpdate($this->workoutView->getCopy(), $this->userId);
+			if (!$workoutToCopy) {
+				$this->workoutView->failCopy();
+				header('Location: ./');
+				die();
+			}
+			else{
+				$this->workoutPage .= $this->workoutView->copyWorkoutForm($workoutToCopy, $this->workouttypeRepo->getAll());
+			}
+			return $this->workoutPage;
+		}
+		//default
 		return $this->showList();
 	}
 
