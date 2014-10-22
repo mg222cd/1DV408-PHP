@@ -6,15 +6,19 @@ require_once('./Model/User.php');
 
 class UserRepository extends DatabaseConnection{
 	private $userList = array();
-	private static $userId = 'userId';
-	private static $username = 'username';
-	private static $password = 'password';
+	private $userId = 'userId';
+	private $username = 'username';
+	private $password = 'password';
 
 	public function __construct(){
 		$this->dbTable = 'member';
 	}
 
-	//Funktion för att hämta alla namn ur databasen.
+	/**
+	* Function to pickup and return all posts from Usertable
+	* 
+	* @return array $userlist
+	*/
 	public function getAll(){
 		try{
 			$db = $this->connection();
@@ -36,10 +40,15 @@ class UserRepository extends DatabaseConnection{
 		}
 	}
 
+	/**
+	* Function to padd new user to Table after registration. Password is encrypted.
+	* 
+	* @param string $username, $password
+	*/
 	public function add($username, $password){
 		try{
 			$db = $this->connection();
-			$sql = "INSERT INTO member (".self::$username.",".self::$password.") VALUES (?, ?)";
+			$sql = "INSERT INTO member (".$this->username.",".$this->password.") VALUES (?, ?)";
 			$params = array($username, $password);
 
 			$query = $db->prepare($sql);
@@ -52,6 +61,11 @@ class UserRepository extends DatabaseConnection{
 		}
 	}
 
+	/**
+	* Function to update user-row with timestamp of latest login
+	* 
+	* @param string $username, $timeToSet
+	*/
 	public function setTime($username, $timeToSet){
 		try{
 			$db = $this->connection();
