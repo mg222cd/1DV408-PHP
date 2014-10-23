@@ -24,7 +24,7 @@ class WorkoutRepository extends DatabaseConnection{
 	* Pickup all workouts to a specific user
 	*
 	* @param int $userId
-	* @return Workout $WorkoutList
+	* @return Workout $WorkoutList (workout object)
 	*/
 	public function getAllWorkouts($userId){
 		try{
@@ -61,6 +61,12 @@ class WorkoutRepository extends DatabaseConnection{
 		}
 	}
 
+	/**
+	* Add workout to database.
+	*
+	* @param string $userId, string $workoutTypeId, string $wdate, string $distance, string $wtime, string $comment
+	* @return bool
+	*/
 	public function addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment){
 		try{
 			$db = $this->connection();
@@ -79,6 +85,12 @@ class WorkoutRepository extends DatabaseConnection{
 		}	
 	}
 
+	/**
+	* Delete one workout from database.
+	*
+	* @param int $workoutId, $userId
+	* @return bool
+	*/
 	public function deleteWorkout($workoutId, $userId){
 		try{
 			$db = $this->connection();
@@ -96,6 +108,12 @@ class WorkoutRepository extends DatabaseConnection{
 		}	
 	}
 
+	/**
+	* Select-function that validates userId has rights to view/change selected workoutId
+	*
+	* @param int $workoutId, $userId
+	* @return array $workoutList (workout object)
+	*/
 	public function certificatedToUpdate($workoutId, $userId){
 		try{
 			$db = $this->connection();
@@ -130,6 +148,12 @@ class WorkoutRepository extends DatabaseConnection{
 		}	
 	}
 
+	/**
+	* Function for updating a specific workout-row.
+	*
+	* @param string $workoutId, string $userId, string $workoutTypeId, string $wdate, string $distance, string $wtime, string $comment
+	* @return bool
+	*/
 	public function updateWorkout($workoutId, $userId, $workoutTypeId, $wdate, $distance, $wtime, $comment){
 		try{
 			$db = $this->connection();
