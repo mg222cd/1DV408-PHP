@@ -6,13 +6,13 @@ require_once("./Model/Workout.php");
 
 class WorkoutRepository extends DatabaseConnection{
 	private $workoutList = array();
-	private static $workoutId = 'workoutId';
-	private static $userId = 'userId';
-	private static $workoutTypeId = 'workoutTypeId';
-	private static $wdate = 'wdate';
-	private static $distance = 'distance';
-	private static $wtime = 'wtime';
-	private static $comment ='comment';
+	private $workoutId = 'workoutId';
+	private $userId = 'userId';
+	private $workoutTypeId = 'workoutTypeId';
+	private $wdate = 'wdate';
+	private $distance = 'distance';
+	private $wtime = 'wtime';
+	private $comment ='comment';
 	private $workouttypeTable;
 	
 	public function __construct(){
@@ -65,7 +65,7 @@ class WorkoutRepository extends DatabaseConnection{
 		try{
 			$db = $this->connection();
 			
-			$sql = "INSERT INTO $this->dbTable (".self::$userId.",".self::$workoutTypeId.",".self::$wdate.",".self::$distance.",".self::$wtime.",".self::$comment.")
+			$sql = "INSERT INTO $this->dbTable (".$this->userId.",".$this->workoutTypeId.",".$this->wdate.",".$this->distance.",".$this->wtime.",".$this->comment.")
                VALUES (?, ?, ?, ?, ?, ?);";
 			$params = array ($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment);
 
