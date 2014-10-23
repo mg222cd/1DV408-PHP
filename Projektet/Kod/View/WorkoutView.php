@@ -4,15 +4,15 @@ namespace View;
 require_once("./Helpers/Message.php");
 
 class WorkoutView{
+	//instance
 	private $messageClass;
+	//today's date
 	private $today;
+	//collected fiels to use when adding hours, minutes, seconds together
 	private $time = '00:00:00';
-	private $addWorkout;
-	private $updateWorkout;
-	private $deleteWorkout;
+	//status-messages:
 	private $message = '';
-	//add
-	private $submitAdd;
+	//fields in add and change forms
 	private $dateAdd;
 	private $typeAdd;
 	private $distanceAdd;
@@ -21,16 +21,13 @@ class WorkoutView{
 	private $minutesAdd;
 	private $secondsAdd;
 	private $commentAdd;
-	//change
-	private $updateAction;
+	//fields for old values (used in update and copy)
 	private $oldDate;
 	private $oldType;
 	private $oldDistance;
 	private $oldTime;
 	private $oldComment;
 	
-	
-
 	public function __construct(){
 		$this->today = date("Y-m-d");
 		$this->messageClass = new \Helpers\Message();
@@ -40,6 +37,7 @@ class WorkoutView{
 		}
 	}
 	
+	//FORMS
 	public function userMenu($username){
 		$html= "
 		<div class='row'>
@@ -51,8 +49,7 @@ class WorkoutView{
         </div>";
 		return $html;
 	}
-
-
+	//FORMS
 	public function workoutList($workoutList){
 		$resultsrow='';
 		foreach ($workoutList as $workout) {
@@ -95,56 +92,7 @@ class WorkoutView{
 		";
 		return $html;
 	}
-
-	public function clickedAdd(){
-		if (isset($_GET['addWorkout'])) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	public function submitAdd(){
-		if (isset($_POST['submitAdd'])) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	public function submitChange(){
-		if (isset($_POST['submitChange'])) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	public function getDelete(){
-		if (isset($_GET['delete'])) {
-			return $_GET['delete'];
-		}
-		return NULL;
-	}
-
-	public function getConfirm(){
-		if (isset($_GET['confirm'])) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	public function getUpdate(){
-		if (isset($_GET['update'])) {
-			$this->updateAction = $_GET['update'];
-			return $_GET['update'];
-		}
-		return NULL;
-	}
-
-	public function getCopy(){
-		if (isset($_GET['copy'])) {
-			return $_GET['copy'];
-		}
-	}
-
+	//FORMS
 	public function addWorkoutForm($workoutTypes){
 		//default values
 		$wdate = isset($_POST['timeAdd']) ? $this->dateAdd : $this->today;
@@ -207,7 +155,7 @@ class WorkoutView{
         </div>";
         return $html;
 	}
-
+	//FORMS
 	public function changeWorkoutForm($workoutToUpdate, $workoutTypes){
 		foreach ($workoutToUpdate as $workout) {
 				$this->oldDate = $workout->getDate();
@@ -295,7 +243,7 @@ class WorkoutView{
         </div>";
         return $html;
 	}
-
+	//FORMS
 	public function copyWorkoutForm($workoutToUpdate, $workoutTypes){
 		foreach ($workoutToUpdate as $workout) {
 				$this->oldDate = $workout->getDate();
@@ -383,6 +331,83 @@ class WorkoutView{
         </div>";
         return $html;
 	}
+	//GETTERS
+	//Selection from start-page - Link Add
+	public function clickedAdd(){
+		if (isset($_GET['addWorkout'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	//GETTERS
+	//Selection from start-page - Button Delete
+	public function getDelete(){
+		if (isset($_GET['delete'])) {
+			return $_GET['delete'];
+		}
+		return NULL;
+	}
+	//GETTERS
+	//Selection from start page - Button Update
+	public function getUpdate(){
+		if (isset($_GET['update'])) {
+			$this->updateAction = $_GET['update'];
+			return $_GET['update'];
+		}
+		return NULL;
+	}
+	//GETTERS
+	//Selection from start page - Button Copy
+	public function getCopy(){
+		if (isset($_GET['copy'])) {
+			return $_GET['copy'];
+		}
+	}
+	//GETTERS
+	//Confirm-botton for Add
+	public function submitAdd(){
+		if (isset($_POST['submitAdd'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	//GETTERS
+	//Confirm-botton for Change/Update
+	public function submitChange(){
+		if (isset($_POST['submitChange'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	//GETTERS
+	//Confirm-botton for Delete
+	public function getConfirm(){
+		if (isset($_GET['confirm'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	//Required fields - Type
+	public function isFilledType(){
+		if ($_POST['typeAdd'] != '- Välj träningstyp -') {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	//Required fields - Distance
+	public function isFilledDistance(){
+		if (isset($_POST['distanceAdd']) && !empty($_POST['distanceAdd'])) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+
+	public function clearMessage(){
+		$this->message = '';
+	}
+
+
 
 	public function getDateAdd(){
 		if (isset($_POST['dateAdd'])) {
@@ -473,30 +498,7 @@ class WorkoutView{
 		return '';
 	}
 
-	public function isFilledType(){
-		if ($_POST['typeAdd'] != '- Välj träningstyp -') {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	public function isFilledDistance(){
-		if (isset($_POST['distanceAdd']) && !empty($_POST['distanceAdd'])) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	public function isFilledMinutes(){
-		if (isset($_POST['minutesAdd']) && !empty($_POST['minutesAdd'])) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	public function clearMessage(){
-		$this->message = '';
-	}
+	
 
 	public function failRequiredFields(){
 		$this->message = '<p class="error">Oligatoriska fält saknas.</p>
