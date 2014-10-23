@@ -36,7 +36,10 @@ class WorkoutView{
 			$this->message = $message;
 		}
 	}
-	
+	//Function to clear message-field.
+	public function clearMessage(){
+		$this->message = '';
+	}
 	//FORMS
 	public function userMenu($username){
 		$html= "
@@ -387,6 +390,7 @@ class WorkoutView{
 		}
 		return FALSE;
 	}
+	//GETTERS
 	//Required fields - Type
 	public function isFilledType(){
 		if ($_POST['typeAdd'] != '- Välj träningstyp -') {
@@ -394,6 +398,7 @@ class WorkoutView{
 		}
 		return FALSE;
 	}
+	//GETTERS
 	//Required fields - Distance
 	public function isFilledDistance(){
 		if (isset($_POST['distanceAdd']) && !empty($_POST['distanceAdd'])) {
@@ -401,14 +406,7 @@ class WorkoutView{
 		}
 		return FALSE;
 	}
-
-
-	public function clearMessage(){
-		$this->message = '';
-	}
-
-
-
+	//GETTERS - date field
 	public function getDateAdd(){
 		if (isset($_POST['dateAdd'])) {
 			$this->dateAdd = $_POST['dateAdd'];
@@ -416,7 +414,7 @@ class WorkoutView{
 		}
 		return '';
 	}
-
+	//GETTERS - type list
 	public function getTypeAdd(){
 		if (isset($_POST['typeAdd'])) {
 			$this->typeAdd = $_POST['typeAdd'];
@@ -424,7 +422,7 @@ class WorkoutView{
 		}
 		return '';
 	}
-
+	//GETTERS - distance field
 	public function getDistanceAdd(){
 		if (isset($_POST['distanceAdd'])) {
 			$this->distanceAdd = $_POST['distanceAdd'];
@@ -432,7 +430,7 @@ class WorkoutView{
 		}
 		return '';
 	}
-	
+	//GETTERS - hours field
 	public function getHoursAdd(){
 		if (isset($_POST['hoursAdd'])) {
 			$this->hoursAdd = $_POST['hoursAdd'];
@@ -444,7 +442,7 @@ class WorkoutView{
 		$this->hoursAdd = '00';
 		return $this->hoursAdd;
 	}
-
+	//GETTERS - hours field
 	public function getMinutesAdd(){
 		if (isset($_POST['minutesAdd'])) {
 			$this->minutesAdd = $_POST['minutesAdd'];
@@ -456,7 +454,7 @@ class WorkoutView{
 		$this->minutesAdd = '00';
 		return $this->minutesAdd;
 	}
-
+	//GETTERS - seconds field
 	public function getSecondsAdd(){
 		if (isset($_POST['secondsAdd'])) {
 			$this->secondsAdd = $_POST['secondsAdd'];
@@ -468,28 +466,30 @@ class WorkoutView{
 		$this->secondsAdd = '00';
 		return $this->secondsAdd;
 	}
-
+	//GETTERS - total time (hours, minutes, seconds fields)
 	public function getTimeAdd(){
 		$totalTime = $hours = $this->getHoursAdd().':'.$this->getMinutesAdd().':'.$this->getSecondsAdd();
 		return $totalTime;
 	}
-
+	//GETTERS - help function to seperate time-format into different fields (hours, minutes, seconds)
 	public function getOldTime($timeFormat){
 		$explodedTime = explode(":", $this->oldTime);
 		$hours = $explodedTime[0];
 		$minutes = $explodedTime[1];
 		$seconds = $explodedTime[2];
-		if ($timeFormat == 'hours') {
-			return $hours;
-		}
-		if ($timeFormat == 'minutes') {
-			return $minutes;
-		}
-		if ($timeFormat == 'seconds') {
-			return $seconds;
+		switch ($timeFormat) {
+    		case 'hours':
+        		return $hours;
+       			break;
+    		case 'minutes':
+        		return $minutes;
+        		break;
+    		case 'seconds':
+        		return $seconds;
+        		break;
 		}
 	}
-
+	//GETTERS - comment field
 	public function getCommentAdd(){
 		if (isset($_POST['commentAdd'])) {
 			$this->commentAdd = $_POST['commentAdd'];
