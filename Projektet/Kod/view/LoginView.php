@@ -88,13 +88,13 @@ private $register;
     //ERROR MESSAGES
     public function failedLogIn($username, $password){
         if($username === ""){
-            $this->message = "Användarnamn saknas";
+            $this->message = "<p class='error'>Användarnamn saknas</p>";
         }
         else if($password === ""){
-            $this->message = "Lösenord saknas";
+            $this->message = "<p class='error'>Lösenord saknas</p>";
         }
         else{
-            $this->message = "Felaktigt användarnamn och/eller lösenord";
+            $this->message = "<p class='error'>Felaktigt användarnamn och/eller lösenord</p>";
         }
     }
 }
