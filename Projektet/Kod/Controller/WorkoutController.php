@@ -29,9 +29,14 @@ class WorkoutController{
 		$this->workoutModel = new \Model\WorkoutModel();
 		$this->initialize();
 	}
-	
+
+	/**
+	* Maincontroller for CRUD-scenarios
+	*
+	* @return string with HTML
+	*/
 	public function doControl(){
-		//add
+		//ADD
 		if ($this->workoutView->clickedAdd()) {
 			if ($this->validateInputs() == TRUE) {
 				$userId = $this->userId;
@@ -49,7 +54,7 @@ class WorkoutController{
 			$this->workoutPage .= $this->workoutView->addWorkoutForm($this->workouttypeRepo->getAll());
 			return $this->workoutPage;
 		}
-		//delete
+		//DELETE
 		if (!is_null($this->workoutView->getDelete())) {
 			$this->workoutView->confirmDelete();
 			if ($this->workoutView->getConfirm()) {
@@ -65,11 +70,11 @@ class WorkoutController{
 				}
 			}
 		}
-		//update
+		//UPDATE
 		if (!is_null($this->workoutView->getUpdate())) {
-			//rad ur DB'n som ska ändras
+			//pickup selected row from database
 			$workoutToUpdate = $this->workoutRepo->certificatedToUpdate($this->workoutView->getUpdate(), $this->userId);
-			//säkerhetskontroll att id't tillhör inloggad user
+			//security check that user is certified selected id, and it's not manipulated
 			if (!$workoutToUpdate) {
 				$this->workoutView->failUpdate();
 				header('Location: ./');
@@ -79,7 +84,7 @@ class WorkoutController{
 				//if ($this->workoutView->clickedChange() || !is_null($this->workoutView->getUpdate())) {
 				//visa formulär med alla värden ifyllda.
 				if ($this->validateInputs() == TRUE) {
-					//lägg till i db
+					//values to add
 					$workoutId = $this->workoutView->getUpdate();
 					$userId = $this->userId;
 					$workoutTypeId = $this->workoutView->getTypeAdd();
@@ -97,9 +102,9 @@ class WorkoutController{
 			}
 			return $this->workoutPage;
 		}
-		//copy
+		//COPY
 		if (!is_null($this->workoutView->getCopy())) {
-			//rad ur DB'n som ska kopieras
+			//selected row to copy from DB
 			$workoutToCopy = $this->workoutRepo->certificatedToUpdate($this->workoutView->getCopy(), $this->userId);
 			if (!$workoutToCopy) {
 				$this->workoutView->failCopy();
@@ -111,10 +116,15 @@ class WorkoutController{
 			}
 			return $this->workoutPage;
 		}
-		//default
+		//DEFAULT
 		return $this->showList();
 	}
 
+	/**
+	* Function to generate workout-list
+	*
+	*	@return string with HTML
+	*/
 	public function showList(){
 		$workoutList = $this->workoutRepo->getAllWorkouts($this->userId);
 		$workoutListView = $this->workoutView->workoutList($workoutList);
@@ -122,10 +132,16 @@ class WorkoutController{
 		return $this->workoutPage;
 	}
 
-	private function setUsername(){ // flytta till konstruktor?
+	/**
+	* Function to set username from logged in user (using session from user model)
+	*/
+	private function setUsername(){ 
 		$this->username = $this->userModel->setAndGetUsername();
 	}
 
+	/**
+	* Random things to when the startpage is loaded
+	*/
 	private function initialize(){
 		//sets values to userId and username
 		$this->setUsername();
@@ -133,27 +149,32 @@ class WorkoutController{
 		$this->workoutPage = $this->workoutView->userMenu($this->username);
 	}
 
+	/**
+	* Validator-function, used from ADD, UPDATE, DELETE-forms
+	*
+	* @return bool
+	*/
 	private function validateInputs(){
-		//kontrollera ifyllda fält
+		//required fields...
 		if (!$this->workoutView->isFilledDistance() || $this->workoutView->getTimeAdd() == '00:00:00' || !$this->workoutView->isFilledType()) {
 			$this->workoutView->failRequiredFields();
 			return FALSE;
 		}
 		else{
 			$this->workoutView->clearMessage();
-			//kontrollera validering...
-			//...datum
+			//validation...
+			//...date-field
 			if (!$this->workoutModel->isShortDate($this->workoutView->getDateAdd())) {
 		 		$this->workoutView->failDateFormat();
 		 		return FALSE;
 		 	}
 		 	else{
-		 		//...distans
+		 		//...distance-field
 		 		if (!$this->workoutModel->validateDistance($this->workoutView->getDistanceAdd())) {
 		 			$this->workoutView->failDistanceFormat();
 		 			return FALSE;
 		 		}
-		 		//...tid (timmar, minuter, sekunder)
+		 		//...time-fields
 		 		$hours = $this->workoutView->getHoursAdd();
 		 		$minutes = $this->workoutView->getMinutesAdd();
 		 		$seconds = $this->workoutView->getSecondsAdd();
@@ -161,7 +182,7 @@ class WorkoutController{
 		 			$this->workoutView->failTimeFormat();
 		 			return FALSE;
 		 		}
-		 		//...otillåtna tecken
+		 		//...comment-field
 		 		$strippedComment = $this->workoutModel->sanitizeText($this->workoutView->getCommentAdd());
                 if ($strippedComment != NULL) {
                     $this->workoutView->failComment($strippedComment);
