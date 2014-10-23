@@ -2,7 +2,7 @@
 namespace Model;
 
 class User{
-	//columns in table User
+	//columns in table "user"
 	private $userId;
 	private $username;
 	private $password;

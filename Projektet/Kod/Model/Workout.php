@@ -3,6 +3,7 @@
 namespace Model;
 
 class Workout{
+	//columns in the table "workout" (except workoutTypeName, which is from table "workouttype")
 	private $workoutId;
 	private $userId;
 	private $workoutTypeId;
@@ -12,6 +13,7 @@ class Workout{
 	private $comment;
 	private $workoutTypeName;
 	
+	//setters
 	public function __construct($workoutId, $userId, $workoutTypeId, $wdate, $distance, $wtime, $comment, $workoutTypeName){
 		$this->workoutId = $workoutId;
 		$this->userId = $userId;
@@ -23,38 +25,43 @@ class Workout{
 		$this->workoutTypeName = $workoutTypeName;
 	}
 
+	//getter
 	public function getWorkoutId(){
 		return $this->workoutId;
 	}
-
+	//getter
 	public function getUserId(){
 		return $this->userId;
 	}
-
+	//getter
 	public function getWorkoutTypeId(){
 		return $this->workoutTypeId;
 	}
-
+	//getter
 	public function getDate(){
 		return $this->wdate;
 	}
-
+	//getter
 	public function getDistance(){
 		return $this->distance;
 	}
-
+	//getter
 	public function getTime(){
 		return $this->wtime;
 	}
-
+	//getter
 	public function getComment(){
 		return $this->comment;
 	}
-
+	//getter
 	public function getWorkoutTypeName(){
 		return $this->workoutTypeName;
 	}
-
+	/**
+	* Calculator-function, using fields distance and time, it calculates avarage time/km
+	*
+	* @return string $average
+	*/
 	public function getAverage(){
 		$time = $this->wtime;
 		$explodedTime = explode(":", $time);
