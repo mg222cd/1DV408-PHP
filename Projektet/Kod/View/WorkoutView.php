@@ -498,57 +498,58 @@ class WorkoutView{
 		return '';
 	}
 
-	
-
+	//ERROR MESSAGES
 	public function failRequiredFields(){
 		$this->message = '<p class="error">Oligatoriska fält saknas.</p>
 			<p class="error">Fälten "Typ" och "Distans" måste vara ifyllda.</p>
 			<p class="error">Den totala tiden måste vara större än 00:00:00</p>';
 	}
-
+	//ERROR MESSAGES
 	public function failDateFormat(){
 		$this->message = '<p class="error">Fel format på datum. Rätt format ska vara ÅÅÅÅ-MM-DD</p>';
 	}
-	
+	//ERROR MESSAGES
 	public function failDistanceFormat(){
 		$this->message .= '<p class="error">Fel format på distans-fältet. Rätt format ska 1-4 st heltal</p>';
 	}
-
+	//ERROR MESSAGES
 	public function failTimeFormat(){
 		$this->message .= '<p class="error">Fel format på något av tidsfälten. Rätt format ska 1-2 st heltal</p>';
 	}
-
+	//ERROR MESSAGES
 	public function failComment($strippedComment){
 		$this->message .= '<p class="error">Otillåtna tecken i kommentarsfältet</p>';
 		$_POST['commentAdd'] = $strippedComment;
 	}
-
+	//ERROR MESSAGES
+	public function failDelete(){
+		$this->messageClass->setMessage('<p class="error">Valt träningspass kunde inte raderas.</p>');
+	}
+	//ERROR MESSAGES
+	public function failUpdate(){
+		$this->messageClass->setMessage('<p class="error">Behörighet saknas att ändra valt träningspass</p>');
+	}
+	//ERROR MESSAGES
+	public function failCopy(){
+		$this->messageClass->setMessage('<p class="error">Behörighet saknas att kopiera valt träningspass</p>');
+	}
+	//SUCCEED MESSAGES
 	public function succeedAdd(){
 		$this->messageClass->setMessage('<p class="succeed">Nytt träningspass lades till.</p>');
 	}
-
+	//SUCCEED MESSAGES
 	public function succeedDelete(){
 		$this->messageClass->setMessage('<p class="succeed">Träningspasset raderades!</p>');
 	}
-
+	//SUCCEED MESSAGES
+	public function succeedUpdate(){
+		$this->messageClass->setMessage('<p class="succeed">Träningspasset uppdaterades.</p>');
+	}
+	//OTHER MESSAGES - confirm
 	public function confirmDelete(){
 		$this->message .= '<p class="error">Vill du verkligen radera träningspasset? 
 		<a class="btn btn-default" href="?delete='.$this->getDelete().'&confirm">Ja, radera!</a> <a class="btn btn-default" href="./">Nej, ångra.</a> </p>';
 	}
 
-	public function failDelete(){
-		$this->messageClass->setMessage('<p class="error">Valt träningspass kunde inte raderas.</p>');
-	}
-
-	public function failUpdate(){
-		$this->messageClass->setMessage('<p class="error">Behörighet saknas att ändra valt träningspass</p>');
-	}
-
-	public function succeedUpdate(){
-		$this->messageClass->setMessage('<p class="succeed">Träningspasset uppdaterades.</p>');
-	}
-
-	public function failCopy(){
-		$this->messageClass->setMessage('<p class="error">Behörighet saknas att kopiera valt träningspass</p>');
-	}
+	
 }
