@@ -32,7 +32,7 @@ class WorkoutRepository extends DatabaseConnection{
 			$sql = "SELECT $this->dbTable.workoutId, $this->dbTable.userId, $this->dbTable.workoutTypeId, $this->dbTable.wdate, 
 							$this->dbTable.distance, $this->dbTable.wtime, $this->dbTable.comment, $this->workouttypeTable.name 
 					FROM $this->dbTable
-					LEFT JOIN workoutType
+					LEFT JOIN workouttype
 					ON $this->dbTable.workoutTypeId = $this->workouttypeTable.workoutTypeId
 					WHERE userId = :userId
 					ORDER BY $this->dbTable.wdate DESC
@@ -119,7 +119,7 @@ class WorkoutRepository extends DatabaseConnection{
 			$db = $this->connection();
 			
 			$sql = "SELECT * FROM $this->dbTable 
-					LEFT JOIN workoutType
+					LEFT JOIN workouttype
 					ON $this->dbTable.workoutTypeId = $this->workouttypeTable.workoutTypeId
 					WHERE workoutID=? AND userId=?";
 			$params = array ($workoutId, $userId);
@@ -168,7 +168,7 @@ class WorkoutRepository extends DatabaseConnection{
 			return TRUE;
 		}
 		catch(\PDOException $e){
-			throw new \Exception('Fel uppstod då träningspass skulle tas bort ur databasen.');
+			throw new \Exception('Fel uppstod då träningspass skulle uppdateras i databasen.');
 		}	
 	}
 }
