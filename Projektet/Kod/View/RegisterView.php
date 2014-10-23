@@ -14,29 +14,35 @@ class RegisterView{
 		$username = isset($_POST['username']) ? $_POST['username'] : '';
         $html = "
         <div class='row'>
-		<div class='col-xs-12 col-sm-6'> 
-		<div id='link'><a href='./'>Tillbaka</a></div>
-        <h3>Registrera ny användare</h3>
-        <p>$this->message</p>
-        <form method='post' role='form' action='?action=".NavigationView::$actionRegister."'>
-	        <div class='form-group'>
-	        <label for='username'>E-post</label>
-	        <input type='text' class='form-control' maxlength='255' name='username' id='username' value='$this->username'>
+
+
+			<div class='col-xs-12 col-sm-6'> 
+			<div id='link'><a href='./'>Tillbaka</a></div>
+	        <h3>Registrera ny användare</h3>
+	        <p>$this->message</p>
+		        <form method='post' role='form' action='?action=".NavigationView::$actionRegister."'>
+			        <div class='form-group'>
+			        <label for='username'>E-post</label>
+			        <input type='text' class='form-control' maxlength='255' name='username' id='username' value='$this->username'>
+			        </div>
+			        <div class='form-group'>
+		            <label for='password'>Lösenord</label>
+					<input type='password' class='form-control' maxlength='255' id='password' name='password'>
+		            </div>
+		            <div class='form-group'>
+		            <label for='passwordRepeat'>Repetera lösenord</label>
+					<input type='password' class='form-control' maxlength='255' id='passwordRepeat' name='passwordRepeat'>
+		            </div>
+		            <div class='form-group'>
+		            <input type='submit' value='Registrera' name='sendButton' class='btn btn-default'>
+		            </div>
+		        </form>
 	        </div>
-	        <div class='form-group'>
-            <label for='password'>Lösenord</label>
-			<input type='password' class='form-control' maxlength='255' id='password' name='password'>
-            </div>
-            <div class='form-group'>
-            <label for='passwordRepeat'>Repetera lösenord</label>
-			<input type='password' class='form-control' maxlength='255' id='passwordRepeat' name='passwordRepeat'>
-            </div>
-            <input type='submit' value='Registrera' name='sendButton' class='btn btn-default'>
-            </div>
-        </form>
-        <div class='col-xs-12 col-sm-6'>
-        <img src='./BasicStyles/DinSpring2.png' class='img-responsive image_startpage' alt='DinSpring alternativ logo'>
-        </div>
+	        <div class='col-xs-12 col-sm-6'>
+	        <img src='./BasicStyles/DinSpring2.png' class='img-responsive image_startpage' alt='DinSpring alternativ logo'>
+	        </div>
+
+
         </div>";
         return $html;
 	}
