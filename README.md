@@ -1,10 +1,10 @@
-Projekt i kursen 1DV408 - Webbutveckling med PHP
+<h1>Projekt i kursen 1DV408 - Webbutveckling med PHP</h1>
 
-Beskrivning:
+<h2>Beskrivning</h2>
 dinspring.se är en träningsdagbok för distanssporter (som löpning, cykel, simning, skidor, vandring) där
 man loggar sina träningspass för att hålla ordning på distanser, tider och snittider.
 
-Installationsanvisningar:
+<h2>Installationsanvisningar</h2>
 1. I filen /Kod/Model/DatabaseConnection.php - ändra databasinställningarna till aktuella för webbhoteller:
   rad 10. protected $dbUsername = 'skriv ditt användarnamn här'; 
   rad 11. protected $dbPassword = 'skriv ditt lösenord här';
