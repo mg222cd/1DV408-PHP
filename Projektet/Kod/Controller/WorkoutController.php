@@ -3,7 +3,7 @@ namespace Controller;
 
 require_once("./Model/UserModel.php");
 require_once("./View/WorkoutView.php");
-require_once("./View/CookieView.php");
+//require_once("./View/CookieView.php");
 require_once("./Model/WorkoutRepository.php");
 require_once("./Model/WorkouttypeRepository.php");
 require_once("./Model/WorkoutModel.php");
@@ -11,7 +11,7 @@ require_once("./Model/WorkoutModel.php");
 class WorkoutController{
 	private $userModel;
 	private $workoutView;
-	private $cookieView;
+	//private $cookieView;
 	private $workoutRepo;
 	private $workouttypeRepo;
 	private $workoutModel;
@@ -23,7 +23,7 @@ class WorkoutController{
 	public function __construct(){
 		$this->userModel = new \Model\UserModel();
 		$this->workoutView = new \View\WorkoutView();
-		$this->cookieView = new \View\CookieStorage();
+		//$this->cookieView = new \View\CookieStorage();
 		$this->workoutRepo = new \Model\WorkoutRepository();
 		$this->workouttypeRepo = new \Model\WorkouttypeRepository();
 		$this->workoutModel = new \Model\WorkoutModel();
