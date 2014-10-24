@@ -68,6 +68,7 @@ class WorkoutRepository extends DatabaseConnection{
 	* @return bool
 	*/
 	public function addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment){
+		var_dump($wtime);
 		try{
 			$db = $this->connection();
 			

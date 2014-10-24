@@ -42,8 +42,10 @@ class WorkoutController{
 				$userId = $this->userId;
 				$workoutTypeId = $this->workoutView->getTypeAdd();
 				$wdate = $this->workoutView->getDateAdd();
+				$wdate = $this->workoutModel->validateDate($wdate);
 				$distance = $this->workoutView->getDistanceAdd();
 				$wtime = $this->workoutView->getTimeAdd();
+				var_dump($wtime);
 				$comment = $this->workoutView->getCommentAdd();
 				if ($this->workoutRepo->addWorkout($userId, $workoutTypeId, $wdate, $distance, $wtime, $comment) == TRUE) {
 					$this->workoutView->succeedAdd();

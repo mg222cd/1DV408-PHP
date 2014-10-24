@@ -13,6 +13,13 @@ class WorkoutModel{
 		return FALSE; 
 	}
 
+	public function validateDate($dateToValidate){
+		if (strtotime($dateToValidate) < strtotime(date('Y-m-d'))) {
+			return $dateToValidate;
+		}
+		return date('Y-m-d');
+	}
+
 	//Validator for distance-field
 	//Accepted format, 1-4 numbers
 	public function validateDistance($var){
