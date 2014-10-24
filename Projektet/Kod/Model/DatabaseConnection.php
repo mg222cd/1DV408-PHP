@@ -7,9 +7,9 @@ namespace Model;
 */
 abstract class DatabaseConnection{
 	
-	protected $dbUsername = '101368-fs50541'; 
-	protected $dbPassword = 'HA%0caxC';
-	protected $dbConnstring = 'mysql:host=mysql01.citynetwork.se;dbname=101368-hqyoas945941;charset=utf8';
+	protected $dbUsername = 'root'; 
+	protected $dbPassword = 'root';
+	protected $dbConnstring = 'mysql:host=mysql01.citynetwork.se;dbname=login;charset=utf8';
 	protected $dbConnection;
 	protected $dbTable;
 
