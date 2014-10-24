@@ -434,7 +434,7 @@ class WorkoutView{
 	public function getHoursAdd(){
 		if (isset($_POST['hoursAdd'])) {
 			$this->hoursAdd = $_POST['hoursAdd'];
-			if (strlen($this->hoursAdd == 1)) {
+			if (strlen($this->hoursAdd) == 1) {
 				$this->hoursAdd = '0'.$this->hoursAdd;
 			}
 			return $this->hoursAdd;
@@ -446,7 +446,7 @@ class WorkoutView{
 	public function getMinutesAdd(){
 		if (isset($_POST['minutesAdd'])) {
 			$this->minutesAdd = $_POST['minutesAdd'];
-			if (strlen($this->minutesAdd == 1)) {
+			if (strlen($this->minutesAdd) == 1) {
 				$this->minutesAdd = '0'.$this->minutesAdd;
 			}
 			return $this->minutesAdd;
@@ -458,7 +458,7 @@ class WorkoutView{
 	public function getSecondsAdd(){
 		if (isset($_POST['secondsAdd'])) {
 			$this->secondsAdd = $_POST['secondsAdd'];
-			if (strlen($this->secondsAdd == 1)) {
+			if (strlen($this->secondsAdd) == 1) {
 				$this->secondsAdd = '0'.$this->secondsAdd;
 			}
 			return $this->secondsAdd;
@@ -500,7 +500,7 @@ class WorkoutView{
 
 	//ERROR MESSAGES
 	public function failRequiredFields(){
-		$this->message = '<p class="error">Oligatoriska fält saknas.</p>
+		$this->message = '<p class="error">Obligatoriska fält saknas.</p>
 			<p class="error">Fälten "Typ" och "Distans" måste vara ifyllda.</p>
 			<p class="error">Den totala tiden måste vara större än 00:00:00</p>';
 	}
