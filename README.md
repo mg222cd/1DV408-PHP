@@ -5,8 +5,8 @@
 man loggar sina träningspass för att hålla ordning på distanser, tider och snittider.</p>
 
 <h2>Användning av applikationen</h2>
-<p>Applikationen finns på här <a href="http://dinspring.se" target="_blank">http://dinspring.se</a></p>
-<p>Testa gärna genom att registrera egen användare och träningspass, för färdig användare med testdata, logga in med användarnamn:marikegrinde@hotmail.com lösenord:123456</p>
+<p><strike>Applikationen finns på här <a href="http://dinspring.se" target="_blank">http://dinspring.se</a></p>
+<p>Testa gärna genom att registrera egen användare och träningspass, för färdig användare med testdata, logga in med användarnamn:marikegrinde@hotmail.com lösenord:123456</strike></p>
 
 <h2>Installationsanvisningar</h2>
 <p>1. I filen /Projektet/Kod/Model/DatabaseConnection.php - ändra databasinställningarna till aktuella för webbhotellet:</p>
